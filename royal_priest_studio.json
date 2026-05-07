@@ -6,27 +6,26 @@
         "instagram_media": "@rpstudios_ng",
         "instagram_music": "@royalpriestmusic_studio",
         "location": "Araromi Junction, Odo Ona, Apata Rd, Ibadan",
-        "about": "A creative collective of music and photography professionals dedicated to delivering exceptional services. Our state-of-the-art studios are designed to inspire and facilitate artistic expression."
+        "about": "A creative collective of music and photography professionals dedicated to delivering exceptional services."
     },
     "business_rules": {
         "payment_terms": {
-            "commitment_fee": "20% (paid after negotiations, non-refundable)",
-            "upfront_payment": "60% (paid at least two weeks before the actual date)",
-            "final_balance": "20% (due latest four weeks after the actual date)"
+            "commitment_fee": "20%",
+            "upfront_payment": "60%",
+            "final_balance": "20%"
         },
-        "travel_policy": "Pre-wedding is free in Ibadan. Outside Ibadan: transportation, feeding, and accommodation to be covered by client.",
-        "negotiable": true
+        "travel_policy": "Outside Ibadan: transportation, feeding, and accommodation handled by client.",
+        "drone_fee": 80000
     },
     "service_categories": [
         {
             "category": "Photography",
             "slug": "photography",
-            "description": "Professional coverage for weddings and events.",
             "packages": [
                 {
                     "name": "One day wedding Silver Package",
                     "price": 200999,
-                    "currency": "NGN",
+                    "image": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800",
                     "features": [
                         "One day coverage",
                         "Pre-wedding (Free in Ibadan)"
@@ -35,27 +34,10 @@
                 {
                     "name": "Two days Silver wedding Package",
                     "price": 250999,
-                    "currency": "NGN",
+                    "image": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800",
                     "features": [
-                        "Engagement coverage",
-                        "White wedding coverage",
+                        "Engagement & White wedding",
                         "Pre-wedding (Free in Ibadan)"
-                    ]
-                },
-                {
-                    "name": "One day Synthetic Package 2",
-                    "price": 350999,
-                    "currency": "NGN",
-                    "features": [
-                        "Premium Synthetic finish"
-                    ]
-                },
-                {
-                    "name": "Two day Synthetic Package 2",
-                    "price": 450999,
-                    "currency": "NGN",
-                    "features": [
-                        "Engagement & Wedding synthetic package"
                     ]
                 }
             ]
@@ -63,32 +45,14 @@
         {
             "category": "Videography",
             "slug": "videography",
-            "description": "Cinematic storytelling and event recording.",
-            "addons": [
-                {
-                    "name": "Drone Service",
-                    "price": 80000,
-                    "unit": "per day"
-                }
-            ],
             "packages": [
-                {
-                    "name": "One day Videography Package 2",
-                    "price": 200999,
-                    "currency": "NGN",
-                    "features": [
-                        "One short video clip",
-                        "Professional Videographer"
-                    ]
-                },
                 {
                     "name": "Two days Videography Package 2",
                     "price": 400999,
-                    "currency": "NGN",
+                    "image": "https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&q=80&w=800",
                     "features": [
-                        "Two short video clips (Engagement & White Wedding)",
-                        "Two professional Videographers",
-                        "Delivered on flash drive"
+                        "Two short video clips",
+                        "Professional Videographers"
                     ]
                 }
             ]
@@ -96,12 +60,11 @@
         {
             "category": "Music Studio",
             "slug": "music",
-            "description": "High-fidelity audio production and creative spaces.",
             "packages": [
                 {
                     "name": "Live Session",
                     "price": 40999,
-                    "currency": "NGN",
+                    "image": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80&w=800",
                     "features": [
                         "Live multi-track recording"
                     ]
@@ -109,17 +72,10 @@
                 {
                     "name": "Jingles",
                     "price": 50999,
-                    "currency": "NGN",
+                    "image": "https://images.unsplash.com/photo-1559732277-7453b141e3a1?auto=format&fit=crop&q=80&w=800",
                     "features": [
-                        "Radio/Social media jingles"
-                    ]
-                },
-                {
-                    "name": "Studio Session (Screen Setup)",
-                    "price": 80000,
-                    "currency": "NGN",
-                    "features": [
-                        "Promo session with full screen setup"
+                        "Professional Voiceover",
+                        "Mixing & Mastering"
                     ]
                 }
             ]
