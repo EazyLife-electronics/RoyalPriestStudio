@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Priest Studios | Creative Space</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <img src="logo.png" alt="Royal Priest Studios" class="logo">
+        <nav>
+            <button onclick="filterCards('all')">All</button>
+            <button onclick="filterCards('photography')">Photography</button>
+            <button onclick="filterCards('videography')">Videography</button>
+            <button onclick="filterCards('music')">Music Studio</button>
+        </nav>
+    </header>
+
+    <main id="package-grid" class="grid-container">
+        </main>
+
+    <section id="booking-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Book Your Session</h2>
+            <form action="https://formspree.io/f/YOUR_ID_HERE" method="POST">
+                <input type="hidden" name="_subject" value="New Booking from Royal Priest Website">
+                
+                <label>Package Selected</label>
+                <input type="text" id="selected-package" name="Package" readonly>
+
+                <div class="form-group">
+                    <input type="text" name="Name" placeholder="Full Name" required>
+                    <input type="email" name="Email" placeholder="Email Address" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="date" name="Event Date" required>
+                    <select name="LocationType" id="location-select" onchange="checkTravelFee()">
+                        <option value="Ibadan">Event is within Ibadan</option>
+                        <option value="Outside">Event is outside Ibadan</option>
+                    </select>
+                </div>
+
+                <p id="travel-note" style="display:none; color: #D4AF37; font-size: 0.8rem; margin-bottom: 10px;">
+                    *Note: Client covers transportation, feeding, and accommodation for events outside Ibadan.
+                </p>
+
+                <textarea name="Message" placeholder="Tell us more about your event..."></textarea>
+                
+                <button type="submit" class="submit-btn">Confirm Booking Request</button>
+            </form>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
