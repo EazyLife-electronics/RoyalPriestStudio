@@ -1,85 +1,175 @@
+/* Premium Studio Theme */
 :root {
     --gold: #D4AF37;
-    --dark: #0a0a0a;
-    --glass: rgba(255, 255, 255, 0.05);
+    --dark: #050505;
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(212, 175, 55, 0.2);
 }
+
+* { box-sizing: border-box; }
 
 body {
     background-color: var(--dark);
-    color: white;
-    font-family: 'Segoe UI', sans-serif;
+    color: #e0e0e0;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
     margin: 0;
+    line-height: 1.6;
 }
 
+/* Header & Navigation */
 header {
     text-align: center;
-    padding: 40px 20px;
-    background: linear-gradient(to bottom, #1a1a1a, transparent);
+    padding: 60px 20px;
+    background: linear-gradient(to bottom, #111, transparent);
 }
 
-nav button {
-    background: none;
+.filter-nav {
+    margin-top: 30px;
+}
+
+.filter-nav button {
+    background: transparent;
     border: 1px solid var(--gold);
     color: var(--gold);
-    padding: 8px 20px;
-    cursor: pointer;
+    padding: 10px 25px;
     margin: 5px;
-    transition: 0.3s;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+    transition: 0.3s ease;
 }
 
-nav button:hover {
+.filter-nav button:hover, .filter-nav button.active {
     background: var(--gold);
     color: black;
 }
 
+/* Grid System */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
-    padding: 40px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+    padding: 20px 10% 80px;
 }
 
+/* Card Design */
 .card {
-    background: var(--glass);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    padding: 25px;
-    border-radius: 15px;
-    transition: transform 0.3s, border 0.3s;
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .card:hover {
-    transform: translateY(-10px);
-    border: 1px solid var(--gold);
+    transform: translateY(-8px);
+    border-color: var(--gold);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-.card h3 { color: var(--gold); margin-top: 0; }
-
-.price-box {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 15px 0;
+.card-img {
+    height: 220px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
 }
 
-.deposit {
-    font-size: 0.9rem;
+.card-img::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(transparent, var(--dark));
+}
+
+.card-content {
+    padding: 25px;
+}
+
+.card-content h3 {
+    margin: 0;
+    color: var(--gold);
+    font-size: 1.4rem;
+}
+
+.price-tag {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 10px 0;
+}
+
+.deposit-info {
+    font-size: 0.85rem;
     color: #888;
+    margin-bottom: 20px;
 }
 
-ul { padding-left: 20px; color: #ccc; font-size: 0.9rem; }
+ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+}
 
+ul li {
+    padding: 5px 0;
+    font-size: 0.9rem;
+    color: #bbb;
+}
+
+ul li::before {
+    content: "•";
+    color: var(--gold);
+    margin-right: 10px;
+}
+
+/* Booking Button */
 .book-btn {
     width: 100%;
-    padding: 12px;
+    padding: 15px;
     background: var(--gold);
     border: none;
+    color: black;
     font-weight: bold;
+    text-transform: uppercase;
     cursor: pointer;
-    margin-top: 20px;
+    border-radius: 4px;
+    transition: 0.3s;
 }
 
-/* Modal Styling */
-.modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); }
-.modal-content { background: #1a1a1a; margin: 10% auto; padding: 30px; border: 1px solid var(--gold); width: 90%; max-width: 500px; border-radius: 10px; }
-.form-group { display: flex; gap: 10px; margin-bottom: 15px; }
-input, select, textarea { width: 100%; padding: 12px; background: #333; border: 1px solid #444; color: white; margin-bottom: 15px; }
+.book-btn:hover {
+    letter-spacing: 1px;
+    filter: brightness(1.1);
+}
+
+/* Booking Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: #111;
+    border: 1px solid var(--gold);
+    width: 90%;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 40px;
+    border-radius: 8px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    color: white;
+}
