@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Royal Priest Studios Limited | Creative Collective</title>
+    <title>Royal Priest Studios | Creative Collective</title>
     <style>
         :root {
             --gold: #D4AF37;
@@ -13,195 +13,124 @@
             --green: #28a745;
         }
 
-        * { box-sizing: border-box; }
-        body {
-            background-color: var(--dark);
-            color: white;
-            font-family: 'Inter', 'Segoe UI', sans-serif;
-            margin: 0;
-            padding-bottom: 50px;
-        }
-
-        header { text-align: center; padding: 60px 20px; }
-        .logo { max-width: 180px; margin-bottom: 20px; }
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+        body { background-color: var(--dark); color: white; font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 50px; }
+        header { text-align: center; padding: 40px 20px; }
 
         /* Navigation */
-        .filter-nav {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 40px;
-        }
+        .filter-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; }
+        .filter-nav button { background: #222; border: 1px solid #444; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer; text-transform: uppercase; font-size: 11px; font-weight: bold; }
+        .filter-nav button:hover, .filter-nav button.active { background: var(--gold); color: black; border-color: var(--gold); }
 
-        .filter-nav button {
-            background: #222;
-            border: 1px solid #444;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
-            font-size: 12px;
-            font-weight: bold;
-        }
+        /* Grid */
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; padding: 0 5%; }
 
-        .filter-nav button:hover, .filter-nav button.active {
-            background: var(--gold);
-            color: black;
-            border-color: var(--gold);
-        }
+        /* Card Styling */
+        .card { background: var(--card-bg); border-radius: 15px; overflow: hidden; border: 1px solid #222; position: relative; }
+        .card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        .card-img { height: 300px; background-size: cover; background-position: center; cursor: pointer; }
+        .card-content { padding: 20px; }
+        .card-content h3 { color: var(--gold); margin: 0; font-size: 1.2rem; }
+        .price { font-size: 1.8rem; font-weight: bold; margin: 10px 0; }
 
-        /* Grid & Cards */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 30px;
-            padding: 0 5%;
-        }
+        /* Actions */
+        .action-btns { display: flex; gap: 10px; margin-top: 15px; }
+        .details-btn { flex: 1; background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .book-btn { flex: 2; background: var(--green); border: none; color: white; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .details-btn:hover { background: var(--gold); color: black; }
 
-        .card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid #222;
-            transition: 0.3s ease;
-        }
+        /* Modals */
+        .modal { display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); overflow-y: auto; }
+        .modal-content { background: #1a1a1a; width: 90%; max-width: 600px; margin: 40px auto; padding: 30px; border-radius: 15px; border: 1px solid var(--gold); position: relative; }
+        .close-btn { position: absolute; top: 15px; right: 20px; color: white; font-size: 30px; cursor: pointer; }
 
-        .card:hover { transform: translateY(-10px); border-color: var(--gold); }
+        .modal-img { width: 100%; height: 250px; border-radius: 10px; background-size: cover; background-position: center; margin-bottom: 20px; }
+        .payment-breakdown { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .payment-breakdown div { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9rem; }
 
-        .card-img {
-            height: 380px;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .card-content { padding: 25px; }
-        .card-content h3 { color: var(--gold); margin: 0 0 10px; font-size: 1.5rem; }
-        .price { font-size: 2.2rem; font-weight: bold; margin: 10px 0; }
-        .commitment { color: #888; font-size: 0.9rem; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
-
-        .features { list-style: none; padding: 0; margin: 0 0 25px; }
-        .features li { padding: 6px 0; color: #bbb; font-size: 0.95rem; }
-        .features li::before { content: "◈"; color: var(--gold); margin-right: 10px; }
-
-        .book-btn {
-            width: 100%;
-            padding: 16px;
-            background: var(--green);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .book-btn:hover { filter: brightness(1.1); transform: scale(1.02); }
-
-        /* Booking Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(8px);
-        }
-
-        .modal-content {
-            background: #1a1a1a;
-            width: 90%;
-            max-width: 500px;
-            margin: 50px auto;
-            padding: 40px;
-            border-radius: 15px;
-            border: 1px solid var(--gold);
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            background: #252525;
-            border: 1px solid #333;
-            color: white;
-            border-radius: 5px;
-        }
-
-        .close-btn { color: white; float: right; font-size: 28px; cursor: pointer; }
+        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 15px; background: #252525; border: 1px solid #333; color: white; border-radius: 5px; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Royal Priest Studios</h1>
+        <h1 style="color:var(--gold)">Royal Priest Studios</h1>
         <div class="filter-nav">
-            <button class="active" onclick="filter('all')">All Services</button>
+            <button class="active" onclick="filter('all')">All</button>
             <button onclick="filter('photography')">Photography</button>
             <button onclick="filter('videography')">Videography</button>
-            <button onclick="filter('music')">Music Production</button>
+            <button onclick="filter('music')">Music</button>
         </div>
     </header>
 
-    <main id="package-grid" class="grid-container">
-        </main>
+    <main id="package-grid" class="grid-container"></main>
+
+    <div id="details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAllModals()">&times;</span>
+            <div id="modal-img-div" class="modal-img"></div>
+            <h2 id="modal-title" style="color:var(--gold); margin-bottom:5px;"></h2>
+            <p id="modal-desc" style="color:#ccc; line-height:1.5;"></p>
+            
+            <div class="payment-breakdown">
+                <h4 style="margin-top:0">Payment Plan Breakdown</h4>
+                <div><span>Commitment (20%)</span><span id="p-commitment"></span></div>
+                <div><span>Pre-Event (60%)</span><span id="p-upfront"></span></div>
+                <div><span>Post-Event (20%)</span><span id="p-balance"></span></div>
+            </div>
+
+            <button class="book-btn" style="width:100%" id="modal-book-trigger">Proceed to Booking</button>
+        </div>
+    </div>
 
     <div id="booking-modal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2 style="color:var(--gold)">Secure Your Slot</h2>
-            <form action="https://formspree.io/f/YOUR_ID_HERE" method="POST">
-                <input type="text" id="pkg-name" name="Selected Package" readonly style="background:#111; color:var(--gold)">
-                <input type="text" name="Client Name" placeholder="Your Full Name" required>
-                <input type="email" name="Email" placeholder="Email Address" required>
-                <input type="date" name="Event Date" required>
-                <select name="Event Location" onchange="toggleNote(this.value)">
-                    <option value="Ibadan">Event is in Ibadan</option>
-                    <option value="Outside">Event is outside Ibadan</option>
+            <span class="close-btn" onclick="closeAllModals()">&times;</span>
+            <h2 style="color:var(--gold)">Booking Request</h2>
+            <form action="https://formspree.io/f/YOUR_ID" method="POST">
+                <input type="text" id="pkg-name" name="Package" readonly>
+                <input type="text" name="Name" placeholder="Full Name" required>
+                <input type="email" name="Email" placeholder="Email" required>
+                <input type="date" name="Date" required>
+                <select name="Location" onchange="document.getElementById('warn').style.display = (this.value=='Outside')?'block':'none'">
+                    <option value="Ibadan">Ibadan</option>
+                    <option value="Outside">Outside Ibadan</option>
                 </select>
-                <p id="travel-warning" style="display:none; color:#888; font-size:12px; margin-bottom:15px;">
-                    *Outside Ibadan: Client handles logistics (Transport/Feeding/Accommodation).
-                </p>
-                <textarea name="Notes" placeholder="Additional details..."></textarea>
-                <button type="submit" class="book-btn">Submit Booking Request</button>
+                <p id="warn" style="display:none; font-size:12px; color:var(--gold)">*Client covers logistics for travel.</p>
+                <textarea name="Notes" placeholder="Any specific requests?"></textarea>
+                <button type="submit" class="book-btn" style="width:100%">Submit Request</button>
             </form>
         </div>
     </div>
 
     <script>
-        const JSON_PATH = 'royal_priest_studio.json';
+        let fullData = [];
 
-        // Load data on start
-        async function loadData() {
-            try {
-                const response = await fetch(JSON_PATH);
-                const data = await response.json();
-                render(data.service_categories);
-            } catch (err) { console.error("Could not fetch JSON data", err); }
+        async function init() {
+            const res = await fetch('royal_priest_studio.json');
+            const data = await res.json();
+            fullData = data.service_categories;
+            render('all');
         }
 
-        function render(categories) {
+        function render(slug) {
             const grid = document.getElementById('package-grid');
             grid.innerHTML = '';
-
-            categories.forEach(cat => {
+            
+            fullData.forEach(cat => {
+                if (slug !== 'all' && cat.slug !== slug) return;
                 cat.packages.forEach(pkg => {
-                    const commitment = (pkg.price * 0.2).toLocaleString();
                     const card = document.createElement('div');
                     card.className = `card ${cat.slug}`;
                     card.innerHTML = `
-                        <div class="card-img" style="background-image: url('${pkg.image}')"></div>
+                        <div class="card-img" style="background-image:url('${pkg.image}')" onclick="showDetails('${pkg.name}')"></div>
                         <div class="card-content">
                             <h3>${pkg.name}</h3>
                             <div class="price">₦${pkg.price.toLocaleString()}</div>
-                            <p class="commitment">Commitment Fee (20%): ₦${commitment}</p>
-                            <ul class="features">
-                                ${pkg.features.map(f => `<li>${f}</li>`).join('')}
-                            </ul>
-                            <button class="book-btn" onclick="openBooking('${pkg.name}')">Add to Booking</button>
+                            <div class="action-btns">
+                                <button class="details-btn" onclick="showDetails('${pkg.name}')">Details</button>
+                                <button class="book-btn" onclick="openBooking('${pkg.name}')">Book Now</button>
+                            </div>
                         </div>
                     `;
                     grid.appendChild(card);
@@ -209,39 +138,40 @@
             });
         }
 
-        function filter(slug) {
-            const cards = document.querySelectorAll('.card');
-            const btns = document.querySelectorAll('.filter-nav button');
+        function showDetails(pkgName) {
+            let pkg;
+            fullData.forEach(c => c.packages.forEach(p => { if(p.name === pkgName) pkg = p; }));
             
-            // UI Button Active State
-            btns.forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-
-            cards.forEach(c => {
-                if(slug === 'all' || c.classList.contains(slug)) {
-                    c.style.display = 'block';
-                } else {
-                    c.style.display = 'none';
-                }
-            });
+            document.getElementById('modal-title').innerText = pkg.name;
+            document.getElementById('modal-desc').innerText = pkg.description || "Premium studio service curated by Royal Priest Studios. Includes professional editing and high-resolution delivery.";
+            document.getElementById('modal-img-div').style.backgroundImage = `url('${pkg.image}')`;
+            
+            document.getElementById('p-commitment').innerText = `₦${(pkg.price * 0.2).toLocaleString()}`;
+            document.getElementById('p-upfront').innerText = `₦${(pkg.price * 0.6).toLocaleString()}`;
+            document.getElementById('p-balance').innerText = `₦${(pkg.price * 0.2).toLocaleString()}`;
+            
+            document.getElementById('modal-book-trigger').onclick = () => openBooking(pkg.name);
+            document.getElementById('details-modal').style.display = 'block';
         }
 
-        function openBooking(pkg) {
+        function openBooking(name) {
+            closeAllModals();
+            document.getElementById('pkg-name').value = name;
             document.getElementById('booking-modal').style.display = 'block';
-            document.getElementById('pkg-name').value = pkg;
         }
 
-        function closeModal() { document.getElementById('booking-modal').style.display = 'none'; }
-        
-        function toggleNote(val) {
-            document.getElementById('travel-warning').style.display = (val === 'Outside') ? 'block' : 'none';
+        function filter(s) {
+            document.querySelectorAll('.filter-nav button').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            render(s);
         }
 
-        window.onclick = function(e) { 
-            if (e.target == document.getElementById('booking-modal')) closeModal(); 
+        function closeAllModals() {
+            document.getElementById('details-modal').style.display = 'none';
+            document.getElementById('booking-modal').style.display = 'none';
         }
 
-        loadData();
+        init();
     </script>
 </body>
 </html>
