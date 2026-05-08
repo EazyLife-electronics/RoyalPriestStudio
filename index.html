@@ -3,175 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Royal Priest Studios | Creative Collective</title>
+    <title>Royal Priest Studios | Portfolio & Booking</title>
     <style>
-        :root {
-            --gold: #D4AF37;
-            --dark: #0a0a0a;
-            --card-bg: #141414;
-            --glass: rgba(255, 255, 255, 0.05);
-            --green: #28a745;
-        }
-
+        :root { --gold: #D4AF37; --dark: #050505; --green: #25D366; --glass: rgba(255,255,255,0.05); }
         * { box-sizing: border-box; transition: all 0.3s ease; }
-        body { background-color: var(--dark); color: white; font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 50px; }
-        header { text-align: center; padding: 40px 20px; }
+        body { background: var(--dark); color: white; font-family: 'Inter', sans-serif; margin: 0; scroll-behavior: smooth; }
+        
+        /* Floating WhatsApp */
+        .wa-float { position: fixed; bottom: 25px; right: 25px; background: var(--green); color: white; padding: 15px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 10px; }
+        .wa-float:hover { transform: scale(1.1); }
 
-        /* Navigation */
-        .filter-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; }
-        .filter-nav button { background: #222; border: 1px solid #444; color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer; text-transform: uppercase; font-size: 11px; font-weight: bold; }
-        .filter-nav button:hover, .filter-nav button.active { background: var(--gold); color: black; border-color: var(--gold); }
+        header { padding: 80px 20px; text-align: center; background: linear-gradient(to bottom, #111, var(--dark)); }
+        section { padding: 60px 5%; }
+        h2 { color: var(--gold); font-size: 2rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 40px; border-bottom: 1px solid var(--gold); display: inline-block; }
 
-        /* Grid */
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; padding: 0 5%; }
+        /* Gallery Grid */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+        .gallery-item { height: 300px; background-size: cover; background-position: center; border-radius: 8px; cursor: pointer; border: 1px solid #222; }
+        .gallery-item:hover { filter: brightness(1.2); border-color: var(--gold); }
 
-        /* Card Styling */
-        .card { background: var(--card-bg); border-radius: 15px; overflow: hidden; border: 1px solid #222; position: relative; }
-        .card:hover { border-color: var(--gold); transform: translateY(-5px); }
-        .card-img { height: 300px; background-size: cover; background-position: center; cursor: pointer; }
-        .card-content { padding: 20px; }
-        .card-content h3 { color: var(--gold); margin: 0; font-size: 1.2rem; }
-        .price { font-size: 1.8rem; font-weight: bold; margin: 10px 0; }
+        /* Video Grid */
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+        .video-card iframe { width: 100%; height: 220px; border-radius: 12px; border: 1px solid #333; }
 
-        /* Actions */
-        .action-btns { display: flex; gap: 10px; margin-top: 15px; }
-        .details-btn { flex: 1; background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        .book-btn { flex: 2; background: var(--green); border: none; color: white; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        .details-btn:hover { background: var(--gold); color: black; }
+        /* Services */
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card { background: var(--glass); border-radius: 20px; border: 1px solid #222; overflow: hidden; }
+        .card-img { height: 250px; background-size: cover; background-position: center; }
+        .card-body { padding: 25px; }
+        .cta-wa { display: block; background: var(--green); color: white; text-align: center; padding: 15px; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 20px; }
 
-        /* Modals */
-        .modal { display: none; position: fixed; z-index: 1000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); overflow-y: auto; }
-        .modal-content { background: #1a1a1a; width: 90%; max-width: 600px; margin: 40px auto; padding: 30px; border-radius: 15px; border: 1px solid var(--gold); position: relative; }
-        .close-btn { position: absolute; top: 15px; right: 20px; color: white; font-size: 30px; cursor: pointer; }
+        /* Lightbox */
+        #lightbox { display: none; position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); text-align: center; }
+        #lightbox img { max-height: 80%; max-width: 90%; margin-top: 5%; border: 2px solid var(--gold); }
 
-        .modal-img { width: 100%; height: 250px; border-radius: 10px; background-size: cover; background-position: center; margin-bottom: 20px; }
-        .payment-breakdown { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; margin: 20px 0; }
-        .payment-breakdown div { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9rem; }
-
-        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 15px; background: #252525; border: 1px solid #333; color: white; border-radius: 5px; }
+        .nav-links { margin-top: 20px; }
+        .nav-links a { color: #888; text-decoration: none; margin: 0 15px; font-size: 14px; }
+        .nav-links a:hover { color: var(--gold); }
     </style>
 </head>
 <body>
 
+    <a href="#" id="wa-master" class="wa-float" target="_blank">Chat with Philip</a>
+
     <header>
-        <h1 style="color:var(--gold)">Royal Priest Studios</h1>
-        <div class="filter-nav">
-            <button class="active" onclick="filter('all')">All</button>
-            <button onclick="filter('photography')">Photography</button>
-            <button onclick="filter('videography')">Videography</button>
-            <button onclick="filter('music')">Music</button>
+        <h1 style="font-size: 3rem; margin:0;">ROYAL PRIEST <span style="color:var(--gold)">STUDIOS</span></h1>
+        <p style="color:#888; letter-spacing: 4px;">CREATIVE COLLECTIVE • IBADAN</p>
+        <div class="nav-links">
+            <a href="#gallery">GALLERY</a>
+            <a href="#videos">VIDEOS</a>
+            <a href="#services">SERVICES</a>
         </div>
     </header>
 
-    <main id="package-grid" class="grid-container"></main>
+    <section id="gallery">
+        <h2>Photo Gallery</h2>
+        <div id="photo-list" class="gallery-grid"></div>
+    </section>
 
-    <div id="details-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeAllModals()">&times;</span>
-            <div id="modal-img-div" class="modal-img"></div>
-            <h2 id="modal-title" style="color:var(--gold); margin-bottom:5px;"></h2>
-            <p id="modal-desc" style="color:#ccc; line-height:1.5;"></p>
-            
-            <div class="payment-breakdown">
-                <h4 style="margin-top:0">Payment Plan Breakdown</h4>
-                <div><span>Commitment (20%)</span><span id="p-commitment"></span></div>
-                <div><span>Pre-Event (60%)</span><span id="p-upfront"></span></div>
-                <div><span>Post-Event (20%)</span><span id="p-balance"></span></div>
-            </div>
+    <section id="videos" style="background: #080808;">
+        <h2>Cinema & Music Videos</h2>
+        <div id="video-list" class="video-grid"></div>
+    </section>
 
-            <button class="book-btn" style="width:100%" id="modal-book-trigger">Proceed to Booking</button>
-        </div>
-    </div>
+    <section id="services">
+        <h2>Packages & Rates</h2>
+        <div id="service-list" class="service-grid"></div>
+    </section>
 
-    <div id="booking-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeAllModals()">&times;</span>
-            <h2 style="color:var(--gold)">Booking Request</h2>
-            <form action="https://formspree.io/f/YOUR_ID" method="POST">
-                <input type="text" id="pkg-name" name="Package" readonly>
-                <input type="text" name="Name" placeholder="Full Name" required>
-                <input type="email" name="Email" placeholder="Email" required>
-                <input type="date" name="Date" required>
-                <select name="Location" onchange="document.getElementById('warn').style.display = (this.value=='Outside')?'block':'none'">
-                    <option value="Ibadan">Ibadan</option>
-                    <option value="Outside">Outside Ibadan</option>
-                </select>
-                <p id="warn" style="display:none; font-size:12px; color:var(--gold)">*Client covers logistics for travel.</p>
-                <textarea name="Notes" placeholder="Any specific requests?"></textarea>
-                <button type="submit" class="book-btn" style="width:100%">Submit Request</button>
-            </form>
-        </div>
+    <div id="lightbox" onclick="this.style.display='none'">
+        <img id="lightbox-img" src="">
+        <p style="color:white; margin-top:10px;">Click anywhere to close</p>
     </div>
 
     <script>
-        let fullData = [];
+        async function loadContent() {
+            const response = await fetch('royal_priest_studio.json');
+            const data = await response.json();
 
-        async function init() {
-            const res = await fetch('royal_priest_studio.json');
-            const data = await res.json();
-            fullData = data.service_categories;
-            render('all');
-        }
+            // WhatsApp Global Link
+            document.getElementById('wa-master').href = `https://wa.me/${data.studio_info.whatsapp_number}?text=Hello Philip, I saw your portfolio and I'd like to inquire about a session.`;
 
-        function render(slug) {
-            const grid = document.getElementById('package-grid');
-            grid.innerHTML = '';
-            
-            fullData.forEach(cat => {
-                if (slug !== 'all' && cat.slug !== slug) return;
+            // 1. Render Gallery
+            const photoList = document.getElementById('photo-list');
+            data.gallery.forEach(img => {
+                const div = document.createElement('div');
+                div.className = 'gallery-item';
+                div.style.backgroundImage = `url('${img.url}')`;
+                div.onclick = () => {
+                    document.getElementById('lightbox-img').src = img.url;
+                    document.getElementById('lightbox').style.display = 'block';
+                };
+                photoList.appendChild(div);
+            });
+
+            // 2. Render Videos
+            const videoList = document.getElementById('video-list');
+            data.videos.forEach(v => {
+                videoList.innerHTML += `
+                    <div class="video-card">
+                        <iframe src="https://www.youtube.com/embed/${v.youtube_id}" frameborder="0" allowfullscreen></iframe>
+                        <h4 style="margin:15px 0 5px">${v.title}</h4>
+                        <p style="color:#666; font-size:14px">${v.category}</p>
+                    </div>
+                `;
+            });
+
+            // 3. Render Services
+            const serviceList = document.getElementById('service-list');
+            data.service_categories.forEach(cat => {
                 cat.packages.forEach(pkg => {
-                    const card = document.createElement('div');
-                    card.className = `card ${cat.slug}`;
-                    card.innerHTML = `
-                        <div class="card-img" style="background-image:url('${pkg.image}')" onclick="showDetails('${pkg.name}')"></div>
-                        <div class="card-content">
-                            <h3>${pkg.name}</h3>
-                            <div class="price">₦${pkg.price.toLocaleString()}</div>
-                            <div class="action-btns">
-                                <button class="details-btn" onclick="showDetails('${pkg.name}')">Details</button>
-                                <button class="book-btn" onclick="openBooking('${pkg.name}')">Book Now</button>
+                    const waLink = `https://wa.me/${data.studio_info.whatsapp_number}?text=I am interested in the ${pkg.name} package.`;
+                    serviceList.innerHTML += `
+                        <div class="card">
+                            <div class="card-img" style="background-image:url('${pkg.image}')"></div>
+                            <div class="card-body">
+                                <h3>${pkg.name}</h3>
+                                <p style="font-size:1.8rem; font-weight:bold; color:var(--gold)">₦${pkg.price.toLocaleString()}</p>
+                                <p style="color:#aaa; font-size:14px; min-height:60px;">${pkg.description}</p>
+                                <a href="${waLink}" class="cta-wa" target="_blank">Book via WhatsApp</a>
                             </div>
                         </div>
                     `;
-                    grid.appendChild(card);
                 });
             });
         }
-
-        function showDetails(pkgName) {
-            let pkg;
-            fullData.forEach(c => c.packages.forEach(p => { if(p.name === pkgName) pkg = p; }));
-            
-            document.getElementById('modal-title').innerText = pkg.name;
-            document.getElementById('modal-desc').innerText = pkg.description || "Premium studio service curated by Royal Priest Studios. Includes professional editing and high-resolution delivery.";
-            document.getElementById('modal-img-div').style.backgroundImage = `url('${pkg.image}')`;
-            
-            document.getElementById('p-commitment').innerText = `₦${(pkg.price * 0.2).toLocaleString()}`;
-            document.getElementById('p-upfront').innerText = `₦${(pkg.price * 0.6).toLocaleString()}`;
-            document.getElementById('p-balance').innerText = `₦${(pkg.price * 0.2).toLocaleString()}`;
-            
-            document.getElementById('modal-book-trigger').onclick = () => openBooking(pkg.name);
-            document.getElementById('details-modal').style.display = 'block';
-        }
-
-        function openBooking(name) {
-            closeAllModals();
-            document.getElementById('pkg-name').value = name;
-            document.getElementById('booking-modal').style.display = 'block';
-        }
-
-        function filter(s) {
-            document.querySelectorAll('.filter-nav button').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            render(s);
-        }
-
-        function closeAllModals() {
-            document.getElementById('details-modal').style.display = 'none';
-            document.getElementById('booking-modal').style.display = 'none';
-        }
-
-        init();
+        loadContent();
     </script>
 </body>
 </html>
