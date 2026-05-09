@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Music Recording & Mixing",
+    "desc": "Professional studio recording, live sessions, mixing and mastering in our large Ibadan studio.",
+    "price": "From ₦50,000",
+    "image": "assets/images/service-music.jpg",
+    "video": "https://www.youtube.com/embed/YOUR_SHORT_VIDEO_ID",
+    "message": "Hello, I want to book a Music Recording & Mixing session."
+  },
+  {
+    "title": "Photography",
+    "desc": "High-quality portraits, events, product and studio photography.",
+    "price": "From ₦30,000",
+    "image": "assets/images/service-photo.jpg",
+    "video": "",
+    "message": "Hello, I want to book a Photography session."
+  },
+  {
+    "title": "Videography & Music Videos",
+    "desc": "Cinematic music videos, podcast recording, commercials and short films.",
+    "price": "From ₦80,000",
+    "image": "assets/images/service-video.jpg",
+    "video": "https://www.youtube.com/embed/ANOTHER_VIDEO_ID",
+    "message": "Hello, I want to book a Videography session."
+  }
+]
