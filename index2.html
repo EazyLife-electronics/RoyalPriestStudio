@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Royal Priest Studios | Ibadan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    .hero-bg { background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('https://via.placeholder.com/1920x1080/1f2937/amber?text=ROYAL+PRIEST+STUDIOS'); background-size: cover; background-position: center; }
+    .card-hover { transition: all 0.4s; }
+    .card-hover:hover { transform: translateY(-12px); }
+  </style>
+</head>
+<body class="bg-zinc-950 text-white">
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 w-full bg-black/90 backdrop-blur z-50 border-b border-zinc-800">
+    <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">ROYAL PRIEST</h1>
+      <div class="flex gap-8 text-sm uppercase tracking-widest">
+        <a href="#services" class="hover:text-amber-400">Services</a>
+        <a href="#gallery" class="hover:text-amber-400">Gallery</a>
+        <a href="#contact" class="hover:text-amber-400">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero-bg h-screen flex items-center">
+    <div class="max-w-6xl mx-auto px-6 text-center pt-16">
+      <h1 class="text-6xl md:text-7xl font-bold mb-4" id="studio-name">Royal Priest Studios</h1>
+      <p class="text-3xl text-amber-400 mb-6" id="tagline"></p>
+      <p class="max-w-2xl mx-auto text-lg" id="hero-desc"></p>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="py-20 bg-zinc-900">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center mb-12">Our Services</h2>
+      <div id="services-container" class="grid md:grid-cols-3 gap-8"></div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery" class="py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center mb-4">Recent Works &amp; Moments</h2>
+      <p class="text-center text-zinc-400 mb-12">Proof of excellence from Royal Priest Studios</p>
+      <div id="gallery-container" class="grid md:grid-cols-2 gap-8"></div>
+      
+      <div class="text-center mt-12">
+        <a href="gallery.html" class="inline-block border border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-black px-8 py-4 rounded-full font-medium">
+          View Full Gallery →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-20 bg-zinc-900">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h2 class="text-4xl font-bold mb-6">Let's Create Magic Together</h2>
+      <p class="text-xl mb-8" id="location"></p>
+      <a id="whatsapp-main" target="_blank" class="inline-flex items-center gap-3 bg-green-600 hover:bg-green-700 px-10 py-5 rounded-2xl text-xl font-semibold">
+        <i class="fab fa-whatsapp text-3xl"></i> Book via WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- Floating WhatsApp -->
+  <a id="floating-whatsapp" href="#" target="_blank" class="fixed bottom-6 right-6 bg-green-600 hover:bg-green-700 w-16 h-16 rounded-full flex items-center justify-center text-4xl shadow-2xl z-50">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <footer class="py-8 text-center text-zinc-500 text-sm border-t border-zinc-800">
+    © 2026 Royal Priest Studios • Ibadan
+  </footer>
+
+  <script>
+    async function loadData() {
+      const [studio, services, gallery] = await Promise.all([
+        fetch('studio-info.json').then(r => r.json()),
+        fetch('services.json').then(r => r.json()),
+        fetch('gallery.json').then(r => r.json())
+      ]);
+
+      // Studio Info
+      document.getElementById('studio-name').textContent = studio.name;
+      document.getElementById('tagline').textContent = studio.tagline;
+      document.getElementById('hero-desc').textContent = studio.description;
+      document.getElementById('location').textContent = studio.location;
+
+      const waBase = `https://wa.me/${studio.whatsapp.replace('+','')}`;
+      document.getElementById('whatsapp-main').href = waBase;
+      document.getElementById('floating-whatsapp').href = waBase;
+
+      // Services (with media)
+      const svcContainer = document.getElementById('services-container');
+      services.forEach(s => {
+        const mediaHTML = s.video 
+          ? `<iframe class="w-full aspect-video rounded-2xl" src="${s.video}" frameborder="0" allowfullscreen></iframe>`
+          : `<img src="\( {s.image}" class="w-full h-56 object-cover rounded-2xl" alt=" \){s.title}">`;
+
+        const card = `
+          <div class="bg-zinc-800 rounded-3xl overflow-hidden card-hover">
+            ${mediaHTML}
+            <div class="p-8">
+              <h3 class="text-2xl font-bold mb-3">${s.title}</h3>
+              <p class="text-zinc-400 mb-6">${s.desc}</p>
+              <p class="text-amber-400 font-semibold text-xl mb-6">${s.price}</p>
+              <a href="\( {waBase}?text= \){encodeURIComponent(s.message)}" target="_blank"
+                 class="block text-center bg-amber-600 hover:bg-amber-700 py-4 rounded-2xl font-semibold">
+                Book This Service
+              </a>
+            </div>
+          </div>`;
+        svcContainer.innerHTML += card;
+      });
+
+      // Gallery (with details)
+      const galContainer = document.getElementById('gallery-container');
+      gallery.forEach(item => {
+        const media = item.type === 'video' 
+          ? `<iframe class="w-full aspect-video rounded-2xl" src="${item.url}" frameborder="0" allowfullscreen></iframe>`
+          : `<img src="\( {item.url}" class="w-full aspect-video object-cover rounded-2xl" alt=" \){item.title}">`;
+
+        const card = `
+          <div class="bg-zinc-800 rounded-3xl overflow-hidden card-hover">
+            ${media}
+            <div class="p-6">
+              <p class="text-amber-400 text-sm">${item.date}</p>
+              <h3 class="font-bold text-xl mt-2 mb-3">${item.title}</h3>
+              <p class="text-zinc-400 line-clamp-3">${item.desc}</p>
+            </div>
+          </div>`;
+        galContainer.innerHTML += card;
+      });
+    }
+
+    window.onload = loadData;
+  </script>
+</body>
+</html>
