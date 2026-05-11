@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Royal Priesthood Studio | Photography & Videography Ibadan</title>
+<title>Royal Priesthood Studio | Ibadan</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
 <style>
@@ -12,7 +12,8 @@
     --black:#060606; --deep:#0D0A06; --charcoal:#1A1510; --mid:#2A2118;
     --text:#D4C09A; --muted:#7A6A4A;
     --nav-bg: rgba(6, 6, 6, 0.95);
-    --white: #FFFFFF; --noise-opacity: 0.35;
+    --white: #FFFFFF;
+    --noise-opacity: 0.35;
   }
 
   [data-theme="light"] {
@@ -23,60 +24,61 @@
 
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
-  body{background:var(--black);color:var(--text);font-family:'Cormorant Garamond',serif;overflow-x:hidden;transition:background 0.4s ease;}
+  body{background:var(--black);color:var(--text);font-family:'Cormorant Garamond',serif;overflow-x:hidden;transition: background 0.5s ease;}
 
   /* CURSOR */
-  .cursor{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;}
-  .cursor-ring{position:fixed;width:30px;height:30px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:0.1s ease-out;}
+  .cursor{position:fixed;width:12px;height:12px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;}
+  .cursor-ring{position:fixed;width:36px;height:36px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.5;transition:0.3s;}
 
   /* NAV */
-  nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:20px 60px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom, var(--nav-bg), transparent);transition:0.4s;}
-  nav.scrolled{background:var(--nav-bg);padding:15px 60px;border-bottom:1px solid rgba(201,168,76,0.1);}
-  .nav-logo{font-family:'Cinzel Decorative',cursive;font-size:14px;color:var(--gold);text-decoration:none;text-transform:uppercase;line-height:1.2;}
-  .nav-logo span{display:block;font-size:9px;color:var(--muted);letter-spacing:0.3em;}
-  .nav-links{display:flex;gap:30px;list-style:none;align-items:center;}
-  .nav-links a{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:var(--muted);text-decoration:none;transition:0.3s;}
-  .nav-links a:hover{color:var(--gold);}
-  
+  nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:24px 60px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom, var(--nav-bg), transparent);transition:0.4s;}
+  nav.scrolled{background:var(--nav-bg);border-bottom:1px solid rgba(201,168,76,.15);padding:15px 60px;}
+  .nav-logo{font-family:'Cinzel Decorative',cursive;font-size:13px;font-weight:700;color:var(--gold);text-decoration:none;text-transform:uppercase;}
+  .nav-logo span{display:block;font-size:9px;color:var(--muted);letter-spacing:.4em;}
+  .nav-links{display:flex;gap:40px;list-style:none;align-items:center;}
+  .nav-links a{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.3em;color:var(--muted);text-decoration:none;transition:0.3s;}
   .theme-toggle{background:none;border:1px solid rgba(201,168,76,0.3);color:var(--gold);cursor:pointer;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .nav-cta{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--black);background:var(--gold);padding:10px 24px;text-decoration:none;}
 
   /* HERO */
-  #hero{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;background:radial-gradient(circle at center, rgba(201,168,76,0.05) 0%, transparent 70%);}
-  .hero-title{font-family:'Cinzel Decorative',cursive;font-size:clamp(40px,8vw,80px);color:var(--white);line-height:1.1;}
+  #hero{height:100vh;position:relative;display:flex;align-items:center;justify-content:center;text-align:center;}
+  .hero-bg{position:absolute;inset:0;background:radial-gradient(circle at center, rgba(201,168,76,0.05), transparent 70%), var(--black);}
+  .hero-title{font-family:'Cinzel Decorative',cursive;font-size:clamp(40px,8vw,90px);color:var(--white);line-height:1;}
   .hero-title span{color:var(--gold);}
-  .hero-tagline{font-size:18px;margin-top:20px;font-style:italic;color:var(--muted);}
 
-  /* GALLERY GRID */
-  #gallery{padding:100px 60px;}
-  .gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:30px;margin-top:50px;}
-  .gallery-item{background:var(--charcoal);border-radius:2px;overflow:hidden;user-select:none;}
+  /* GALLERY GRID & SWIPE CAROUSEL */
+  #gallery{padding:100px 60px;background:var(--deep);}
+  .gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:30px;}
+  .gallery-item{background:var(--charcoal);overflow:hidden;position:relative;user-select:none;}
+  
+  /* Instagram Style Wrapper */
   .gallery-media-wrap{position:relative;aspect-ratio:4/5;overflow:hidden;background:#000;touch-action:pan-y;}
-  .slider-container{display:flex;height:100%;transition:transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);}
+  .slider-container{display:flex;height:100%;transition:transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);will-change:transform;}
   .slider-container img, .slider-container iframe{min-width:100%;width:100%;height:100%;object-fit:cover;pointer-events:none;}
   .slider-container iframe{pointer-events:auto;}
 
+  /* Slider UI */
   .slider-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.4);color:white;border:none;width:35px;height:35px;border-radius:50%;cursor:pointer;z-index:10;opacity:0;transition:0.3s;}
   .gallery-item:hover .slider-nav{opacity:1;}
   .prev-btn{left:10px;}.next-btn{right:10px;}
-
-  .slider-dots{position:absolute;bottom:15px;left:50%;transform:translateX(-50%);display:flex;gap:6px;}
+  .slider-dots{position:absolute;bottom:15px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:11;}
   .dot{width:6px;height:6px;background:rgba(255,255,255,0.3);border-radius:50%;transition:0.3s;}
-  .dot.active{background:var(--gold);transform:scale(1.2);}
+  .dot.active{background:var(--gold);transform:scale(1.3);}
 
-  .gallery-body{padding:25px;}
-  .gallery-title{font-family:'Cinzel',serif;font-size:18px;color:var(--white);margin-bottom:10px;}
-  .gallery-desc{font-size:15px;color:var(--muted);line-height:1.5;}
+  .gallery-item-body{padding:25px;}
+  .gallery-item-title{font-family:'Cinzel',serif;font-size:18px;color:var(--white);margin-bottom:8px;}
+  .gallery-item-desc{font-size:15px;color:var(--muted);line-height:1.6;}
 
-  /* REVEAL ANIMATION */
-  .reveal{opacity:0;transform:translateY(30px);transition:0.8s ease-out;}
-  .reveal.visible{opacity:1;transform:translateY(0);}
-
+  /* MOBILE */
   @media(max-width:900px){
-    nav{padding:20px;} .nav-links{display:none;}
+    nav{padding:20px;} .nav-links, .nav-cta{display:none;}
     .gallery-grid{grid-template-columns:1fr;}
     #gallery{padding:60px 20px;}
-    .slider-nav{display:none;} /* Use swipe on mobile */
+    .slider-nav{display:none;} /* Arrows hidden on mobile for cleaner swipe feel */
   }
+
+  .reveal{opacity:0;transform:translateY(30px);transition:0.8s ease-out;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
 </style>
 </head>
 <body>
@@ -88,38 +90,39 @@
   <a class="nav-logo" href="#">Royal Priesthood<span>Studio · Ibadan</span></a>
   <ul class="nav-links">
     <li><a href="#gallery">Gallery</a></li>
-    <li><a href="#services">Services</a></li>
     <li><button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button></li>
   </ul>
+  <a class="nav-cta" href="#contact">Book Session</a>
 </nav>
 
 <section id="hero">
-  <div>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
     <h1 class="hero-title">Royal<br/><span>Priesthood</span></h1>
-    <p class="hero-tagline" id="hero-tagline">...</p>
+    <p style="margin-top:20px; letter-spacing:0.3em; color:var(--gold);">PHOTOGRAPHY & VIDEOGRAPHY</p>
   </div>
 </section>
 
 <section id="gallery">
-  <h2 style="font-family:'Cinzel'; text-align:center; color:var(--gold); letter-spacing:0.3em;">PORTFOLIO</h2>
-  <div class="gallery-grid" id="gallery-grid"></div>
+  <div style="text-align:center; margin-bottom: 60px;">
+    <h2 style="font-family:'Cinzel Decorative'; font-size: 40px; color:var(--white);">Visual <span style="color:var(--gold);">Stories</span></h2>
+  </div>
+  <div class="gallery-grid" id="gallery-grid">
+    </div>
 </section>
 
 <script>
-/* ── THEME ENGINE ── */
+/* ── THEME ── */
 const themeToggle = document.getElementById('themeToggle');
-const html = document.documentElement;
 themeToggle.addEventListener('click', () => {
-  const isLight = html.getAttribute('data-theme') === 'light';
-  const newTheme = isLight ? 'dark' : 'light';
-  html.setAttribute('data-theme', newTheme);
-  themeToggle.querySelector('i').className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+  document.documentElement.setAttribute('data-theme', isLight ? 'dark' : 'light');
+  themeToggle.querySelector('i').className = isLight ? 'fas fa-moon' : 'fas fa-sun';
 });
 
 /* ── CURSOR ── */
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursorRing');
-document.addEventListener('mousemove', (e) => {
+const cursor=document.getElementById('cursor'), ring=document.getElementById('cursorRing');
+document.addEventListener('mousemove', e => {
   cursor.style.left = ring.style.left = e.clientX + 'px';
   cursor.style.top = ring.style.top = e.clientY + 'px';
 });
@@ -129,8 +132,9 @@ let touchStartX = 0;
 window.handleTouchStart = (e) => { touchStartX = e.changedTouches[0].screenX; };
 window.handleTouchEnd = (e, idx) => {
   const touchEndX = e.changedTouches[0].screenX;
-  if (touchEndX < touchStartX - 50) moveSlider(idx, 1);
-  if (touchEndX > touchStartX + 50) moveSlider(idx, -1);
+  const threshold = 50;
+  if (touchEndX < touchStartX - threshold) moveSlider(idx, 1);
+  if (touchEndX > touchStartX + threshold) moveSlider(idx, -1);
 };
 
 window.moveSlider = (idx, dir) => {
@@ -139,62 +143,67 @@ window.moveSlider = (idx, dir) => {
   const dots = el.querySelectorAll('.dot');
   let current = parseInt(el.getAttribute('data-current'));
   const total = parseInt(el.getAttribute('data-total'));
-  
+
   current = (current + dir + total) % total;
   el.setAttribute('data-current', current);
   cont.style.transform = `translateX(-${current * 100}%)`;
   dots.forEach((d, i) => d.classList.toggle('active', i === current));
 };
 
-/* ── DATA LOADER ── */
-async function init() {
+/* ── GALLERY LOADER ── */
+async function loadGallery() {
   try {
-    const [info, gallery] = await Promise.all([
-      fetch('studio-info.json').then(r => r.json()),
-      fetch('gallery.json').then(r => r.json())
-    ]);
-
-    document.getElementById('hero-tagline').textContent = info.tagline;
-
+    const response = await fetch('gallery.json');
+    const gallery = await response.json();
     const grid = document.getElementById('gallery-grid');
+
     grid.innerHTML = gallery.map((item, idx) => {
-      const isMulti = item.media.length > 1;
-      const mediaHTML = item.media.map(url => {
-        if(url.includes('embed')) return `<iframe src="${url}" frameborder="0" allowfullscreen></iframe>`;
+      // Logic for multi-media arrays
+      const mediaList = Array.isArray(item.media) ? item.media : [item.url];
+      const isMulti = mediaList.length > 1;
+      
+      const mediaHTML = mediaList.map(url => {
+        if(url.includes('embed') || url.includes('youtube')) {
+          return `<iframe src="${url}" frameborder="0" allowfullscreen></iframe>`;
+        }
         return `<img src="${url}" alt="${item.title}" loading="lazy">`;
       }).join('');
 
       return `
-        <div class="gallery-item reveal" id="gal-${idx}" data-current="0" data-total="${item.media.length}">
+        <div class="gallery-item reveal" id="gal-${idx}" data-current="0" data-total="${mediaList.length}">
           <div class="gallery-media-wrap" 
                ontouchstart="handleTouchStart(event)" 
                ontouchend="handleTouchEnd(event, ${idx})">
-            ${isMulti ? `<button class="slider-nav prev-btn" onclick="moveSlider(${idx}, -1)">❮</button>
-                         <button class="slider-nav next-btn" onclick="moveSlider(${idx}, 1)">❯</button>` : ''}
+            ${isMulti ? `
+              <button class="slider-nav prev-btn" onclick="moveSlider(${idx}, -1)">❮</button>
+              <button class="slider-nav next-btn" onclick="moveSlider(${idx}, 1)">❯</button>
+            ` : ''}
             <div class="slider-container" id="slide-cont-${idx}">${mediaHTML}</div>
-            ${isMulti ? `<div class="slider-dots">${item.media.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('')}</div>` : ''}
+            ${isMulti ? `<div class="slider-dots">${mediaList.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('')}</div>` : ''}
           </div>
-          <div class="gallery-body">
-            <h3 class="gallery-title">${item.title}</h3>
-            <p class="gallery-desc">${item.desc}</p>
+          <div class="gallery-item-body">
+            <div style="color:var(--gold); font-size:10px; margin-bottom:5px;">${item.date || ''}</div>
+            <h3 class="gallery-item-title">${item.title}</h3>
+            <p class="gallery-item-desc">${item.desc || ''}</p>
           </div>
-        </div>`;
+        </div>
+      `;
     }).join('');
 
-    // Animation Observer
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  } catch (err) { console.error("Error loading site data:", err); }
+  } catch (e) { console.error("Gallery Error:", e); }
 }
 
 window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
 });
 
-init();
+loadGallery();
 </script>
 </body>
 </html>
+
