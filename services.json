@@ -1,26 +1,56 @@
 [
   {
-    "title": "Music Recording & Mixing",
-    "desc": "Professional studio recording, live sessions, mixing and mastering in our large Ibadan studio.",
-    "price": "From ₦50,000",
-    "image": "assets/images/service-music.jpg",
-    "video": "https://www.youtube.com/embed/YOUR_SHORT_VIDEO_ID",
-    "message": "Hello, I want to book a Music Recording & Mixing session."
-  },
-  {
-    "title": "Photography",
-    "desc": "High-quality portraits, events, product and studio photography.",
-    "price": "From ₦30,000",
-    "image": "assets/images/service-photo.jpg",
+    "icon": "📸",
+    "title": "Portrait Photography",
+    "desc": "Professional portraits that reveal character, dignity, and story — for individuals, families, and leaders.",
+    "price": "From ₦25,000",
+    "image": "",
     "video": "",
-    "message": "Hello, I want to book a Photography session."
+    "message": "Hello Royal Priesthood Studio, I'd like to book a Portrait Photography session."
   },
   {
-    "title": "Videography & Music Videos",
-    "desc": "Cinematic music videos, podcast recording, commercials and short films.",
-    "price": "From ₦80,000",
-    "image": "assets/images/service-video.jpg",
-    "video": "https://www.youtube.com/embed/ANOTHER_VIDEO_ID",
-    "message": "Hello, I want to book a Videography session."
+    "icon": "🎬",
+    "title": "Event Videography",
+    "desc": "Full-coverage cinematic documentation of your events — from weddings to church programs to corporate gatherings.",
+    "price": "From ₦50,000",
+    "image": "",
+    "video": "",
+    "message": "Hello Royal Priesthood Studio, I'd like to book Event Videography coverage."
+  },
+  {
+    "icon": "💒",
+    "title": "Wedding Coverage",
+    "desc": "Luxury wedding photography and videography that preserves every sacred detail of your special day.",
+    "price": "From ₦150,000",
+    "image": "",
+    "video": "",
+    "message": "Hello Royal Priesthood Studio, I'd like to enquire about Wedding Coverage."
+  },
+  {
+    "icon": "🎙️",
+    "title": "Ministry Media",
+    "desc": "Dedicated media coverage for church programs, crusades, and ministry events — capturing the move of God.",
+    "price": "From ₦40,000",
+    "image": "",
+    "video": "",
+    "message": "Hello Royal Priesthood Studio, I'd like to book Ministry Media coverage."
+  },
+  {
+    "icon": "🏢",
+    "title": "Corporate Shoots",
+    "desc": "Brand photography and video content that positions your business with authority and professionalism.",
+    "price": "From ₦60,000",
+    "image": "",
+    "video": "",
+    "message": "Hello Royal Priesthood Studio, I'd like to book a Corporate Shoot."
+  },
+  {
+    "icon": "✂️",
+    "title": "Post Production",
+    "desc": "Expert editing, color grading, and retouching that elevates every image and video to its fullest potential.",
+    "price": "From ₦15,000",
+    "image": "",
+    "video": "",
+    "message": "Hello Royal Priesthood Studio, I'd like to enquire about Post Production services."
   }
 ]
