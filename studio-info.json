@@ -1,11 +1,27 @@
 {
   "name": "Royal Priesthood Studio",
+  "metaTitle": "Royal Priesthood Studio | Photography & Videography in Ibadan",
+  "metaDescription": "Royal Priesthood Studio captures sacred stories, weddings, events and creative portfolios with cinematic photography and videography in Ibadan, Nigeria.",
+  "logo": "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=400&q=80",
+  "heroImage": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=1200&q=80",
+  "ogImage": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=1200&q=80",
+  "heroHeadline": "Royal Priesthood Studio",
+  "heroSubheading": "Capturing moments. Telling sacred stories. Framing eternity.",
   "tagline": "Capturing moments. Telling sacred stories. Framing eternity.",
   "description": "We are storytellers, historians, and artists who believe every moment deserves to be preserved with excellence and intention. From intimate portraits to grand productions, we bring a regal touch to every frame.",
   "location": "Ibadan, Oyo State, Nigeria",
+  "address": "Ibadan, Oyo State, Nigeria",
   "whatsapp": "+2348000000000",
   "email": "info@royalpriesthoodstudio.com",
-  "instagram": "@royalpriesthoodstudio",
+  "website": "https://royalpriesthoodstudio.com",
+  "social": {
+    "instagram": "@royalpriesthoodstudio",
+    "facebook": "https://facebook.com/royalpriesthoodstudio",
+    "youtube": "https://youtube.com/@royalpriesthoodstudio",
+    "tiktok": "https://tiktok.com/@royalpriesthoodstudio"
+  },
+  "businessCategory": "Photography & Videography",
+  "servicesSummary": "Luxury wedding coverage, ministry media, portraits, corporate shoots, and creative art direction.",
   "stats": [
     { "num": "500+", "label": "Sessions Done" },
     { "num": "200+", "label": "Happy Clients" },
