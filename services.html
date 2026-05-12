@@ -7,67 +7,189 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
 <style>
-  :root{--gold:#C9A84C;--gold-light:#E8C97A;--gold-pale:#F5E6B8;--black:#060606;--deep:#0D0A06;--charcoal:#1A1510;--mid:#2A2118;--text:#D4C09A;--muted:#7A6A4A;--nav-bg:rgba(6,6,6,0.95);--white:#FFFFFF;--noise-opacity:0.35;}
-  [data-theme="light"]{--black:#FCFBF7;--deep:#F4F1E8;--charcoal:#E9E4D5;--mid:#DED8C4;--text:#332D24;--muted:#6B5F4A;--nav-bg:rgba(252, 251, 247, 0.95);--white:#060606;--noise-opacity:0.15;}
-  
-  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
-  body{background:var(--black);color:var(--text);font-family:'Cormorant Garamond',serif;overflow-x:hidden;transition:background .5s,color .5s;}
-  
-  /* NOISE OVERLAY */
-  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;opacity:var(--noise-opacity);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+  :root {
+    --gold:#C9A84C; --gold-light:#E8C97A; --gold-pale:#F5E6B8;
+    --black:#060606; --deep:#0D0A06; --charcoal:#1A1510; --mid:#2A2118;
+    --text:#D4C09A; --muted:#7A6A4A;
+    --nav-bg: rgba(6,6,6,0.95);
+    --white: #FFFFFF;
+    --noise-opacity: 0.35;
+  }
+  [data-theme="light"] {
+    --black:#FCFBF7; --deep:#F4F1E8; --charcoal:#E9E4D5; --mid:#DED8C4;
+    --text:#332D24; --muted:#6B5F4A; --nav-bg:rgba(252,251,247,0.95);
+    --white:#060606; --noise-opacity:0.15;
+  }
 
-  /* CURSOR */
-  .cursor{position:fixed;width:12px;height:12px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
-  .cursor-ring{position:fixed;width:36px;height:36px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.5;}
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--black);color:var(--text);font-family:'Cormorant Garamond',serif;overflow-x:hidden;transition:background .5s ease,color .5s ease;}
+
+  /* NOISE OVERLAY */
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;opacity:var(--noise-opacity);
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+
+  /* CUSTOM CURSOR */
+  .cursor{position:fixed;width:12px;height:12px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:difference;}
+  .cursor-ring{position:fixed;width:36px;height:36px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.5;transition:width .3s,height .3s,opacity .3s;}
 
   /* NAV */
   nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:24px 60px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,var(--nav-bg),transparent);transition:background .4s;}
   nav.scrolled{background:var(--nav-bg);border-bottom:1px solid rgba(201,168,76,.15);}
-  .nav-logo{font-family:'Cinzel Decorative',cursive;font-size:13px;font-weight:700;color:var(--gold);text-decoration:none;text-transform:uppercase;}
+  .nav-logo{font-family:'Cinzel Decorative',cursive;font-size:13px;font-weight:700;color:var(--gold);letter-spacing:.15em;text-decoration:none;text-transform:uppercase;line-height:1.3;}
   .nav-logo span{display:block;font-size:9px;font-weight:400;color:var(--muted);letter-spacing:.4em;}
-  .nav-links{display:flex;gap:32px;list-style:none;align-items:center;}
-  .nav-links a{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;}
+  .nav-links{display:flex;gap:40px;list-style:none;align-items:center;}
+  .nav-links a{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;position:relative;}
+  .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .3s;}
   .nav-links a:hover,.nav-links a.active{color:var(--gold-light);}
-  
-  .theme-toggle{background:none;border:1px solid rgba(201,168,76,.3);color:var(--gold);cursor:pointer;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
-  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:410;}
-  .hamburger span{display:block;width:24px;height:1px;background:var(--gold);}
-  .mobile-menu{display:none;position:fixed;inset:0;background:var(--nav-bg);z-index:400;flex-direction:column;align-items:center;justify-content:center;gap:36px;}
+  .nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}
+  .theme-toggle{background:none;border:1px solid rgba(201,168,76,.3);color:var(--gold);cursor:pointer;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .3s;font-size:12px;}
+  .theme-toggle:hover{background:rgba(201,168,76,.1);border-color:var(--gold);}
+  .nav-cta{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--black);background:var(--gold);padding:10px 24px;text-decoration:none;transition:background .3s;}
+  .nav-cta:hover{background:var(--gold-light);}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:510;}
+  .hamburger span{display:block;width:24px;height:1px;background:var(--gold);transition:all .3s;}
+
+  /* MOBILE MENU */
+  .mobile-menu{display:none;position:fixed;inset:0;background:var(--nav-bg);z-index:400;flex-direction:column;align-items:center;justify-content:center;gap:40px;}
   .mobile-menu.open{display:flex;}
-  .mobile-menu a{font-family:'Cinzel',serif;font-size:18px;letter-spacing:.3em;text-transform:uppercase;color:var(--text);text-decoration:none;}
+  .mobile-menu a{font-family:'Cinzel',serif;font-size:18px;letter-spacing:.3em;text-transform:uppercase;color:var(--text);text-decoration:none;transition:color .3s;}
+  .mobile-menu a:hover{color:var(--gold);}
 
-  /* HEADER & SECTION UI */
-  .page-header{padding:180px 60px 80px;text-align:center;background:var(--deep);}
+  /* PAGE HEADER */
+  .page-header{padding:180px 60px 100px;text-align:center;background:var(--deep);position:relative;overflow:hidden;}
+  .page-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 60%,rgba(201,168,76,.07),transparent);}
+  .page-header-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black,transparent);}
+  .page-header-content{position:relative;z-index:2;}
+
+  /* SHARED */
+  .gold-divider{width:100%;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);opacity:.3;}
   .section-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:16px;justify-content:center;}
-  .section-title{font-family:'Cinzel Decorative',cursive;font-size:clamp(28px,4vw,52px);font-weight:700;color:var(--white);margin-bottom:24px;}
-  .gold{color:var(--gold);}
+  .section-title{font-family:'Cinzel Decorative',cursive;font-size:clamp(28px,4vw,52px);font-weight:700;color:var(--white);line-height:1.2;margin-bottom:16px;}
+  .section-title .gold{color:var(--gold);}
+  .section-body{font-size:clamp(16px,1.5vw,19px);line-height:1.8;color:var(--muted);font-weight:300;max-width:560px;margin:0 auto;}
 
-  /* SERVICES GRID */
-  #services-full{padding:60px 60px 120px;background:var(--black);}
-  .services-grid{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:30px;}
-  .service-card{background:var(--charcoal);border:1px solid rgba(201,168,76,0.1);padding:40px;position:relative;overflow:hidden;transition:transform 0.4s;}
-  .service-card:hover{transform:translateY(-10px);border-color:var(--gold);}
-  .service-icon{font-size:32px;color:var(--gold);margin-bottom:24px;}
-  .service-name{font-family:'Cinzel',serif;font-size:20px;color:var(--white);margin-bottom:15px;}
-  .service-text{font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:25px;}
-  .service-price{font-family:'Cinzel',serif;font-size:12px;color:var(--gold-light);letter-spacing:2px;border-top:1px solid rgba(201,168,76,0.1);padding-top:20px;}
+  /* SERVICES SECTION */
+  #services-full{padding:80px 60px 120px;background:var(--black);}
+  .services-inner{max-width:1300px;margin:0 auto;}
 
-  /* CONTACT */
-  #contact{padding:120px 60px;background:var(--deep);border-top:1px solid rgba(201,168,76,0.1);}
-  .contact-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;}
-  .form-group{margin-bottom:24px;}
-  .form-label{display:block;font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
-  .form-control{width:100%;background:var(--black);border:1px solid rgba(201,168,76,0.2);padding:16px;color:var(--text);font-family:inherit;}
-  .btn-wa{display:flex;align-items:center;justify-content:center;gap:12px;background:#25D366;color:#fff;padding:18px;text-decoration:none;font-family:'Cinzel',serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-top:20px;}
-
-  @media(max-width:900px){
-    nav{padding:20px 24px;}.nav-links{display:none;}.hamburger{display:flex;}
-    .page-header,#services-full,#contact{padding:100px 24px;}
-    .contact-inner{grid-template-columns:1fr;}
+  /* 3-column grid — same as index.html */
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:2px;
   }
 
-  .reveal{opacity:0;transform:translateY(30px);transition:0.8s ease-out;}
-  .reveal.visible{opacity:1;transform:translateY(0);}
+  .service-card{
+    background:var(--charcoal);
+    padding:48px 36px;
+    position:relative;
+    overflow:hidden;
+    opacity:0;
+    transform:translateY(24px);
+    transition:background .4s, opacity .6s ease, transform .6s ease;
+  }
+  .service-card.visible{opacity:1;transform:translateY(0);}
+  .service-card::before{
+    content:'';position:absolute;bottom:0;left:0;right:0;
+    height:3px;background:var(--gold);
+    transform:scaleX(0);transform-origin:left;transition:transform .4s;
+  }
+  .service-card:hover{background:var(--mid);}
+  .service-card:hover::before{transform:scaleX(1);}
+
+  .service-num{font-family:'Cinzel Decorative',cursive;font-size:11px;color:rgba(201,168,76,.3);letter-spacing:.2em;margin-bottom:28px;}
+  .service-icon-wrap{
+    width:64px;height:64px;
+    border:1px solid rgba(201,168,76,.2);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:24px;font-size:28px;
+    transition:border-color .3s,background .3s;
+  }
+  .service-card:hover .service-icon-wrap{border-color:var(--gold);background:rgba(201,168,76,.08);}
+  .service-name{font-family:'Cinzel',serif;font-size:14px;font-weight:700;letter-spacing:.08em;color:var(--white);margin-bottom:10px;text-transform:uppercase;}
+  .service-desc{font-size:15px;line-height:1.7;color:var(--muted);font-weight:300;margin-bottom:20px;}
+  .service-price{font-family:'Cinzel',serif;font-size:14px;color:var(--gold);margin-bottom:24px;}
+
+  .btn-wa-service{
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    font-family:'Cinzel',serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    background:rgba(37,211,102,.1);color:#25D366;
+    border:1px solid rgba(37,211,102,.25);
+    padding:14px 20px;text-decoration:none;
+    transition:background .3s,border-color .3s;width:100%;
+  }
+  .btn-wa-service:hover{background:rgba(37,211,102,.2);border-color:#25D366;}
+
+  /* CONTACT */
+  #contact{padding:120px 60px;background:var(--deep);border-top:1px solid rgba(201,168,76,.1);}
+  .contact-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start;}
+  .contact-info .section-label{justify-content:flex-start;}
+  .contact-info .section-body{margin:0;max-width:100%;}
+  .contact-details{display:flex;flex-direction:column;gap:28px;margin-top:40px;}
+  .contact-item{display:flex;gap:20px;align-items:flex-start;}
+  .contact-icon{width:48px;height:48px;border:1px solid rgba(201,168,76,.3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;color:var(--gold);}
+  .contact-item-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+  .contact-item-value{font-size:16px;color:var(--text);}
+  .contact-item-value a{color:var(--text);text-decoration:none;}
+
+  .contact-form{display:flex;flex-direction:column;gap:20px;
+    opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+  .contact-form.visible{opacity:1;transform:translateY(0);}
+  .form-group{display:flex;flex-direction:column;gap:8px;}
+  .form-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);}
+  .form-control{
+    background:var(--charcoal);border:1px solid rgba(201,168,76,.15);
+    padding:16px 20px;color:var(--text);
+    font-family:'Cormorant Garamond',serif;font-size:16px;
+    outline:none;transition:border-color .3s,background .3s;width:100%;
+    appearance:none;-webkit-appearance:none;
+  }
+  .form-control:focus{border-color:var(--gold);background:rgba(201,168,76,.03);}
+  .form-control::placeholder{color:rgba(122,106,74,.5);}
+  select.form-control{
+    cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9A84C' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 18px center;padding-right:44px;
+  }
+  select.form-control option{background:var(--charcoal);color:var(--text);}
+  textarea.form-control{resize:vertical;min-height:90px;}
+
+  .btn-wa-main{
+    display:flex;align-items:center;justify-content:center;gap:12px;
+    font-family:'Cinzel',serif;font-size:12px;letter-spacing:.25em;text-transform:uppercase;
+    background:#25D366;color:#fff;padding:18px 48px;
+    text-decoration:none;transition:background .3s,transform .2s;width:100%;
+    border:none;cursor:pointer;
+  }
+  .btn-wa-main:hover{background:#1ebe5d;transform:translateY(-2px);}
+  .btn-wa-main i{font-size:20px;}
+  .wa-note{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:10px;}
+
+  /* FLOATING WHATSAPP */
+  .floating-wa{position:fixed;bottom:28px;right:28px;z-index:600;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:26px;color:#fff;box-shadow:0 4px 20px rgba(37,211,102,.35);transition:transform .3s,box-shadow .3s;}
+  .floating-wa:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,.5);}
+
+  /* FOOTER */
+  footer{background:var(--deep);border-top:1px solid rgba(201,168,76,.1);padding:40px 60px;text-align:center;}
+  .footer-logo{font-family:'Cinzel Decorative',cursive;font-size:14px;color:var(--gold);margin-bottom:8px;}
+  .footer-sub{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.4em;color:var(--muted);text-transform:uppercase;}
+
+  /* RESPONSIVE */
+  @media(max-width:1000px){
+    .services-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media(max-width:768px){
+    nav{padding:20px 24px;}
+    .nav-links{display:none;}
+    .hamburger{display:flex;}
+    .page-header{padding:140px 24px 80px;}
+    #services-full{padding:60px 24px 80px;}
+    .services-grid{grid-template-columns:1fr;}
+    #contact{padding:80px 24px;}
+    .contact-inner{grid-template-columns:1fr;gap:60px;}
+    footer{padding:32px 24px;}
+  }
 </style>
 </head>
 <body>
@@ -79,112 +201,211 @@
   <a class="nav-logo" href="index.html">Royal Priesthood<span>Studio · Ibadan</span></a>
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
     <li><a href="services.html" class="active">Services</a></li>
     <li><a href="gallery.html">Gallery</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button></li>
+    <li><button class="theme-toggle" id="themeToggle" title="Toggle theme"><i class="fas fa-moon"></i></button></li>
   </ul>
-  <div class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="index.html" onclick="toggleMobile()">Home</a>
-  <a href="services.html" onclick="toggleMobile()">Services</a>
-  <a href="gallery.html" onclick="toggleMobile()">Gallery</a>
-  <a href="#contact" onclick="toggleMobile()">Contact</a>
+  <a href="index.html" onclick="closeMobile()">Home</a>
+  <a href="index.html#about" onclick="closeMobile()">About</a>
+  <a href="services.html" onclick="closeMobile()">Services</a>
+  <a href="gallery.html" onclick="closeMobile()">Gallery</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
 </div>
 
+<!-- PAGE HEADER -->
 <header class="page-header">
-  <div class="section-label">Our Expertise</div>
-  <h1 class="section-title">Premium <span class="gold">Services</span></h1>
+  <div class="page-header-grid"></div>
+  <div class="page-header-content">
+    <div class="section-label">Our Expertise</div>
+    <h1 class="section-title">Premium <span class="gold">Services</span></h1>
+    <p class="section-body">Every frame, every moment — crafted with intention and delivered with excellence.</p>
+  </div>
 </header>
 
+<div class="gold-divider"></div>
+
+<!-- SERVICES GRID -->
 <section id="services-full">
-  <div class="services-grid" id="services-grid">
-    <!-- Injected by JS -->
+  <div class="services-inner">
+    <div class="services-grid" id="services-grid">
+      <!-- Populated by JS from services.json using: s.title, s.desc, s.price, s.icon, s.message -->
+    </div>
   </div>
 </section>
 
+<div class="gold-divider"></div>
+
+<!-- CONTACT / BOOKING -->
 <section id="contact">
   <div class="contact-inner">
-    <div>
-      <div class="section-label" style="justify-content:flex-start;">Booking</div>
+    <div class="contact-info">
+      <div class="section-label">Book a Session</div>
       <h2 class="section-title">Ready to <span class="gold">Begin?</span></h2>
-      <p style="color:var(--muted); line-height:1.8;">Select a service and send us a message on WhatsApp. We typically respond within the hour to discuss your specific needs and scheduling.</p>
+      <p class="section-body">Select a service and reach out on WhatsApp. We typically respond within the hour to discuss your needs and scheduling.</p>
+      <div class="contact-details">
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+          <div>
+            <div class="contact-item-label">WhatsApp</div>
+            <div class="contact-item-value"><a href="https://wa.me/234XXXXXXXXXX" target="_blank">+234 XXX XXX XXXX</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div>
+            <div class="contact-item-label">Location</div>
+            <div class="contact-item-value">Ibadan, Oyo State, Nigeria</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="reveal">
+
+    <div class="contact-form" id="contactForm">
       <div class="form-group">
-        <label class="form-label">Full Name</label>
+        <label class="form-label" for="name">Full Name</label>
         <input type="text" id="name" class="form-control" placeholder="Enter your name">
       </div>
       <div class="form-group">
-        <label class="form-label">Select Service</label>
+        <label class="form-label" for="service-select">Select Service</label>
         <select id="service-select" class="form-control">
-          <!-- Options will be populated from JSON -->
+          <!-- Populated from services.json -->
         </select>
       </div>
-      <a href="#" class="btn-wa" id="wa-submit" onclick="sendWhatsApp(event)">
-        <i class="fab fa-whatsapp"></i> Book via WhatsApp
+      <div class="form-group">
+        <label class="form-label" for="extra">Additional Notes (optional)</label>
+        <textarea id="extra" class="form-control" rows="3" placeholder="Event date, location, any special requirements…"></textarea>
+      </div>
+      <a href="#" class="btn-wa-main" id="wa-submit">
+        <i class="fab fa-whatsapp"></i> <span>Book via WhatsApp</span>
       </a>
+      <p class="wa-note">Opens WhatsApp with your enquiry pre-filled</p>
     </div>
   </div>
 </section>
 
+<footer>
+  <div class="footer-logo">Royal Priesthood</div>
+  <div class="footer-sub">Studio · Ibadan · &copy; 2025</div>
+</footer>
+
+<a class="floating-wa" href="https://wa.me/234XXXXXXXXXX" target="_blank" title="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
 <script>
-/* --- THEME & CURSOR --- */
+/* ── THEME ── */
 const themeToggle = document.getElementById('themeToggle');
+const savedTheme = localStorage.getItem('rps-theme');
+if (savedTheme) {
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  themeToggle.querySelector('i').className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+}
 themeToggle.addEventListener('click', () => {
   const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-  document.documentElement.setAttribute('data-theme', isLight ? 'dark' : 'light');
+  const next = isLight ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('rps-theme', next);
+  themeToggle.querySelector('i').className = next === 'light' ? 'fas fa-sun' : 'fas fa-moon';
 });
 
-const cursor = document.getElementById('cursor'), ring = document.getElementById('cursorRing');
-document.addEventListener('mousemove', (e) => {
-  cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
-  ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px';
+/* ── CURSOR ── */
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursorRing');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top  = e.clientY + 'px';
+  setTimeout(() => { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }, 60);
 });
 
-function toggleMobile() { document.getElementById('mobileMenu').classList.toggle('open'); }
+/* ── NAV SCROLL ── */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
 
-/* --- DATA LOADING --- */
+/* ── MOBILE MENU ── */
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+function closeMobile() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+/* ── CONFIG: replace with your real WhatsApp number ── */
+const WA_NUMBER = '234XXXXXXXXXX';
+
+/* ── LOAD SERVICES FROM services.json ── */
 async function loadServices() {
   try {
-    const response = await fetch('services.json');
-    const services = await response.json();
-    const grid = document.getElementById('services-grid');
+    const res = await fetch('services.json');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const services = await res.json();
+
+    const grid   = document.getElementById('services-grid');
     const select = document.getElementById('service-select');
 
-    grid.innerHTML = services.map(s => `
-      <div class="service-card reveal">
-        <div class="service-icon"><i class="${s.icon}"></i></div>
-        <h3 class="service-name">${s.name}</h3>
-        <p class="service-text">${s.description}</p>
-        <div class="service-price">Starting from ${s.price}</div>
+    // Use s.title, s.desc, s.price, s.icon, s.message — matching the JSON exactly
+    grid.innerHTML = services.map((s, i) => `
+      <div class="service-card" data-index="${i}">
+        <div class="service-num">0${i + 1}</div>
+        <div class="service-icon-wrap">${s.icon}</div>
+        <h3 class="service-name">${s.title}</h3>
+        <p class="service-desc">${s.desc}</p>
+        <div class="service-price">${s.price}</div>
+        <a class="btn-wa-service"
+           href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(s.message)}"
+           target="_blank">
+          <i class="fab fa-whatsapp"></i> Book This Service
+        </a>
       </div>
     `).join('');
 
-    select.innerHTML = services.map(s => `<option value="${s.name}">${s.name}</option>`).join('');
+    // Populate booking dropdown
+    select.innerHTML = services.map(s =>
+      `<option value="${s.title}">${s.title} — ${s.price}</option>`
+    ).join('');
 
-    // Intersection Observer for reveal animation
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); });
+    // Staggered card reveal
+    const cardObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idx = parseInt(entry.target.dataset.index || 0);
+          setTimeout(() => entry.target.classList.add('visible'), idx * 80);
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.service-card').forEach(el => cardObserver.observe(el));
+
+    // Reveal contact form
+    const formObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    formObserver.observe(document.getElementById('contactForm'));
 
-  } catch (err) { console.error("Error loading services:", err); }
+  } catch (err) {
+    console.error('Failed to load services.json:', err);
+    document.getElementById('services-grid').innerHTML = `
+      <p style="grid-column:1/-1;text-align:center;padding:60px 24px;font-family:'Cinzel',serif;font-size:12px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;">
+        Unable to load services. Please contact us directly on WhatsApp.
+      </p>`;
+  }
 }
 
-function sendWhatsApp(e) {
+/* ── BOOKING FORM → WHATSAPP ── */
+document.getElementById('wa-submit').addEventListener('click', e => {
   e.preventDefault();
-  const name = document.getElementById('name').value || "Customer";
+  const name    = (document.getElementById('name').value || 'a prospective client').trim();
   const service = document.getElementById('service-select').value;
-  const waNumber = "234XXXXXXXXXX"; // REPLACE WITH YOUR NUMBER
-  const text = `Hello Royal Priesthood! My name is ${name}. I am interested in booking your "${service}" service. Please let me know the next steps.`;
-  window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`, '_blank');
-}
-
-window.addEventListener('scroll', () => {
-  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  const extra   = document.getElementById('extra').value.trim();
+  let text = `Hello Royal Priesthood Studio! My name is ${name}. I'd like to book your *${service}* service.`;
+  if (extra) text += `\n\nAdditional notes: ${extra}`;
+  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`, '_blank');
 });
 
 loadServices();
