@@ -129,6 +129,9 @@
   .services-inner{max-width:1200px;margin:0 auto;}
   .services-header{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-bottom:80px;align-items:end;}
   .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+  /* On home page preview, 4 items → first row: 3, second row: 1 spanning all → looks intentional */
+  .services-grid .service-card:last-child:nth-child(3n+1){grid-column:1 / -1;}
+
   .service-card{background:var(--charcoal);padding:48px 36px;position:relative;overflow:hidden;transition:background .4s;}
   .service-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s;}
   .service-card:hover{background:var(--mid);}.service-card:hover::before{transform:scaleX(1);}
@@ -145,23 +148,52 @@
   .btn-wa-service{display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;background:rgba(37,211,102,.1);color:#25D366;border:1px solid rgba(37,211,102,.25);padding:14px 20px;text-decoration:none;transition:background .3s,border-color .3s;width:100%;}
   .btn-wa-service:hover{background:rgba(37,211,102,.2);border-color:#25D366;}
 
-  /* ═══ GALLERY (HOME PREVIEW) ═══
-     Uses the same media[] array format as gallery.html
-     with a proper slider, swipe support, and a "View Full Gallery" CTA.
-  */
+  /* Services CTA */
+  .services-cta{
+    text-align:center;
+    margin-top:56px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+  .services-cta-label{
+    font-family:'Cinzel',serif;
+    font-size:10px;
+    letter-spacing:.35em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .btn-catalog{
+    font-family:'Cinzel',serif;
+    font-size:11px;
+    letter-spacing:.25em;
+    text-transform:uppercase;
+    color:var(--gold);
+    border:1px solid rgba(201,168,76,.4);
+    padding:14px 36px;
+    text-decoration:none;
+    transition:background .3s,border-color .3s;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  .btn-catalog:hover{background:rgba(201,168,76,.08);border-color:var(--gold);}
+  .btn-catalog i{font-size:13px;}
+
+  /* GALLERY */
   #gallery{padding:140px 60px;background:var(--deep);}
   .gallery-inner{max-width:1300px;margin:0 auto;}
   .gallery-header{text-align:center;margin-bottom:80px;}
   .gallery-header .section-label{justify-content:center;}
   .gallery-header .section-label::before{display:none;}
 
-  /* ── Grid: 2 columns, auto-fills rows. Odd last item spans 2 cols. ── */
   .gallery-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
     gap:4px;
   }
-  /* If the last child is in an odd (sole) position, span 2 */
   .gallery-item:last-child:nth-child(odd){
     grid-column: 1 / -1;
   }
@@ -175,16 +207,13 @@
   }
   .gallery-item:hover{background:var(--mid);}
 
-  /* ── Slider media wrap ── */
   .gallery-media-wrap{
     position:relative;
-    aspect-ratio:4/5;   /* tall portrait ratio — looks great on mobile */
+    aspect-ratio:4/5;
     overflow:hidden;
     background:#000;
-    touch-action:pan-y; /* allow vertical scroll, catch horizontal swipe in JS */
+    touch-action:pan-y;
   }
-
-  /* When a single item spans the full row, use landscape ratio */
   .gallery-item:last-child:nth-child(odd) .gallery-media-wrap{
     aspect-ratio:16/9;
   }
@@ -206,7 +235,6 @@
   }
   .slider-container iframe{pointer-events:auto;}
 
-  /* Arrow nav – visible on hover (hidden on mobile, replaced by swipe) */
   .slider-nav{
     position:absolute;top:50%;transform:translateY(-50%);
     background:rgba(0,0,0,.5);backdrop-filter:blur(4px);
@@ -219,7 +247,6 @@
   .gallery-item:hover .slider-nav{opacity:1;}
   .prev-btn{left:10px;}.next-btn{right:10px;}
 
-  /* Dot indicators */
   .slider-dots{
     position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
     display:flex;gap:6px;z-index:11;
@@ -227,7 +254,6 @@
   .dot{width:6px;height:6px;background:rgba(255,255,255,.3);border-radius:50%;transition:.3s;cursor:pointer;}
   .dot.active{background:var(--gold);transform:scale(1.3);}
 
-  /* Slide counter badge */
   .slide-counter{
     position:absolute;top:12px;right:12px;
     font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;
@@ -237,13 +263,11 @@
   }
   .gallery-item[data-total="1"] .slide-counter{display:none!important;}
 
-  /* Item body */
   .gallery-item-body{padding:28px 32px;}
   .gallery-item-date{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
   .gallery-item-title{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:10px;}
   .gallery-item-desc{font-size:15px;line-height:1.7;color:var(--muted);font-weight:300;}
 
-  /* View full gallery CTA */
   .gallery-cta{text-align:center;margin-top:60px;}
 
   /* CONTACT */
@@ -300,13 +324,11 @@
     .about-text{padding-left:0;}
     .services-header{grid-template-columns:1fr;gap:20px;}
     .services-grid{grid-template-columns:1fr;}
-    /* On mobile, single column gallery so every item is full-width */
+    .services-grid .service-card:last-child:nth-child(3n+1){grid-column:auto;}
     .gallery-grid{grid-template-columns:1fr;}
     .gallery-item:last-child:nth-child(odd){grid-column:auto;}
     .gallery-item:last-child:nth-child(odd) .gallery-media-wrap{aspect-ratio:4/5;}
-    /* Hide arrows on mobile — use swipe instead */
     .slider-nav{display:none!important;}
-    /* Show counter on mobile */
     .slide-counter{display:block;}
     .form-row{grid-template-columns:1fr;}
     footer{padding:40px 24px;}
@@ -419,6 +441,16 @@
       </p>
     </div>
     <div class="services-grid" id="services-grid"></div>
+
+    <!-- ── More Services CTA ── -->
+    <div class="services-cta reveal reveal-delay-2" id="services-cta" style="display:none;">
+      <span class="services-cta-label">Explore everything we offer</span>
+      <a href="services.html" class="btn-catalog">
+        <i class="fas fa-th-large"></i>
+        Full Services Catalog
+        <i class="fas fa-arrow-right" style="font-size:10px;"></i>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -498,6 +530,7 @@
     <ul class="footer-links">
       <li><a href="#about">About</a></li>
       <li><a href="#services">Services</a></li>
+      <li><a href="services.html">All Services</a></li>
       <li><a href="#gallery">Gallery</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -583,11 +616,29 @@ function buildWaLink(){
 });
 
 /* ══════════════════════════════════════
+   SESSION-RANDOM PICKER
+   ─ Picks N random indices once per browser session.
+   ─ Stable on reload; fresh on new tab / new session.
+   ─ key: unique string per data-set (services / gallery)
+══════════════════════════════════════ */
+function sessionPick(key, totalCount, pickCount) {
+  const stored = sessionStorage.getItem(key);
+  if (stored) {
+    try { return JSON.parse(stored); } catch(e) {}
+  }
+  // Fisher-Yates shuffle of indices, take first pickCount
+  const indices = Array.from({length: totalCount}, (_, i) => i);
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  const picked = indices.slice(0, Math.min(pickCount, totalCount));
+  sessionStorage.setItem(key, JSON.stringify(picked));
+  return picked;
+}
+
+/* ══════════════════════════════════════
    GALLERY SLIDER
-   ─ Reads item.media[] (array of URLs),
-     same format as gallery.html.
-   ─ Supports images AND YouTube embeds.
-   ─ Arrow buttons + dot indicators + swipe.
 ══════════════════════════════════════ */
 function buildSlider(item, idx){
   const media  = item.media || (item.url ? [item.url] : []);
@@ -595,7 +646,6 @@ function buildSlider(item, idx){
 
   const mediaHTML = media.map(url => {
     if(url.includes('youtube.com') || url.includes('youtu.be') || url.includes('embed')) {
-      // Ensure autoplay is off, no controls clutter
       const src = url.includes('?') ? url : url + '?rel=0';
       return `<iframe src="${src}" frameborder="0" allowfullscreen loading="lazy"></iframe>`;
     }
@@ -636,7 +686,6 @@ function buildSlider(item, idx){
     </div>`;
 }
 
-/* Move to absolute position */
 window.moveTo = function(idx, pos){
   const el   = document.getElementById(`gal-${idx}`);
   const cont = document.getElementById(`slide-cont-${idx}`);
@@ -649,7 +698,6 @@ window.moveTo = function(idx, pos){
   if(counter) counter.textContent = `${pos+1} / ${total}`;
 };
 
-/* Move relative */
 window.moveSlider = function(idx, dir){
   const el    = document.getElementById(`gal-${idx}`);
   const total = parseInt(el.dataset.total);
@@ -657,13 +705,12 @@ window.moveSlider = function(idx, dir){
   moveTo(idx, (cur + dir + total) % total);
 };
 
-/* Swipe */
 let _tx = {}, _ty = {};
 window.touchStart = function(e, idx){ _tx[idx]=e.changedTouches[0].screenX; _ty[idx]=e.changedTouches[0].screenY; };
 window.touchMove  = function(e, idx){
   const dx = Math.abs(e.changedTouches[0].screenX - _tx[idx]);
   const dy = Math.abs(e.changedTouches[0].screenY - _ty[idx]);
-  if(dx > dy) e.preventDefault(); // horizontal swipe — block page scroll
+  if(dx > dy) e.preventDefault();
 };
 window.touchEnd   = function(e, idx){
   const dx = e.changedTouches[0].screenX - _tx[idx];
@@ -727,13 +774,27 @@ async function loadData(){
     buildWaLink();
   }
 
-  /* ── SERVICES ── */
+  /* ── SERVICES ──
+     Pick 4 random services per session; show "Full Catalog" link only when
+     there are more than 4 services in total.
+  ── */
   if(services && services.length){
+    const SERVICES_LIMIT = 4;
     const grid = document.getElementById('services-grid');
     const sel  = document.getElementById('cf-service');
     const num  = waNumber.replace(/\D/g,'');
 
-    grid.innerHTML = services.map((s,i) => {
+    // Populate the contact-form select with ALL services
+    services.forEach(s => {
+      const o = document.createElement('option');
+      o.value = s.title; o.textContent = s.title; sel.appendChild(o);
+    });
+
+    // Pick which 4 to show (session-stable random)
+    const pickedIndices = sessionPick('rps-services-indices', services.length, SERVICES_LIMIT);
+    const preview = pickedIndices.map(i => services[i]);
+
+    grid.innerHTML = preview.map((s,i) => {
       const n = String(i+1).padStart(2,'0');
       let mediaHTML = '';
       if(s.video)       mediaHTML = `<div class="service-media-wrap visible"><iframe src="${s.video}" allowfullscreen loading="lazy"></iframe></div>`;
@@ -752,23 +813,24 @@ async function loadData(){
       </div>`;
     }).join('');
 
-    services.forEach(s => {
-      const o = document.createElement('option');
-      o.value = s.title; o.textContent = s.title; sel.appendChild(o);
-    });
+    // Show the "Full Services Catalog" link only when there are more services than shown
+    if(services.length > SERVICES_LIMIT){
+      const ctaEl = document.getElementById('services-cta');
+      if(ctaEl) ctaEl.style.display = 'flex';
+    }
   }
 
   /* ── GALLERY ──
-     Reads item.media[] — same structure gallery.html uses.
-     Falls back gracefully if item only has item.url (old format).
-  */
+     Pick 4 random items per session; stable within the session.
+  ── */
   if(gallery && gallery.length){
-    // Show a maximum of 6 items on the home page preview
-    const preview = gallery.slice(0, 6);
+    const GALLERY_LIMIT = 4;
+    const pickedIndices = sessionPick('rps-gallery-indices', gallery.length, GALLERY_LIMIT);
+    const preview = pickedIndices.map(i => gallery[i]);
     document.getElementById('gallery-grid').innerHTML = preview.map((item, idx) => buildSlider(item, idx)).join('');
   }
 
-  watchAll(); // re-observe dynamically added .reveal elements
+  watchAll();
 }
 
 loadData();
