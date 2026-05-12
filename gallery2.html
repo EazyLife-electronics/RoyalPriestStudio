@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gallery | Royal Priesthood Studio</title>
+<!-- Copy all CSS <style> block from index.html here -->
+</head>
+<body>
+<!-- Use the same Nav as services.html (ensure 'Gallery' is marked 'active') -->
+<nav id="navbar">
+  <a class="nav-logo" href="index.html">Royal Priesthood<span>Studio · Ibadan</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="gallery.html" class="active">Gallery</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    <li><button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button></li>
+  </ul>
+</nav>
+
+<header class="page-header" style="padding: 180px 60px 80px; text-align: center; background: var(--deep);">
+  <div class="section-label" style="justify-content:center;">Our Portfolio</div>
+  <h1 class="section-title">Visual <span class="gold">Masterpieces</span></h1>
+</header>
+
+<section id="gallery" style="padding-top:0;">
+  <div class="gallery-inner">
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </div>
+</section>
+
+<!-- REPLICATED CONTACT SECTION FROM INDEX.HTML GOES HERE -->
+<!-- This ensures the "Call to Action" is present on the gallery page -->
+
+<!-- FOOTER GOES HERE -->
+
+<script>
+/* Use the same JS as index.html, but in loadData(), 
+   ensure gallery.slice is removed so it shows ALL images */
+if(gallery && gallery.length) {
+    document.getElementById('gallery-grid').innerHTML = gallery.map((item, idx) => buildSlider(item, idx)).join('');
+}
+</script>
+</body>
+</html>
