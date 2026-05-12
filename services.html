@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Services | Royal Priesthood Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+<style>
+  :root{--gold:#C9A84C;--gold-light:#E8C97A;--gold-pale:#F5E6B8;--black:#060606;--deep:#0D0A06;--charcoal:#1A1510;--mid:#2A2118;--text:#D4C09A;--muted:#7A6A4A;--nav-bg:rgba(6,6,6,0.95);--white:#FFFFFF;--noise-opacity:0.35;}
+  [data-theme="light"]{--black:#FCFBF7;--deep:#F4F1E8;--charcoal:#E9E4D5;--mid:#DED8C4;--text:#332D24;--muted:#6B5F4A;--nav-bg:rgba(252, 251, 247, 0.95);--white:#060606;--noise-opacity:0.15;}
+  
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+  body{background:var(--black);color:var(--text);font-family:'Cormorant Garamond',serif;overflow-x:hidden;transition:background .5s,color .5s;}
+  
+  /* NOISE OVERLAY */
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;opacity:var(--noise-opacity);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");}
+
+  /* CURSOR */
+  .cursor{position:fixed;width:12px;height:12px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+  .cursor-ring{position:fixed;width:36px;height:36px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.5;}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:24px 60px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,var(--nav-bg),transparent);transition:background .4s;}
+  nav.scrolled{background:var(--nav-bg);border-bottom:1px solid rgba(201,168,76,.15);}
+  .nav-logo{font-family:'Cinzel Decorative',cursive;font-size:13px;font-weight:700;color:var(--gold);text-decoration:none;text-transform:uppercase;}
+  .nav-logo span{display:block;font-size:9px;font-weight:400;color:var(--muted);letter-spacing:.4em;}
+  .nav-links{display:flex;gap:32px;list-style:none;align-items:center;}
+  .nav-links a{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;}
+  .nav-links a:hover,.nav-links a.active{color:var(--gold-light);}
+  
+  .theme-toggle{background:none;border:1px solid rgba(201,168,76,.3);color:var(--gold);cursor:pointer;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:410;}
+  .hamburger span{display:block;width:24px;height:1px;background:var(--gold);}
+  .mobile-menu{display:none;position:fixed;inset:0;background:var(--nav-bg);z-index:400;flex-direction:column;align-items:center;justify-content:center;gap:36px;}
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{font-family:'Cinzel',serif;font-size:18px;letter-spacing:.3em;text-transform:uppercase;color:var(--text);text-decoration:none;}
+
+  /* HEADER & SECTION UI */
+  .page-header{padding:180px 60px 80px;text-align:center;background:var(--deep);}
+  .section-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:16px;justify-content:center;}
+  .section-title{font-family:'Cinzel Decorative',cursive;font-size:clamp(28px,4vw,52px);font-weight:700;color:var(--white);margin-bottom:24px;}
+  .gold{color:var(--gold);}
+
+  /* SERVICES GRID */
+  #services-full{padding:60px 60px 120px;background:var(--black);}
+  .services-grid{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:30px;}
+  .service-card{background:var(--charcoal);border:1px solid rgba(201,168,76,0.1);padding:40px;position:relative;overflow:hidden;transition:transform 0.4s;}
+  .service-card:hover{transform:translateY(-10px);border-color:var(--gold);}
+  .service-icon{font-size:32px;color:var(--gold);margin-bottom:24px;}
+  .service-name{font-family:'Cinzel',serif;font-size:20px;color:var(--white);margin-bottom:15px;}
+  .service-text{font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:25px;}
+  .service-price{font-family:'Cinzel',serif;font-size:12px;color:var(--gold-light);letter-spacing:2px;border-top:1px solid rgba(201,168,76,0.1);padding-top:20px;}
+
+  /* CONTACT */
+  #contact{padding:120px 60px;background:var(--deep);border-top:1px solid rgba(201,168,76,0.1);}
+  .contact-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;}
+  .form-group{margin-bottom:24px;}
+  .form-label{display:block;font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+  .form-control{width:100%;background:var(--black);border:1px solid rgba(201,168,76,0.2);padding:16px;color:var(--text);font-family:inherit;}
+  .btn-wa{display:flex;align-items:center;justify-content:center;gap:12px;background:#25D366;color:#fff;padding:18px;text-decoration:none;font-family:'Cinzel',serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-top:20px;}
+
+  @media(max-width:900px){
+    nav{padding:20px 24px;}.nav-links{display:none;}.hamburger{display:flex;}
+    .page-header,#services-full,#contact{padding:100px 24px;}
+    .contact-inner{grid-template-columns:1fr;}
+  }
+
+  .reveal{opacity:0;transform:translateY(30px);transition:0.8s ease-out;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="navbar">
+  <a class="nav-logo" href="index.html">Royal Priesthood<span>Studio · Ibadan</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html" class="active">Services</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" onclick="toggleMobile()">Home</a>
+  <a href="services.html" onclick="toggleMobile()">Services</a>
+  <a href="gallery.html" onclick="toggleMobile()">Gallery</a>
+  <a href="#contact" onclick="toggleMobile()">Contact</a>
+</div>
+
+<header class="page-header">
+  <div class="section-label">Our Expertise</div>
+  <h1 class="section-title">Premium <span class="gold">Services</span></h1>
+</header>
+
+<section id="services-full">
+  <div class="services-grid" id="services-grid">
+    <!-- Injected by JS -->
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="section-label" style="justify-content:flex-start;">Booking</div>
+      <h2 class="section-title">Ready to <span class="gold">Begin?</span></h2>
+      <p style="color:var(--muted); line-height:1.8;">Select a service and send us a message on WhatsApp. We typically respond within the hour to discuss your specific needs and scheduling.</p>
+    </div>
+    <div class="reveal">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input type="text" id="name" class="form-control" placeholder="Enter your name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Select Service</label>
+        <select id="service-select" class="form-control">
+          <!-- Options will be populated from JSON -->
+        </select>
+      </div>
+      <a href="#" class="btn-wa" id="wa-submit" onclick="sendWhatsApp(event)">
+        <i class="fab fa-whatsapp"></i> Book via WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+/* --- THEME & CURSOR --- */
+const themeToggle = document.getElementById('themeToggle');
+themeToggle.addEventListener('click', () => {
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+  document.documentElement.setAttribute('data-theme', isLight ? 'dark' : 'light');
+});
+
+const cursor = document.getElementById('cursor'), ring = document.getElementById('cursorRing');
+document.addEventListener('mousemove', (e) => {
+  cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+  ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px';
+});
+
+function toggleMobile() { document.getElementById('mobileMenu').classList.toggle('open'); }
+
+/* --- DATA LOADING --- */
+async function loadServices() {
+  try {
+    const response = await fetch('services.json');
+    const services = await response.json();
+    const grid = document.getElementById('services-grid');
+    const select = document.getElementById('service-select');
+
+    grid.innerHTML = services.map(s => `
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="${s.icon}"></i></div>
+        <h3 class="service-name">${s.name}</h3>
+        <p class="service-text">${s.description}</p>
+        <div class="service-price">Starting from ${s.price}</div>
+      </div>
+    `).join('');
+
+    select.innerHTML = services.map(s => `<option value="${s.name}">${s.name}</option>`).join('');
+
+    // Intersection Observer for reveal animation
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  } catch (err) { console.error("Error loading services:", err); }
+}
+
+function sendWhatsApp(e) {
+  e.preventDefault();
+  const name = document.getElementById('name').value || "Customer";
+  const service = document.getElementById('service-select').value;
+  const waNumber = "234XXXXXXXXXX"; // REPLACE WITH YOUR NUMBER
+  const text = `Hello Royal Priesthood! My name is ${name}. I am interested in booking your "${service}" service. Please let me know the next steps.`;
+  window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`, '_blank');
+}
+
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+loadServices();
+</script>
+</body>
+</html>
