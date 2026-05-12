@@ -193,10 +193,32 @@ copyBtn.addEventListener('click', async () => {
   if (!data) return;
   const jsonString = JSON.stringify(data, null, 2);
   try {
-    await navigator.clipboard.writeText(jsonString);
-    showMessage('JSON copied to clipboard.', 'success');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(jsonString);
+      showMessage('JSON copied to clipboard.', 'success');
+      return;
+    }
   } catch (error) {
-    showMessage('Clipboard copy failed. Please download the JSON file instead.', 'warning');
+    // fallback to older copy method below
+  }
+
+  const temp = document.createElement('textarea');
+  temp.value = jsonString;
+  temp.style.position = 'fixed';
+  temp.style.left = '-9999px';
+  document.body.appendChild(temp);
+  temp.select();
+  try {
+    const successful = document.execCommand('copy');
+    document.body.removeChild(temp);
+    if (successful) {
+      showMessage('JSON copied to clipboard.', 'success');
+    } else {
+      throw new Error('execCommand failed');
+    }
+  } catch (error) {
+    document.body.removeChild(temp);
+    showMessage('Copy failed. Please download the JSON file instead.', 'warning');
   }
 });
 
