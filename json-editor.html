@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JSON Dataset Editor | Royal Priesthood Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root { --bg:#111; --panel:#1a1918; --panel-soft:#242220; --border:#3f3a2f; --text:#eee; --muted:#b8ad9a; --accent:#c9a84c; --accent-soft:#e8c97a; --danger:#d25f5f; }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Cormorant Garamond',serif;background:#070705;color:var(--text);min-height:100vh;}
+  a{color:var(--accent);text-decoration:none;}
+  .page-shell{max-width:1400px;margin:0 auto;padding:24px 24px 80px;}
+  header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-bottom:24px;border-bottom:1px solid rgba(201,168,76,.15);}
+  header .brand{font-family:'Cinzel Decorative',cursive;font-size:28px;letter-spacing:.08em;color:var(--accent);}
+  header nav{display:flex;flex-wrap:wrap;gap:10px;}
+  header nav a{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);padding:10px 14px;border:1px solid rgba(201,168,76,.18);border-radius:8px;transition:background .2s,color .2s;}
+  header nav a.active, header nav a:hover{background:rgba(201,168,76,.08);color:var(--accent);}
+  .hero{margin-top:24px;padding:28px;border:1px solid rgba(201,168,76,.1);border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent);}
+  .hero h1{font-size:clamp(30px,4vw,44px);margin-bottom:12px;}
+  .hero p{max-width:860px;line-height:1.8;color:var(--muted);margin-bottom:18px;}
+  .hero .tool-actions{display:flex;flex-wrap:wrap;gap:10px;}
+  button, .file-button{cursor:pointer;font-family:'Cinzel',serif;font-size:13px;letter-spacing:.3em;text-transform:uppercase;border:none;border-radius:12px;padding:14px 22px;transition:transform .2s,background .2s;}
+  button:hover, .file-button:hover{transform:translateY(-1px);}
+  button:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+  .btn-primary{background:var(--accent);color:#111;}
+  .btn-secondary{background:rgba(201,168,76,.08);color:var(--text);border:1px solid rgba(201,168,76,.18);}
+  .file-button{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:rgba(201,168,76,.08);color:var(--text);border:1px solid rgba(201,168,76,.18);position:relative;overflow:hidden;}
+  .file-button input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+  .note{margin-top:18px;font-size:14px;color:var(--muted);}
+  .section{margin-top:32px;}
+  .section .section-title{font-size:18px;font-family:'Cinzel',serif;text-transform:uppercase;letter-spacing:.25em;color:var(--accent);margin-bottom:14px;}
+  .section .section-copy{color:var(--muted);line-height:1.75;margin-bottom:18px;}
+  .editor-panel{display:grid;gap:24px;}
+  .dataset-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;}
+  .dataset-card{padding:24px;border:1px solid rgba(201,168,76,.12);border-radius:20px;min-height:180px;background:rgba(255,255,255,.02);}
+  .dataset-card h2{margin:0 0 12px;font-size:20px;color:var(--text);}
+  .dataset-card p{margin:0 0 20px;color:var(--muted);line-height:1.7;}
+  .dataset-card a{display:inline-flex;color:var(--accent);}
+  .editor-grid{display:grid;grid-template-columns:1fr 360px;gap:24px;}
+  .editor-column{display:grid;gap:20px;}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:22px;padding:22px;}
+  .panel-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;}
+  .panel-heading h2{margin:0;font-size:16px;text-transform:uppercase;letter-spacing:.25em;color:var(--accent);}
+  .panel-actions{display:flex;flex-wrap:wrap;gap:10px;}
+  .panel-actions button{min-width:120px;}
+  .field-group{display:grid;gap:12px;padding:18px;border:1px solid rgba(255,255,255,.05);border-radius:16px;background:rgba(255,255,255,.01);}
+  .field-group legend{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  label{display:grid;gap:8px;font-size:14px;color:var(--text);line-height:1.6;}
+  input[type=text], textarea{width:100%;min-height:44px;padding:12px 14px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(0,0,0,.45);color:var(--text);outline:none;resize:vertical;}
+  input[type=text]:focus, textarea:focus{border-color:rgba(201,168,76,.5);}
+  textarea{min-height:120px;font-family:'Cormorant Garamond',serif;line-height:1.7;}
+  .small-input{max-width:220px;}
+  .item-row{display:grid;gap:16px;}
+  .item-row .item-row-header{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .item-row .item-row-header h3{margin:0;font-size:16px;color:var(--text);}
+  .item-row .item-row-header button{background:var(--danger);color:#111;}
+  .preview-grid{display:grid;gap:14px;}
+  .preview-card{border-radius:18px;overflow:hidden;background:#111;position:relative;border:1px solid rgba(255,255,255,.08);}
+  .preview-card img, .preview-card iframe, .preview-card video{width:100%;display:block;height:220px;object-fit:cover;}
+  .preview-card a{display:block;padding:12px;font-size:13px;color:var(--muted);text-decoration:none;word-break:break-all;}
+  .preview-footer{padding:12px 14px;background:rgba(255,255,255,.03);font-size:13px;color:var(--muted);}
+  .raw-panel{display:grid;gap:12px;}
+  .raw-panel textarea{min-height:300px;font-family:monospace;white-space:pre-wrap;word-break:break-word;background:rgba(0,0,0,.4);}
+  .message{padding:14px 16px;border-radius:14px;font-size:14px;line-height:1.65;}
+  .message.success{background:rgba(41,70,35,.22);border:1px solid rgba(68,160,54,.3);color:#b7f0ad;}
+  .message.warning{background:rgba(173,129,53,.18);border:1px solid rgba(201,168,76,.3);color:#f3d87f;}
+  .message.error{background:rgba(115,40,40,.22);border:1px solid rgba(210,95,95,.35);color:#ffb9b9;}
+  @media(max-width:1040px){.editor-grid{grid-template-columns:1fr;}.panel{padding:18px;}header{flex-direction:column;align-items:flex-start;}}</style>
+</head>
+<body>
+<div class="page-shell">
+  <header>
+    <div class="brand">JSON Dataset Editor</div>
+    <nav>
+      <a href="json-editor.html?dataset=gallery" class="nav-link" id="link-gallery">Gallery</a>
+      <a href="json-editor.html?dataset=services" class="nav-link" id="link-services">Services</a>
+      <a href="json-editor.html?dataset=studio" class="nav-link" id="link-studio">Studio Info</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1 id="pageTitle">Edit dataset content</h1>
+    <p id="pageIntro">Choose a dataset and update data items, media links, and descriptions. When your changes are ready, download the updated JSON file or copy the new JSON text for paste into the source file.</p>
+    <div class="tool-actions">
+      <button class="btn-secondary" id="loadServerBtn">Load JSON from file</button>
+      <label class="file-button">Upload JSON<input type="file" id="fileInput" accept="application/json" /></label>
+      <button class="btn-primary" id="downloadBtn">Download JSON</button>
+      <button class="btn-secondary" id="copyBtn">Copy JSON</button>
+    </div>
+    <div class="note">If direct fetch is blocked by your browser, use the upload button. The editor can preview images, video URLs, and allow add/remove of dataset items.</div>
+  </section>
+
+  <div class="editor-panel" id="editorPanel"></div>
+</div>
+
+<script>
+const datasetConfigs = {
+  gallery: {
+    title: 'Gallery',
+    file: 'gallery.json',
+    itemLabel: 'Gallery Item',
+    rootType: 'array',
+  },
+  services: {
+    title: 'Services',
+    file: 'services.json',
+    itemLabel: 'Service',
+    rootType: 'array',
+  },
+  studio: {
+    title: 'Studio Info',
+    file: 'studio-info.json',
+    itemLabel: 'Profile',
+    rootType: 'object',
+  }
+};
+
+const params = new URLSearchParams(location.search);
+const datasetKey = params.get('dataset');
+const dataset = datasetConfigs[datasetKey];
+let data = null;
+let rawJson = '';
+const editorPanel = document.getElementById('editorPanel');
+const pageTitle = document.getElementById('pageTitle');
+const pageIntro = document.getElementById('pageIntro');
+const loadServerBtn = document.getElementById('loadServerBtn');
+const fileInput = document.getElementById('fileInput');
+const downloadBtn = document.getElementById('downloadBtn');
+const copyBtn = document.getElementById('copyBtn');
+
+const navLinks = {
+  gallery: document.getElementById('link-gallery'),
+  services: document.getElementById('link-services'),
+  studio: document.getElementById('link-studio')
+};
+
+if (!dataset) {
+  pageTitle.textContent = 'Select a dataset to edit';
+  pageIntro.textContent = 'Use the buttons above to open the Gallery, Services, or Studio Info editor.';
+  editorPanel.innerHTML = `
+    <div class="dataset-grid">
+      ${Object.entries(datasetConfigs).map(([key,config]) => `
+        <article class="dataset-card">
+          <h2>${config.title}</h2>
+          <p>Edit ${config.title} data, preview media, add and remove entries, then export the updated JSON.</p>
+          <a href="json-editor.html?dataset=${key}">Open ${config.title}</a>
+        </article>
+      `).join('')}
+    </div>
+  `;
+  loadServerBtn.disabled = true;
+  downloadBtn.disabled = true;
+  copyBtn.disabled = true;
+} else {
+  navLinks[datasetKey].classList.add('active');
+  pageTitle.textContent = `Edit ${dataset.title}`;
+  pageIntro.textContent = `Update ${dataset.title} data, preview media content, add or remove items, and export the updated JSON to copy or download.`;
+  loadServerBtn.textContent = `Load ${dataset.title}`;
+  initEditor();
+}
+
+loadServerBtn.addEventListener('click', () => {
+  if (!dataset) return;
+  loadRemoteData();
+});
+fileInput.addEventListener('change', async (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+  const text = await file.text();
+  try {
+    const parsed = JSON.parse(text);
+    data = parsed;
+    renderEditor();
+    showMessage(`Loaded ${file.name} successfully.`, 'success');
+  } catch (error) {
+    showMessage('Unable to parse JSON file. Please select a valid .json document.', 'error');
+  }
+  fileInput.value = '';
+});
+downloadBtn.addEventListener('click', () => {
+  if (!data) return;
+  const jsonString = JSON.stringify(data, null, 2);
+  const blob = new Blob([jsonString], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement('a');
+  anchor.href = url;
+  anchor.download = dataset.file;
+  anchor.click();
+  URL.revokeObjectURL(url);
+});
+copyBtn.addEventListener('click', async () => {
+  if (!data) return;
+  const jsonString = JSON.stringify(data, null, 2);
+  try {
+    await navigator.clipboard.writeText(jsonString);
+    showMessage('JSON copied to clipboard.', 'success');
+  } catch (error) {
+    showMessage('Clipboard copy failed. Please download the JSON file instead.', 'warning');
+  }
+});
+
+function initEditor() {
+  editorPanel.innerHTML = `<div class="panel"><div class="panel-heading"><h2>${dataset.title} editor</h2><div class="panel-actions"><button class="btn-secondary" id="resetBtn">Reset preview</button></div></div><div id="editorContent"></div></div>`;
+  document.getElementById('resetBtn').addEventListener('click', () => renderEditor());
+  loadRemoteData();
+}
+
+async function loadRemoteData() {
+  try {
+    const response = await fetch(dataset.file, { cache: 'no-store' });
+    if (!response.ok) throw new Error('Fetch failed');
+    const json = await response.json();
+    data = json;
+    renderEditor();
+    showMessage(`${dataset.title} loaded from ${dataset.file}.`, 'success');
+  } catch (error) {
+    showMessage(`Unable to fetch ${dataset.file}. Upload the JSON file manually if needed.`, 'warning');
+  }
+}
+
+function renderEditor() {
+  if (!data) {
+    editorPanel.querySelector('#editorContent').innerHTML = '<p class="section-copy">No data loaded yet. Use the load button or upload a JSON file.</p>';
+    downloadBtn.disabled = true;
+    copyBtn.disabled = true;
+    return;
+  }
+  downloadBtn.disabled = false;
+  copyBtn.disabled = false;
+
+  const content = document.createElement('div');
+  content.className = 'editor-grid';
+
+  const left = document.createElement('div');
+  left.className = 'editor-column';
+  const right = document.createElement('div');
+  right.className = 'editor-column';
+
+  if (datasetKey === 'gallery') {
+    left.appendChild(createGalleryForm());
+  } else if (datasetKey === 'services') {
+    left.appendChild(createServicesForm());
+  } else if (datasetKey === 'studio') {
+    left.appendChild(createStudioForm());
+  }
+
+  right.appendChild(createRawPanel());
+  editorPanel.querySelector('#editorContent').innerHTML = '';
+  editorPanel.querySelector('#editorContent').appendChild(content);
+  content.append(left, right);
+  updateRawText();
+}
+
+function createGalleryForm() {
+  const panel = document.createElement('div');
+  panel.className = 'panel';
+  const header = document.createElement('div');
+  header.className = 'panel-heading';
+  header.innerHTML = `<h2>Gallery Items</h2><div class="panel-actions"><button class="btn-secondary" type="button" id="addItemBtn">Add item</button></div>`;
+  const body = document.createElement('div');
+  body.className = 'editor-column';
+
+  data.forEach((item, index) => {
+    body.appendChild(createGalleryItemEditor(item, index));
+  });
+
+  panel.append(header, body);
+  header.querySelector('#addItemBtn').addEventListener('click', () => {
+    data.push({ title: 'New title', date: 'New date', desc: 'New description', media: [] });
+    renderEditor();
+  });
+  return panel;
+}
+
+function createGalleryItemEditor(item, index) {
+  const group = document.createElement('fieldset');
+  group.className = 'field-group';
+  group.innerHTML = `
+    <div class="item-row-header"><h3>Item ${index + 1}</h3><button class="btn-secondary" type="button" data-action="delete" data-index="${index}">Delete</button></div>
+    <label>Title<input type="text" data-path="${index}.title" value="${escapeHtml(item.title || '')}" /></label>
+    <label>Date<input type="text" data-path="${index}.date" value="${escapeHtml(item.date || '')}" /></label>
+    <label>Description<textarea data-path="${index}.desc">${escapeHtml(item.desc || '')}</textarea></label>
+    <label>Media URLs (one per line)<textarea data-path="${index}.media">${escapeHtml(mediaToText(item.media))}</textarea></label>
+    <div class="preview-grid">${renderMediaPreviews(item.media)}</div>
+  `;
+  group.querySelectorAll('input, textarea').forEach(el => {
+    el.addEventListener('input', handleFieldUpdate);
+  });
+  group.querySelector('[data-action="delete"]').addEventListener('click', () => {
+    data.splice(index, 1);
+    renderEditor();
+  });
+  return group;
+}
+
+function createServicesForm() {
+  const panel = document.createElement('div');
+  panel.className = 'panel';
+  const header = document.createElement('div');
+  header.className = 'panel-heading';
+  header.innerHTML = `<h2>Service Items</h2><div class="panel-actions"><button class="btn-secondary" type="button" id="addServiceBtn">Add service</button></div>`;
+  const body = document.createElement('div');
+  body.className = 'editor-column';
+
+  data.forEach((item, index) => {
+    body.appendChild(createServiceItemEditor(item, index));
+  });
+
+  panel.append(header, body);
+  header.querySelector('#addServiceBtn').addEventListener('click', () => {
+    data.push({ icon: '✨', title: 'New title', desc: 'New description', price: 'New price', image: '', video: '', message: 'New WhatsApp message' });
+    renderEditor();
+  });
+  return panel;
+}
+
+function createServiceItemEditor(item, index) {
+  const group = document.createElement('fieldset');
+  group.className = 'field-group';
+  group.innerHTML = `
+    <div class="item-row-header"><h3>Service ${index + 1}</h3><button class="btn-secondary" type="button" data-action="delete" data-index="${index}">Delete</button></div>
+    <label>Icon<input type="text" class="small-input" data-path="${index}.icon" value="${escapeHtml(item.icon || '')}" /></label>
+    <label>Title<input type="text" data-path="${index}.title" value="${escapeHtml(item.title || '')}" /></label>
+    <label>Description<textarea data-path="${index}.desc">${escapeHtml(item.desc || '')}</textarea></label>
+    <label>Price<input type="text" class="small-input" data-path="${index}.price" value="${escapeHtml(item.price || '')}" /></label>
+    <label>Image URL(s) (one per line)<textarea data-path="${index}.image">${escapeHtml(mediaToText(item.image))}</textarea></label>
+    <label>Video URL<input type="text" data-path="${index}.video" value="${escapeHtml(item.video || '')}" /></label>
+    <label>WhatsApp Message<textarea data-path="${index}.message">${escapeHtml(item.message || '')}</textarea></label>
+    <div class="preview-grid">${renderMediaPreviews(item.image)}${item.video ? renderMediaPreview(item.video):''}</div>
+  `;
+  group.querySelectorAll('input, textarea').forEach(el => {
+    el.addEventListener('input', handleFieldUpdate);
+  });
+  group.querySelector('[data-action="delete"]').addEventListener('click', () => {
+    data.splice(index, 1);
+    renderEditor();
+  });
+  return group;
+}
+
+function createStudioForm() {
+  const panel = document.createElement('div');
+  panel.className = 'panel';
+  const header = document.createElement('div');
+  header.className = 'panel-heading';
+  header.innerHTML = `<h2>Studio Info</h2><div class="panel-actions"><button class="btn-secondary" type="button" id="addStatBtn">Add stat</button></div>`;
+  const body = document.createElement('div');
+  body.className = 'editor-column';
+
+  const fields = ['name', 'tagline', 'description', 'location', 'whatsapp', 'email', 'instagram'];
+  fields.forEach(key => {
+    body.appendChild(createStudioField(key, data[key] || ''));
+  });
+
+  const statsSection = document.createElement('fieldset');
+  statsSection.className = 'field-group';
+  statsSection.innerHTML = `<legend>Stats</legend>`;
+  data.stats = Array.isArray(data.stats) ? data.stats : [];
+  data.stats.forEach((stat, index) => {
+    statsSection.appendChild(createStudioStatEditor(stat, index));
+  });
+  panel.append(header, body, statsSection);
+  header.querySelector('#addStatBtn').addEventListener('click', () => {
+    data.stats.push({ num: 'New', label: 'Label' });
+    renderEditor();
+  });
+  return panel;
+}
+
+function createStudioField(key, value) {
+  const wrapper = document.createElement('label');
+  wrapper.innerHTML = `${capitalize(key)}<input type="text" data-path="${key}" value="${escapeHtml(value)}" />`;
+  wrapper.querySelector('input').addEventListener('input', handleFieldUpdate);
+  return wrapper;
+}
+
+function createStudioStatEditor(stat, index) {
+  const row = document.createElement('div');
+  row.className = 'field-group';
+  row.innerHTML = `
+    <div class="item-row-header"><h3>Stat ${index + 1}</h3><button class="btn-secondary" type="button" data-action="delete" data-index="${index}">Delete</button></div>
+    <label>Value<input type="text" data-path="stats.${index}.num" value="${escapeHtml(stat.num || '')}" /></label>
+    <label>Label<input type="text" data-path="stats.${index}.label" value="${escapeHtml(stat.label || '')}" /></label>
+  `;
+  row.querySelectorAll('input').forEach(el => el.addEventListener('input', handleFieldUpdate));
+  row.querySelector('[data-action="delete"]').addEventListener('click', () => {
+    data.stats.splice(index, 1);
+    renderEditor();
+  });
+  return row;
+}
+
+function createRawPanel() {
+  const panel = document.createElement('div');
+  panel.className = 'panel raw-panel';
+  panel.innerHTML = `
+    <div class="panel-heading"><h2>Raw JSON</h2></div>
+    <textarea id="jsonRaw"></textarea>
+    <div class="panel-actions"><button class="btn-secondary" id="applyRawBtn" type="button">Apply raw JSON</button></div>
+  `;
+  panel.querySelector('#applyRawBtn').addEventListener('click', () => {
+    const text = panel.querySelector('#jsonRaw').value;
+    try {
+      const parsed = JSON.parse(text);
+      data = parsed;
+      renderEditor();
+      showMessage('Raw JSON applied successfully.', 'success');
+    } catch (err) {
+      showMessage('Cannot parse JSON. Please correct syntax errors before applying.', 'error');
+    }
+  });
+  return panel;
+}
+
+function handleFieldUpdate(event) {
+  const path = event.target.dataset.path;
+  if (!path) return;
+  const value = event.target.value;
+  const parsedValue = parseFieldValue(path, value);
+  setDataPath(data, path, parsedValue);
+  if (path.includes('image') || path.includes('media')) {
+    renderEditor();
+  } else {
+    updateRawText();
+  }
+}
+
+function parseFieldValue(path, value) {
+  if (path.endsWith('.media') || path.endsWith('.image')) {
+    return parseMediaInput(value);
+  }
+  return value;
+}
+
+function parseMediaInput(value) {
+  const lines = value.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+  if (lines.length === 0) return '';
+  return lines.length === 1 ? lines[0] : lines;
+}
+
+function mediaToText(value) {
+  if (Array.isArray(value)) return value.join('\n');
+  return value || '';
+}
+
+function setDataPath(target, path, value) {
+  const parts = path.split('.');
+  let current = target;
+  for (let i = 0; i < parts.length - 1; i += 1) {
+    const key = isNaN(parts[i]) ? parts[i] : Number(parts[i]);
+    current = current[key];
+    if (current == null) return;
+  }
+  const last = parts[parts.length - 1];
+  current[isNaN(last) ? last : Number(last)] = value;
+  updateRawText();
+}
+
+function renderMediaPreviews(media) {
+  const values = Array.isArray(media) ? media : (media ? [media] : []);
+  if (!values.length) return '<div class="preview-card"><a>No preview available</a></div>';
+  return values.map(url => renderMediaPreview(url)).join('');
+}
+
+function renderMediaPreview(url) {
+  if (!url) return '<div class="preview-card"><a>No media URL</a></div>';
+  const lower = url.toLowerCase();
+  if (lower.includes('youtube.com') || lower.includes('youtu.be') || lower.includes('embed')) {
+    const embedUrl = transformYouTubeUrl(url);
+    return `<div class="preview-card"><iframe src="${embedUrl}" allowfullscreen loading="lazy"></iframe><div class="preview-footer">YouTube preview</div></div>`;
+  }
+  if (lower.match(/\.mp4|\.webm|\.ogv|player\.vimeo\.com|vimeo\.com/)) {
+    if (lower.includes('vimeo.com') && !lower.includes('.mp4')) {
+      return `<div class="preview-card"><iframe src="${url}" allowfullscreen loading="lazy"></iframe><div class="preview-footer">Video preview</div></div>`;
+    }
+    return `<div class="preview-card"><video controls muted src="${url}"></video><div class="preview-footer">Video preview</div></div>`;
+  }
+  return `<div class="preview-card"><img src="${url}" alt="Media preview"><div class="preview-footer">Image preview</div></div>`;
+}
+
+function transformYouTubeUrl(url) {
+  if (url.includes('youtu.be/')) {
+    const id = url.split('youtu.be/')[1].split(/[?&]/)[0];
+    return `https://www.youtube.com/embed/${id}`;
+  }
+  const match = url.match(/[?&]v=([^&]+)/);
+  if (match) return `https://www.youtube.com/embed/${match[1]}`;
+  return url.replace('watch?v=', 'embed/');
+}
+
+function updateRawText() {
+  const rawArea = document.getElementById('jsonRaw');
+  if (rawArea) rawArea.value = JSON.stringify(data, null, 2);
+}
+
+function showMessage(message, type = 'success') {
+  const existing = document.querySelector('.message');
+  if (existing) existing.remove();
+  const msg = document.createElement('div');
+  msg.className = `message ${type}`;
+  msg.textContent = message;
+  editorPanel.prepend(msg);
+  setTimeout(() => { msg.remove(); }, 5500);
+}
+
+function capitalize(text) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function escapeHtml(text) {
+  return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+</script>
+</body>
+</html>
