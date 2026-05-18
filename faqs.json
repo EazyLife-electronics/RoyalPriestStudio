@@ -1,0 +1,37 @@
+"faqs": [
+  {
+    "category": "General & Booking",
+    "question": "Where is Royal Priest Studios located, and do you travel?",
+    "answer": "Our main creative studio is located in Ibadan, Oyo State, Nigeria. While our audio sessions happen in-studio, our photography and videography teams are fully mobile and available to travel nationwide for weddings, corporate projects, and special events."
+  },
+  {
+    "category": "General & Booking",
+    "question": "How do I book a session, and is a deposit required?",
+    "answer": "You can book directly via our website, WhatsApp, or email. To secure your date for studio time or event coverage, a non-refundable deposit is required, with the balance due before or on the day of the project."
+  },
+  {
+    "category": "Music & Audio",
+    "question": "What should I bring to a quick live session or music project?",
+    "answer": "For recording sessions, please bring your instrumentals/backing tracks on a flash drive or have them emailed to us in high-quality WAV or MP3 format. If you are doing a live session with instruments, please let our team know in advance so we can set up the microphones and routing beforehand."
+  },
+  {
+    "category": "Music & Audio",
+    "question": "Can I send my songs strictly for mixing and mastering?",
+    "answer": "Yes! You don't need to record with us to use our engineering services. You can send your dry, exported audio stems via Google Drive or WeTransfer, and our engineers will handle the mixing and mastering remotely."
+  },
+  {
+    "category": "Photography & Videography",
+    "question": "What is the turnaround time for event photos and videos?",
+    "answer": "For standard portrait and studio shoots, edited images are delivered within 3 to 5 business days. For luxury weddings and large corporate events, fully edited photo galleries and cinematic highlight videos take between 2 to 4 weeks."
+  },
+  {
+    "category": "Photography & Videography",
+    "question": "Do you provide the raw, unedited files?",
+    "answer": "Our brand prides itself on delivering finished, high-quality art, so we do not typically release raw, unedited files. However, our packages include a generous amount of professionally color-graded and retouched high-resolution images."
+  },
+  {
+    "category": "Photography & Videography",
+    "question": "What happens if our event runs past the scheduled time?",
+    "answer": "We understand that events can experience delays. Overtime requests can be accommodated on the day of the event, subject to team availability, and will be billed at our standard hourly overtime rate."
+  }
+]
