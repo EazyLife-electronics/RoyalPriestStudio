@@ -1,90 +1,130 @@
 [
   {
+    "slug": "the-emmanuel-wedding",
     "title": "The Emmanuel Wedding",
     "date": "March 2025",
-    "desc": "A beautifully covered royal-themed wedding in Ibadan. Every sacred moment preserved.",
-    "media": [
+    "category": "Wedding",
+    "shortDesc": "A beautifully covered royal-themed wedding in Ibadan.",
+    "longDesc": "An exquisite, multi-tier traditional and white wedding production captured live at a luxury garden venue in Ibadan. Preserving deep cultural honors, delicate sacred vows, and cinematic reception dynamics.",
+    "images": [
       "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1465495910483-0d674577873d?auto=format&fit=crop&w=800&q=80"
-    ]
+    ],
+    "videos": []
   },
   {
+    "slug": "crusade-highlights",
     "title": "Crusade Highlights",
     "date": "January 2025",
-    "desc": "Full media coverage of the Ibadan Evangelistic Crusade, capturing the atmosphere of worship.",
-    "media": [
-      "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    "category": "Ministry Media",
+    "shortDesc": "Full media coverage of the Ibadan Evangelistic Crusade, capturing the atmosphere of worship.",
+    "longDesc": "Multi-camera broadcast production tracking massive multi-day outdoor crusades. Rigged with deep soundboard optimization matrices to feed crisp ambient audio captures alongside stadium-grade wide crane framing.",
+    "images": [],
+    "videos": [
+      { "provider": "youtube", "embedUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ", "title": "Main Event Stream Recap" }
     ]
   },
   {
+    "slug": "executive-portraits",
     "title": "Executive Portraits",
     "date": "February 2025",
-    "desc": "High-end corporate headshots for local ministry leaders and business executives.",
-    "media": [
+    "category": "Corporate",
+    "shortDesc": "High-end corporate headshots for local ministry leaders and business executives.",
+    "longDesc": "Premium climate-controlled studio portrait sessions using modern softbox configurations. Engineered to radiate deep industry authority, natural dignity, and sharp personal branding assets.",
+    "images": [
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80"
-    ]
+    ],
+    "videos": []
   },
   {
+    "slug": "nature-spirit-exhibit",
     "title": "Nature & Spirit Exhibit",
     "date": "April 2025",
-    "desc": "An artistic exploration of creation through the lens of a spiritual journey.",
-    "media": [
+    "category": "Creative Editorial",
+    "shortDesc": "An artistic exploration of creation through the lens of a spiritual journey.",
+    "longDesc": "A conceptual landscape art display documenting raw geographical peaks across the southwestern borders of Nigeria, framing deep metaphorical correlations between natural elements and inner peace.",
+    "images": [
       "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80"
-    ]
+    ],
+    "videos": []
   },
   {
+    "slug": "zion-choir-live",
     "title": "Zion Choir Live",
     "date": "December 2024",
-    "desc": "Cinematic recording of the annual Christmas Carol and Praise night.",
-    "media": [
-      "https://www.youtube.com/embed/L_jWHffIx5E"
+    "category": "Live Audio Session",
+    "shortDesc": "Cinematic recording of the annual Christmas Carol and Praise night.",
+    "longDesc": "Live audio routing engineering paired alongside a rhythmic cinematic video production. Tracked multi-channel stems live to ensure professional, radio-ready final post-production mixing and mastering.",
+    "images": [],
+    "videos": [
+      { "provider": "youtube", "embedUrl": "https://www.youtube.com/embed/L_jWHffIx5E", "title": "Full Concert Track Playback" }
     ]
   },
   {
+    "slug": "the-artisan-series",
     "title": "The Artisan Series",
     "date": "May 2025",
-    "desc": "Documenting the hands of local craftsmen in Ibadan, showcasing the beauty of labor.",
-    "media": [
+    "category": "Documentary",
+    "shortDesc": "Documenting the hands of local craftsmen in Ibadan, showcasing the beauty of labor.",
+    "longDesc": "A gritty macro photography documentary highlighting the deep detail, raw focus, and historical cultural preservation driving grassroots local industrial trades within Oyo state.",
+    "images": [
       "https://images.unsplash.com/photo-1504194104404-433180773017?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80"
-    ]
+    ],
+    "videos": []
   },
   {
+    "slug": "graceful-maternity",
     "title": "Graceful Maternity",
     "date": "June 2025",
-    "desc": "Soft, elegant maternity session celebrating the gift of new life.",
-    "media": [
+    "category": "Portrait",
+    "shortDesc": "Soft, elegant maternity session celebrating the gift of new life.",
+    "longDesc": "Intimate background lighting sets and custom maternity gown drapings designed specifically around maternal grace and protective joy, edited in soft, timeless film-graded warm tones.",
+    "images": [
       "https://images.unsplash.com/photo-1559839734-2b71f1e3c7e5?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1555243896-c709bfa0b564?auto=format&fit=crop&w=800&q=80"
-    ]
+    ],
+    "videos": []
   },
   {
+    "slug": "uipower-conference",
     "title": "UIPower Conference",
     "date": "July 2025",
-    "desc": "Corporate event documentation for a tech summit at the University of Ibadan.",
-    "media": [
+    "category": "Corporate",
+    "shortDesc": "Corporate event documentation for a tech summit at the University of Ibadan.",
+    "longDesc": "High-speed snapshot logs tracking keynote speakers, executive panel sessions, and energetic audience interaction segments during the annual university technology cluster summit.",
+    "images": [
       "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80"
-    ]
+    ],
+    "videos": []
   },
   {
+    "slug": "street-worship-session",
     "title": "Street Worship Session",
     "date": "August 2025",
-    "desc": "Candid video highlights of outdoor praise sessions in the heart of the city.",
-    "media": [
-      "https://www.youtube.com/embed/fJ9rUzIMcZQ"
+    "category": "Ministry Media",
+    "shortDesc": "Candid video highlights of outdoor praise sessions in the heart of the city.",
+    "longDesc": "Run-and-gun documentary style multi-cam videography following rapid open-air worship sessions. Crafted to spotlight raw street atmosphere, emotional public feedback, and authentic community connections.",
+    "images": [],
+    "videos": [
+      { "provider": "youtube", "embedUrl": "https://www.youtube.com/embed/fJ9rUzIMcZQ", "title": "Street Vlog & Performance Reel" }
     ]
   },
   {
+    "slug": "agape-youth-fest",
     "title": "Agape Youth Fest",
     "date": "September 2025",
-    "desc": "Vibrant and energetic coverage of the inter-denominational youth festival.",
-    "media": [
+    "category": "Event",
+    "shortDesc": "Vibrant and energetic coverage of the inter-denominational youth festival.",
+    "longDesc": "High-saturation media arrays locking onto fast onstage performances, dynamic praise dance events, and deep youth interaction moments across a stadium venue environment.",
+    "images": [
       "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=800&q=80",
       "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=800&q=80"
-    ]
+      "https://images.unsplash.com/photo-1501281668745-f74eccf877e2?auto=format&fit=crop&w=800&q=80"
+    ],
+    "videos": []
   }
 ]
