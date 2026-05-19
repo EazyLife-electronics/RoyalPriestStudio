@@ -50,40 +50,61 @@
   .gallery-item{background:var(--charcoal);overflow:hidden;transition:background .3s;user-select:none;}
   .gallery-media-wrap{position:relative;aspect-ratio:4/5;overflow:hidden;background:#000;touch-action:pan-y;}
   .slider-container{display:flex;height:100%;transition:transform .5s cubic-bezier(.23,1,.32,1);will-change:transform;}
-  .slider-container img, .slider-container iframe{min-width:100%;width:100%;height:100%;object-fit:cover;pointer-events:none;flex-shrink:0;}
+  .slider-container img, .slider-container iframe, .slider-container video{min-width:100%;width:100%;height:100%;object-fit:cover;pointer-events:none;flex-shrink:0;}
   .slider-container iframe{pointer-events:auto;}
   .slider-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.5);backdrop-filter:blur(4px);color:#fff;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;z-index:10;opacity:0;transition:opacity .3s;display:flex;align-items:center;justify-content:center;}
   .gallery-item:hover .slider-nav{opacity:1;}
   .prev-btn{left:10px;}.next-btn{right:10px;}
   .slider-dots{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:11;}
-  .dot{width:6px;height:6px;background:rgba(255,255,255,.3);border-radius:50%;transition:.3s;cursor:pointer;}
+  .dot{width:6px;height:6px;background:rgba(255,255,255,.3);border:none;padding:0;border-radius:50%;transition:.3s;cursor:pointer;}
   .dot.active{background:var(--gold);transform:scale(1.3);}
+  .slide-counter{position:absolute;top:14px;right:14px;z-index:11;background:rgba(0,0,0,.55);color:#fff;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.16em;padding:7px 10px;border:1px solid rgba(255,255,255,.14);}
   .gallery-item-body{padding:28px 32px;}
+  .gallery-item-meta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);}
   .gallery-item-title{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:10px;}
   .gallery-item-desc{font-size:15px;line-height:1.7;color:var(--muted);font-weight:300;}
+  .gallery-empty{grid-column:1/-1;padding:60px 24px;text-align:center;background:var(--charcoal);color:var(--muted);font-size:18px;}
 
   /* CONTACT FORM (Standardized) */
   #contact{padding:140px 60px;background:var(--black);border-top:1px solid rgba(201,168,76,.1);}
-  .contact-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:100px;}
-  .form-group{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;}
+  .contact-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start;}
+  .contact-details{display:flex;flex-direction:column;gap:32px;margin-top:40px;}
+  .contact-item{display:flex;gap:20px;align-items:flex-start;}
+  .contact-icon{width:48px;height:48px;border:1px solid rgba(201,168,76,.3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;color:var(--gold);}
+  .contact-item-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+  .contact-item-value{font-size:16px;color:var(--text);}
+  .contact-item-value a{color:var(--text);text-decoration:none;}
+  .contact-form{display:flex;flex-direction:column;gap:24px;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .form-group{display:flex;flex-direction:column;gap:8px;}
   .form-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);}
-  .form-control{background:var(--charcoal);border:1px solid rgba(201,168,76,0.15);padding:16px 20px;color:var(--text);font-family:'Cormorant Garamond',serif;font-size:16px;outline:none;width:100%;}
-  .form-control:focus{border-color:var(--gold);}
-  .btn-wa-main{display:flex;align-items:center;justify-content:center;gap:12px;font-family:'Cinzel',serif;font-size:12px;letter-spacing:.25em;text-transform:uppercase;background:#25D366;color:#fff;padding:18px 48px;text-decoration:none;transition:background .3s;width:100%;}
+  .form-control{background:var(--charcoal);border:1px solid rgba(201,168,76,0.15);padding:16px 20px;color:var(--text);font-family:'Cormorant Garamond',serif;font-size:16px;outline:none;transition:border-color .3s,background .3s;resize:none;width:100%;}
+  .form-control:focus{border-color:var(--gold);background:rgba(201,168,76,.03);}
+  .form-control::placeholder{color:rgba(122,106,74,.5);}
+  .btn-wa-main{display:flex;align-items:center;justify-content:center;gap:12px;font-family:'Cinzel',serif;font-size:12px;letter-spacing:.25em;text-transform:uppercase;background:#25D366;color:#fff;padding:18px 48px;text-decoration:none;transition:background .3s,transform .2s;width:100%;}
+  .btn-wa-main:hover{background:#1ebe5d;transform:translateY(-2px);}
+  .btn-wa-main i{font-size:22px;}
+  .wa-note{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:12px;}
   
   .floating-wa{position:fixed;bottom:28px;right:28px;z-index:600;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:28px;text-decoration:none;box-shadow:0 8px 32px rgba(37,211,102,.35);}
 
   /* FOOTER */
   footer{padding:60px;background:var(--deep);border-top:1px solid rgba(201,168,76,.1);}
-  .footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:40px;}
-  .footer-logo{font-family:'Cinzel Decorative',cursive;font-size:14px;color:var(--gold);}
-  .footer-copy{font-size:13px;color:rgba(122,106,74,.5);text-align:right;}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;}
+  .footer-logo{font-family:'Cinzel Decorative',cursive;font-size:14px;color:var(--gold);letter-spacing:.1em;}
+  .footer-logo span{display:block;font-size:9px;color:var(--muted);letter-spacing:.3em;margin-top:4px;font-family:'Cinzel',serif;}
+  .footer-links{display:flex;gap:32px;list-style:none;}
+  .footer-links a{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;}
+  .footer-links a:hover{color:var(--gold);}
+  .footer-copy{font-size:13px;color:rgba(122,106,74,.5);}
 
   @media(max-width:900px){
     nav{padding:20px 24px;}.nav-links{display:none;}.hamburger{display:flex;}
     #gallery,#contact,.page-header{padding:80px 24px;}
     .gallery-grid,.contact-inner,.footer-inner{grid-template-columns:1fr;gap:40px;}
-    .footer-copy{text-align:left;}
+    .form-row{grid-template-columns:1fr;}
+    .footer-inner{flex-direction:column;align-items:flex-start;}
+    .footer-links{flex-wrap:wrap;gap:20px;}
   }
 </style>
 </head>
@@ -96,6 +117,7 @@
   <a href="index.html" onclick="closeMobile()">Home</a>
   <a href="services.html" onclick="closeMobile()">Services</a>
   <a href="gallery.html" onclick="closeMobile()">Gallery</a>
+  <a href="blog.html" onclick="closeMobile()">Blog</a>
   <a href="#contact" onclick="closeMobile()">Contact</a>
 </div>
 
@@ -105,6 +127,7 @@
     <li><a href="index.html">Home</a></li>
     <li><a href="services.html">Services</a></li>
     <li><a href="gallery.html" class="active">Gallery</a></li>
+    <li><a href="blog.html">Blog</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button></li>
   </ul>
@@ -126,20 +149,37 @@
       <div class="section-label reveal">Get In Touch</div>
       <h2 class="section-title reveal">Book Your<br/><span class="gold">Session Now</span></h2>
       <p style="color:var(--muted); font-size:18px;">Love our work? Let's discuss your project on WhatsApp.</p>
+      <div class="contact-details reveal" id="contact-details"></div>
     </div>
     <div class="reveal">
-      <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-control" id="cf-name" placeholder="Your Name"/></div>
-      <div class="form-group"><label class="form-label">Service Interest</label><select class="form-control" id="cf-service"><option value="Photography">Photography</option><option value="Videography">Videography</option></select></div>
-      <div class="form-group"><label class="form-label">Message</label><textarea class="form-control" id="cf-message" rows="4" placeholder="Tell us about your event..."></textarea></div>
-      <a class="btn-wa-main" id="btn-wa-contact" href="#" target="_blank"><i class="fab fa-whatsapp"></i><span>Send to WhatsApp</span></a>
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">First Name</label><input type="text" class="form-control" id="cf-fname" placeholder="John"/></div>
+          <div class="form-group"><label class="form-label">Last Name</label><input type="text" class="form-control" id="cf-lname" placeholder="Doe"/></div>
+        </div>
+        <div class="form-group"><label class="form-label">Phone Number</label><input type="tel" class="form-control" id="cf-phone" placeholder="+2347080868471"/></div>
+        <div class="form-group"><label class="form-label">Service Needed</label><select class="form-control" id="cf-service"><option value="">Select a service...</option></select></div>
+        <div class="form-group"><label class="form-label">Your Message</label><textarea class="form-control" id="cf-message" rows="5" placeholder="Tell us about your project or event..."></textarea></div>
+        <a class="btn-wa-main" id="btn-wa-contact" href="#" target="_blank"><i class="fab fa-whatsapp"></i><span>Send via WhatsApp</span></a>
+        <p class="wa-note">Tap to open WhatsApp — your message is pre-filled</p>
+      </div>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="footer-inner">
-    <div class="footer-logo">Royal Priesthood Studio</div>
-    <div class="footer-copy">© 2026 Royal Priesthood Studio</div>
+    <div class="footer-logo">Royal Priesthood Studio<span>Photography &amp; Videography · <span id="footer-location">Ibadan, Oyo State</span></span></div>
+    <ul class="footer-links">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="services.html">All Services</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 Royal Priesthood Studio. All rights reserved.</div>
   </div>
 </footer>
 
@@ -164,33 +204,164 @@ function toggleMobile(){document.getElementById('mobileMenu').classList.toggle('
 function closeMobile(){document.getElementById('mobileMenu').classList.remove('open');}
 
 /* --- GALLERY LOADING --- */
+async function loadJson(path) {
+  const response = await fetch(path, { cache: 'no-store' });
+  if (!response.ok) throw new Error(`Unable to load ${path}`);
+  return response.json();
+}
+
 async function loadGallery() {
+  const grid = document.getElementById('gallery-grid');
   try {
-    const r = await fetch('gallery.json');
-    const gallery = await r.json();
-    const grid = document.getElementById('gallery-grid');
+    const [gallery, studio, services] = await Promise.all([
+      loadJson('gallery.json'),
+      loadJson('studio-info.json').catch(() => null),
+      loadJson('services.json').catch(() => [])
+    ]);
 
-    grid.innerHTML = gallery.map((item, idx) => {
-      const isMulti = item.media.length > 1;
-      const mediaHTML = item.media.map(url => {
-        if(url.includes('youtube.com') || url.includes('embed')) return `<iframe src="${url}" frameborder="0" allowfullscreen></iframe>`;
-        return `<img src="${url}" alt="${item.title}">`;
-      }).join('');
+    hydrateStudioContact(studio);
+    populateServiceDropdown(services);
 
-      const dotsHTML = isMulti ? `<div class="slider-dots">${item.media.map((_, i) => `<div class="dot ${i===0?'active':''}" onclick="moveTo(${idx},${i})"></div>`).join('')}</div>` : '';
-      const navHTML = isMulti ? `<button class="slider-nav prev-btn" onclick="moveSlider(${idx},-1)"><i class="fas fa-chevron-left"></i></button><button class="slider-nav next-btn" onclick="moveSlider(${idx},1)"><i class="fas fa-chevron-right"></i></button>` : '';
+    if (!Array.isArray(gallery) || !gallery.length) {
+      grid.innerHTML = '<div class="gallery-empty">No gallery items are available yet.</div>';
+      return;
+    }
 
-      return `<div class="gallery-item reveal" id="gal-${idx}" data-current="0" data-total="${item.media.length}">
-                <div class="gallery-media-wrap" ontouchstart="tS(event,${idx})" ontouchend="tE(event,${idx})">
-                  ${navHTML}<div class="slider-container" id="slide-cont-${idx}">${mediaHTML}</div>${dotsHTML}
-                </div>
-                <div class="gallery-item-body"><h3 class="gallery-item-title">${item.title}</h3><p class="gallery-item-desc">${item.desc}</p></div>
-              </div>`;
-    }).join('');
+    grid.innerHTML = gallery.map((item, idx) => buildGalleryItem(item, idx)).join('');
+    observeReveals();
+  } catch (e) {
+    console.error(e);
+    grid.innerHTML = '<div class="gallery-empty">Gallery could not be loaded right now.</div>';
+  }
+}
 
-    const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:.1});
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-  } catch (e) { console.error(e); }
+function buildGalleryItem(item, idx) {
+  const media = getGalleryMedia(item);
+  const total = media.length;
+  const isMulti = total > 1;
+  const title = item.title || 'Untitled Gallery Item';
+  const desc = item.longDesc || item.shortDesc || item.desc || '';
+  const meta = [item.date, item.category].filter(Boolean);
+
+  const mediaHTML = media.length
+    ? media.map(mediaItem => renderGalleryMedia(mediaItem, title)).join('')
+    : `<div style="min-width:100%;display:flex;align-items:center;justify-content:center;color:var(--muted);padding:24px;">No media added</div>`;
+
+  const dotsHTML = isMulti
+    ? `<div class="slider-dots">${media.map((_, i) => `<button class="dot ${i===0?'active':''}" type="button" aria-label="Show slide ${i + 1}" onclick="moveTo(${idx},${i})"></button>`).join('')}</div>`
+    : '';
+  const navHTML = isMulti
+    ? `<button class="slider-nav prev-btn" type="button" aria-label="Previous media" onclick="moveSlider(${idx},-1)"><i class="fas fa-chevron-left"></i></button><button class="slider-nav next-btn" type="button" aria-label="Next media" onclick="moveSlider(${idx},1)"><i class="fas fa-chevron-right"></i></button>`
+    : '';
+  const counterHTML = isMulti ? `<div class="slide-counter" id="counter-${idx}">1 / ${total}</div>` : '';
+
+  return `<article class="gallery-item reveal" id="gal-${idx}" data-current="0" data-total="${Math.max(total, 1)}">
+    <div class="gallery-media-wrap" ontouchstart="touchStart(event,${idx})" ontouchmove="touchMove(event,${idx})" ontouchend="touchEnd(event,${idx})">
+      ${navHTML}${counterHTML}<div class="slider-container" id="slide-cont-${idx}">${mediaHTML}</div>${dotsHTML}
+    </div>
+    <div class="gallery-item-body">
+      ${meta.length ? `<div class="gallery-item-meta">${meta.map(escapeHtml).join('<span>•</span>')}</div>` : ''}
+      <h3 class="gallery-item-title">${escapeHtml(title)}</h3>
+      <p class="gallery-item-desc">${escapeHtml(desc)}</p>
+    </div>
+  </article>`;
+}
+
+function getGalleryMedia(item) {
+  const media = [];
+  const legacyMedia = Array.isArray(item.media) ? item.media : (item.media ? [item.media] : []);
+  const images = Array.isArray(item.images) ? item.images : (item.images ? [item.images] : []);
+  const videos = Array.isArray(item.videos) ? item.videos : (item.videos ? [item.videos] : []);
+
+  legacyMedia.forEach(url => media.push({ type: inferMediaType(url), url }));
+  images.forEach(url => media.push({ type: 'image', url }));
+  videos.forEach(video => {
+    if (typeof video === 'string') {
+      media.push({ type: inferMediaType(video), url: video });
+      return;
+    }
+    if (video && (video.embedUrl || video.url)) {
+      media.push({ type: 'video', url: video.embedUrl || video.url, title: video.title || '' });
+    }
+  });
+
+  return media.filter(item => item.url);
+}
+
+function renderGalleryMedia(mediaItem, fallbackTitle) {
+  const url = mediaItem.url;
+  if (isDirectVideoUrl(url)) {
+    return `<video controls muted preload="metadata" src="${escapeHtml(url)}" title="${escapeHtml(mediaItem.title || fallbackTitle)}"></video>`;
+  }
+  if (mediaItem.type === 'video' || isVideoUrl(url)) {
+    const src = transformVideoUrl(url);
+    return `<iframe src="${escapeHtml(src)}" title="${escapeHtml(mediaItem.title || fallbackTitle)}" frameborder="0" allowfullscreen loading="lazy"></iframe>`;
+  }
+  return `<img src="${escapeHtml(url)}" alt="${escapeHtml(fallbackTitle)}" loading="lazy">`;
+}
+
+function inferMediaType(url) {
+  return isVideoUrl(url) ? 'video' : 'image';
+}
+
+function isVideoUrl(url) {
+  const value = String(url || '').toLowerCase();
+  return value.includes('youtube.com') || value.includes('youtu.be') || value.includes('embed') || value.includes('vimeo.com') || isDirectVideoUrl(value);
+}
+
+function isDirectVideoUrl(url) {
+  return /\.(mp4|webm|ogv)(\?|#|$)/i.test(String(url || ''));
+}
+
+function transformVideoUrl(url) {
+  const value = String(url || '');
+  if (value.includes('youtu.be/')) {
+    const id = value.split('youtu.be/')[1].split(/[?&]/)[0];
+    return `https://www.youtube.com/embed/${id}?rel=0`;
+  }
+  const watchMatch = value.match(/[?&]v=([^&]+)/);
+  if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}?rel=0`;
+  if (value.includes('youtube.com/embed/') && !value.includes('?')) return `${value}?rel=0`;
+  return value;
+}
+
+function observeReveals() {
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if(e.isIntersecting) e.target.classList.add('visible');
+  }), {threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+}
+
+function hydrateStudioContact(studio) {
+  if (!studio) {
+    buildWa();
+    return;
+  }
+  const contact = studio.contact || {};
+  const social = studio.social || {};
+  const instagram = Array.isArray(social.instagram) ? social.instagram[0] : social.instagram;
+  const whatsapp = contact.whatsapp || studio.whatsapp || '2347080868471';
+  const email = contact.email || studio.email || '';
+  const website = contact.website || studio.website || '';
+  const waNumber = whatsapp.replace(/\D/g, '');
+  const waBase = `https://wa.me/${waNumber}`;
+  document.getElementById('floatingWa').href = waBase;
+  document.getElementById('btn-wa-contact').dataset.waNumber = waNumber;
+  if (studio.location) document.getElementById('footer-location').textContent = studio.location;
+  document.getElementById('contact-details').innerHTML = `
+    ${studio.location ? `<div class="contact-item"><div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div><div><div class="contact-item-label">Location</div><div class="contact-item-value">${escapeHtml(studio.location)}</div></div></div>` : ''}
+    <div class="contact-item"><div class="contact-icon"><i class="fab fa-whatsapp"></i></div><div><div class="contact-item-label">WhatsApp</div><div class="contact-item-value"><a href="${waBase}" target="_blank">${escapeHtml(whatsapp)}</a></div></div></div>
+    ${email ? `<div class="contact-item"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div><div class="contact-item-label">Email</div><div class="contact-item-value"><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></div></div></div>` : ''}
+    ${instagram ? `<div class="contact-item"><div class="contact-icon"><i class="fab fa-instagram"></i></div><div><div class="contact-item-label">Instagram</div><div class="contact-item-value"><a href="${escapeHtml(instagram)}" target="_blank">${escapeHtml(instagram.replace(/^https?:\/\//,''))}</a></div></div></div>` : ''}
+    ${website ? `<div class="contact-item"><div class="contact-icon"><i class="fas fa-globe"></i></div><div><div class="contact-item-label">Website</div><div class="contact-item-value"><a href="${escapeHtml(website)}" target="_blank">${escapeHtml(website.replace(/^https?:\/\//,''))}</a></div></div></div>` : ''}
+  `;
+  buildWa();
+}
+
+function populateServiceDropdown(services) {
+  const select = document.getElementById('cf-service');
+  if (!select || !Array.isArray(services)) return;
+  select.innerHTML = '<option value="">Select a service...</option>' + services.map(service => `<option value="${escapeHtml(service.title || '')}">${escapeHtml(service.title || 'Service')}</option>`).join('');
 }
 
 /* Slider Controls */
@@ -201,24 +372,44 @@ window.moveTo = function(idx, pos) {
   el.dataset.current = pos;
   cont.style.transform = `translateX(-${pos * 100}%)`;
   el.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === pos));
+  const counter = document.getElementById(`counter-${idx}`);
+  if (counter) counter.textContent = `${pos + 1} / ${total}`;
 };
 window.moveSlider = (idx, dir) => moveTo(idx, parseInt(document.getElementById(`gal-${idx}`).dataset.current) + dir);
 
 /* Touch Swiping */
-let _tx=0; 
-window.tS=e=>_tx=e.changedTouches[0].screenX;
-window.tE=(e,i)=>{
-  const dx=e.changedTouches[0].screenX-_tx;
-  if(Math.abs(dx)>50) moveSlider(i, dx<0?1:-1);
+let _tx = {}, _ty = {};
+window.touchStart = function(e, idx){ _tx[idx]=e.changedTouches[0].screenX; _ty[idx]=e.changedTouches[0].screenY; };
+window.touchMove = function(e, idx){
+  const dx = Math.abs(e.changedTouches[0].screenX - _tx[idx]);
+  const dy = Math.abs(e.changedTouches[0].screenY - _ty[idx]);
+  if(dx > dy) e.preventDefault();
+};
+window.touchEnd = function(e, idx){
+  const dx=e.changedTouches[0].screenX-_tx[idx];
+  if(Math.abs(dx)>50) moveSlider(idx, dx<0?1:-1);
 };
 
 /* WhatsApp Form */
 function buildWa() {
-  const name = document.getElementById('cf-name').value, srv = document.getElementById('cf-service').value, msg = document.getElementById('cf-message').value;
-  const text = `Hello Royal Priesthood! I'm ${name}. I'm interested in ${srv}. ${msg}`;
-  document.getElementById('btn-wa-contact').href = `https://wa.me/2347080868471?text=${encodeURIComponent(text)}`; // Replace X with your number
+  const fname = document.getElementById('cf-fname').value.trim();
+  const lname = document.getElementById('cf-lname').value.trim();
+  const phone = document.getElementById('cf-phone').value.trim();
+  const srv = document.getElementById('cf-service').value;
+  const msg = document.getElementById('cf-message').value.trim();
+  const name = [fname, lname].filter(Boolean).join(' ') || 'A client';
+  let text = `Hello Royal Priesthood Studio!\n\nMy name is *${name}*.`;
+  if (phone) text += `\nPhone: ${phone}`;
+  if (srv) text += `\nService: ${srv}`;
+  if (msg) text += `\n\n${msg}`;
+  const waNumber = document.getElementById('btn-wa-contact').dataset.waNumber || '2347080868471';
+  document.getElementById('btn-wa-contact').href = `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
 }
 document.querySelectorAll('.form-control').forEach(el => el.addEventListener('input', buildWa));
+
+function escapeHtml(value) {
+  return String(value || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 
 loadGallery();
 </script>

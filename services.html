@@ -98,6 +98,19 @@
   .service-card:hover{background:var(--mid);}
   .service-card:hover::before{transform:scaleX(1);}
 
+  .service-media{width:100%;aspect-ratio:16/10;background:#000;margin:-18px 0 28px;overflow:hidden;border:1px solid rgba(201,168,76,.12);position:relative;touch-action:pan-y;}
+  .service-media-track{display:flex;height:100%;transition:transform .5s cubic-bezier(.23,1,.32,1);will-change:transform;}
+  .service-media-track img,.service-media-track iframe,.service-media-track video{min-width:100%;width:100%;height:100%;object-fit:cover;display:block;border:0;flex-shrink:0;}
+  .service-media-track iframe,.service-media-track video{pointer-events:auto;}
+  .service-slider-nav{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;border:none;background:rgba(0,0,0,.55);color:#fff;z-index:5;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:opacity .3s,background .3s;}
+  .service-card:hover .service-slider-nav{opacity:1;}
+  .service-slider-nav:hover{background:rgba(0,0,0,.78);}
+  .service-slider-prev{left:10px;}
+  .service-slider-next{right:10px;}
+  .service-slider-dots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:6;}
+  .service-dot{width:6px;height:6px;border-radius:50%;border:0;padding:0;background:rgba(255,255,255,.35);cursor:pointer;transition:.3s;}
+  .service-dot.active{background:var(--gold);transform:scale(1.3);}
+  .service-slide-counter{position:absolute;top:12px;right:12px;z-index:6;background:rgba(0,0,0,.55);color:var(--gold);font-family:'Cinzel',serif;font-size:9px;letter-spacing:.18em;padding:5px 9px;}
   .service-num{font-family:'Cinzel Decorative',cursive;font-size:11px;color:rgba(201,168,76,.3);letter-spacing:.2em;margin-bottom:28px;}
   .service-icon-wrap{
     width:64px;height:64px;
@@ -109,7 +122,18 @@
   .service-card:hover .service-icon-wrap{border-color:var(--gold);background:rgba(201,168,76,.08);}
   .service-name{font-family:'Cinzel',serif;font-size:14px;font-weight:700;letter-spacing:.08em;color:var(--white);margin-bottom:10px;text-transform:uppercase;}
   .service-desc{font-size:15px;line-height:1.7;color:var(--muted);font-weight:300;margin-bottom:20px;}
-  .service-price{font-family:'Cinzel',serif;font-size:14px;color:var(--gold);margin-bottom:24px;}
+  .service-long{font-size:14px;line-height:1.65;color:var(--text);opacity:.82;font-weight:300;margin-bottom:22px;}
+  .service-price{font-family:'Cinzel',serif;font-size:14px;color:var(--gold);margin-bottom:10px;}
+  .service-price del{display:block;color:var(--muted);font-size:11px;margin-top:4px;opacity:.75;}
+  .service-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+  .service-badge{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-light);border:1px solid rgba(201,168,76,.2);padding:6px 8px;background:rgba(201,168,76,.06);}
+  .service-details{display:grid;gap:10px;margin:18px 0 24px;padding-top:18px;border-top:1px solid rgba(201,168,76,.12);}
+  .service-detail-title{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+  .service-detail-text{font-size:14px;line-height:1.55;color:var(--muted);}
+  .milestone-list{display:grid;gap:6px;list-style:none;}
+  .milestone-list li{display:grid;grid-template-columns:1fr auto;gap:12px;font-size:13px;color:var(--muted);line-height:1.45;}
+  .milestone-list span:last-child{color:var(--text);white-space:nowrap;}
+  .service-empty{grid-column:1/-1;text-align:center;padding:60px 24px;background:var(--charcoal);color:var(--muted);font-size:18px;}
 
   .btn-wa-service{
     display:flex;align-items:center;justify-content:center;gap:10px;
@@ -133,9 +157,10 @@
   .contact-item-value{font-size:16px;color:var(--text);}
   .contact-item-value a{color:var(--text);text-decoration:none;}
 
-  .contact-form{display:flex;flex-direction:column;gap:20px;
+  .contact-form{display:flex;flex-direction:column;gap:24px;
     opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
   .contact-form.visible{opacity:1;transform:translateY(0);}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
   .form-group{display:flex;flex-direction:column;gap:8px;}
   .form-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);}
   .form-control{
@@ -172,8 +197,13 @@
 
   /* FOOTER */
   footer{background:var(--deep);border-top:1px solid rgba(201,168,76,.1);padding:40px 60px;text-align:center;}
-  .footer-logo{font-family:'Cinzel Decorative',cursive;font-size:14px;color:var(--gold);margin-bottom:8px;}
-  .footer-sub{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.4em;color:var(--muted);text-transform:uppercase;}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;}
+  .footer-logo{font-family:'Cinzel Decorative',cursive;font-size:14px;color:var(--gold);letter-spacing:.1em;}
+  .footer-logo span{display:block;font-size:9px;color:var(--muted);letter-spacing:.3em;margin-top:4px;font-family:'Cinzel',serif;}
+  .footer-links{display:flex;gap:32px;list-style:none;}
+  .footer-links a{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;}
+  .footer-links a:hover{color:var(--gold);}
+  .footer-copy{font-size:13px;color:rgba(122,106,74,.5);}
 
   /* RESPONSIVE */
   @media(max-width:1000px){
@@ -188,7 +218,10 @@
     .services-grid{grid-template-columns:1fr;}
     #contact{padding:80px 24px;}
     .contact-inner{grid-template-columns:1fr;gap:60px;}
+    .form-row{grid-template-columns:1fr;}
     footer{padding:32px 24px;}
+    .footer-inner{flex-direction:column;align-items:flex-start;}
+    .footer-links{flex-wrap:wrap;gap:20px;}
   }
 </style>
 </head>
@@ -204,6 +237,7 @@
     <li><a href="index.html#about">About</a></li>
     <li><a href="services.html" class="active">Services</a></li>
     <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="blog.html">Blog</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><button class="theme-toggle" id="themeToggle" title="Toggle theme"><i class="fas fa-moon"></i></button></li>
   </ul>
@@ -215,6 +249,7 @@
   <a href="index.html#about" onclick="closeMobile()">About</a>
   <a href="services.html" onclick="closeMobile()">Services</a>
   <a href="gallery.html" onclick="closeMobile()">Gallery</a>
+  <a href="blog.html" onclick="closeMobile()">Blog</a>
   <a href="#contact" onclick="closeMobile()">Contact</a>
 </div>
 
@@ -234,7 +269,7 @@
 <section id="services-full">
   <div class="services-inner">
     <div class="services-grid" id="services-grid">
-      <!-- Populated by JS from services.json using: s.title, s.desc, s.price, s.icon, s.message -->
+      <!-- Populated by JS from services.json -->
     </div>
   </div>
 </section>
@@ -248,7 +283,7 @@
       <div class="section-label">Book a Session</div>
       <h2 class="section-title">Ready to <span class="gold">Begin?</span></h2>
       <p class="section-body">Select a service and reach out on WhatsApp. We typically respond within the hour to discuss your needs and scheduling.</p>
-      <div class="contact-details">
+      <div class="contact-details" id="contact-details">
         <div class="contact-item">
           <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
           <div>
@@ -267,31 +302,50 @@
     </div>
 
     <div class="contact-form" id="contactForm">
-      <div class="form-group">
-        <label class="form-label" for="name">Full Name</label>
-        <input type="text" id="name" class="form-control" placeholder="Enter your name">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="cf-fname">First Name</label>
+          <input type="text" id="cf-fname" class="form-control" placeholder="John">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cf-lname">Last Name</label>
+          <input type="text" id="cf-lname" class="form-control" placeholder="Doe">
+        </div>
       </div>
       <div class="form-group">
-        <label class="form-label" for="service-select">Select Service</label>
-        <select id="service-select" class="form-control">
-          <!-- Populated from services.json -->
-        </select>
+        <label class="form-label" for="cf-phone">Phone Number</label>
+        <input type="tel" id="cf-phone" class="form-control" placeholder="+2347080868471">
       </div>
       <div class="form-group">
-        <label class="form-label" for="extra">Additional Notes (optional)</label>
-        <textarea id="extra" class="form-control" rows="3" placeholder="Event date, location, any special requirements…"></textarea>
+        <label class="form-label" for="cf-service">Service Needed</label>
+        <select id="cf-service" class="form-control"><option value="">Select a service...</option></select>
       </div>
-      <a href="#" class="btn-wa-main" id="wa-submit">
-        <i class="fab fa-whatsapp"></i> <span>Book via WhatsApp</span>
+      <div class="form-group">
+        <label class="form-label" for="cf-message">Your Message</label>
+        <textarea id="cf-message" class="form-control" rows="5" placeholder="Tell us about your project or event..."></textarea>
+      </div>
+      <a href="#" class="btn-wa-main" id="btn-wa-contact" target="_blank">
+        <i class="fab fa-whatsapp"></i> <span>Send via WhatsApp</span>
       </a>
-      <p class="wa-note">Opens WhatsApp with your enquiry pre-filled</p>
+      <p class="wa-note">Tap to open WhatsApp — your message is pre-filled</p>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="footer-logo">Royal Priesthood</div>
-  <div class="footer-sub">Studio · Ibadan · &copy; 2025</div>
+  <div class="footer-inner">
+    <div class="footer-logo">Royal Priesthood Studio<span>Photography &amp; Videography · <span id="footer-location">Ibadan, Oyo State</span></span></div>
+    <ul class="footer-links">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="services.html">All Services</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 Royal Priesthood Studio. All rights reserved.</div>
+  </div>
 </footer>
 
 <a class="floating-wa" href="https://wa.me/2347080868471" target="_blank" title="Chat on WhatsApp">
@@ -336,39 +390,39 @@ function closeMobile() {
   document.getElementById('mobileMenu').classList.remove('open');
 }
 
-/* ── CONFIG: replace with your real WhatsApp number ── */
-const WA_NUMBER = '2347080868471';
+let waNumber = '2347080868471';
+
+async function loadJson(path) {
+  const res = await fetch(path, { cache: 'no-store' });
+  if (!res.ok) throw new Error(`${path} HTTP ${res.status}`);
+  return res.json();
+}
 
 /* ── LOAD SERVICES FROM services.json ── */
 async function loadServices() {
   try {
-    const res = await fetch('services.json');
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const services = await res.json();
+    const [services, studio] = await Promise.all([
+      loadJson('services.json'),
+      loadJson('studio-info.json').catch(() => null)
+    ]);
 
     const grid   = document.getElementById('services-grid');
-    const select = document.getElementById('service-select');
+    const select = document.getElementById('cf-service');
+    hydrateStudioContact(studio);
 
-    // Use s.title, s.desc, s.price, s.icon, s.message — matching the JSON exactly
-    grid.innerHTML = services.map((s, i) => `
-      <div class="service-card" data-index="${i}">
-        <div class="service-num">0${i + 1}</div>
-        <div class="service-icon-wrap">${s.icon}</div>
-        <h3 class="service-name">${s.title}</h3>
-        <p class="service-desc">${s.desc}</p>
-        <div class="service-price">${s.price}</div>
-        <a class="btn-wa-service"
-           href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(s.message)}"
-           target="_blank">
-          <i class="fab fa-whatsapp"></i> Book This Service
-        </a>
-      </div>
-    `).join('');
+    if (!Array.isArray(services) || !services.length) {
+      grid.innerHTML = '<div class="service-empty">No services are available yet.</div>';
+      select.innerHTML = '<option value="">No services available</option>';
+      return;
+    }
+
+    grid.innerHTML = services.map((s, i) => renderServiceCard(s, i)).join('');
 
     // Populate booking dropdown
-    select.innerHTML = services.map(s =>
-      `<option value="${s.title}">${s.title} — ${s.price}</option>`
+    select.innerHTML = services.map((s, i) =>
+      `<option value="${escapeHtml(s.title || '')}" data-index="${i}">${escapeHtml(s.title || 'Service')} - ${escapeHtml(getDisplayPrice(s))}</option>`
     ).join('');
+    buildWaLink();
 
     // Staggered card reveal
     const cardObserver = new IntersectionObserver(entries => {
@@ -397,16 +451,249 @@ async function loadServices() {
   }
 }
 
+function renderServiceCard(service, index) {
+  const pricing = service.pricing || {};
+  const payment = pricing.paymentStructure || {};
+  const promo = pricing.promotionDetails || null;
+  const price = getDisplayPrice(service);
+  const promoPrice = promo && promo.calculatedAmount ? formatMoney(promo.calculatedAmount, pricing.currency) : '';
+  const message = service.message || `Hello Royal Priest Studios, I'd like to enquire about ${service.title || 'your service'}.`;
+  const badges = buildServiceBadges(service, payment, promo);
+  const media = getServiceMedia(service);
+
+  return `
+    <article class="service-card" data-index="${index}" id="${escapeHtml(service.id || `service-${index}`)}">
+      ${media.length ? renderServiceMediaSlider(media, service.title || 'Service media', index) : ''}
+      <div class="service-num">${String(index + 1).padStart(2, '0')}</div>
+      <div class="service-icon-wrap">${escapeHtml(service.icon || '')}</div>
+      <h3 class="service-name">${escapeHtml(service.title || 'Untitled Service')}</h3>
+      <p class="service-desc">${escapeHtml(service.shortDescription || service.desc || '')}</p>
+      ${service.longDescription ? `<p class="service-long">${escapeHtml(service.longDescription)}</p>` : ''}
+      <div class="service-price">
+        ${escapeHtml(promoPrice || price)}
+        ${promoPrice ? `<del>${escapeHtml(price)}</del>` : ''}
+      </div>
+      ${badges ? `<div class="service-badges">${badges}</div>` : ''}
+      <div class="service-details">
+        ${promo ? renderPromotion(promo) : ''}
+        ${renderPaymentStructure(payment, pricing.currency)}
+      </div>
+      <a class="btn-wa-service"
+         href="https://wa.me/${waNumber}?text=${encodeURIComponent(message)}"
+         target="_blank" rel="noopener">
+        <i class="fab fa-whatsapp"></i> Book This Service
+      </a>
+    </article>
+  `;
+}
+
+function getDisplayPrice(service) {
+  const pricing = service.pricing || {};
+  return pricing.displayPrice || service.price || formatMoney(pricing.baseAmount, pricing.currency);
+}
+
+function buildServiceBadges(service, payment, promo) {
+  const badges = [];
+  if (promo) badges.push(`Promo: ${promo.promoCode || 'Active'}`);
+  if (payment.requiresDeposit) badges.push(`Deposit ${formatDeposit(payment)}`);
+  if (payment.installmentsAllowed) badges.push('Installments');
+  if (getServiceMedia(service).length > 1) badges.push(`${getServiceMedia(service).length} media`);
+  return badges.map(text => `<span class="service-badge">${escapeHtml(text)}</span>`).join('');
+}
+
+function renderPromotion(promo) {
+  const discount = promo.discountType === 'percentage'
+    ? `${promo.discountValue}% off`
+    : `${formatMoney(promo.discountValue)} off`;
+  return `<div>
+    <div class="service-detail-title">Promotion</div>
+    <div class="service-detail-text">${escapeHtml(discount)}${promo.promoCode ? ` with code ${escapeHtml(promo.promoCode)}` : ''}</div>
+  </div>`;
+}
+
+function renderPaymentStructure(payment, currency) {
+  if (!payment || typeof payment !== 'object') return '';
+  const depositText = payment.requiresDeposit
+    ? `Deposit required: ${formatDeposit(payment, currency)}.`
+    : 'No deposit required.';
+  const installmentText = payment.installmentsAllowed ? 'Installments available.' : 'Installments not listed.';
+  const milestones = Array.isArray(payment.milestones) ? payment.milestones : [];
+  return `<div>
+    <div class="service-detail-title">Payment</div>
+    <div class="service-detail-text">${escapeHtml(depositText)} ${escapeHtml(installmentText)}</div>
+    ${milestones.length ? `<ul class="milestone-list">${milestones.map(m => `
+      <li><span>${escapeHtml(m.label || 'Milestone')}</span><span>${escapeHtml(formatMilestoneAmount(m, currency))}</span></li>
+    `).join('')}</ul>` : ''}
+  </div>`;
+}
+
+function formatDeposit(payment, currency) {
+  if (payment.depositType === 'percentage') return `${payment.depositValue || 0}%`;
+  if (payment.depositType === 'fixed') return formatMoney(payment.depositValue, currency);
+  return 'not required';
+}
+
+function formatMilestoneAmount(milestone, currency) {
+  const pieces = [];
+  if (milestone.percentage != null) pieces.push(`${milestone.percentage}%`);
+  if (milestone.amount != null) pieces.push(formatMoney(milestone.amount, currency));
+  return pieces.join(' / ');
+}
+
+function formatMoney(amount, currency = 'NGN') {
+  if (amount == null || amount === '') return '';
+  try {
+    return new Intl.NumberFormat('en-NG', { style: 'currency', currency: currency || 'NGN', maximumFractionDigits: 0 }).format(Number(amount));
+  } catch (error) {
+    return `${currency || 'NGN'} ${Number(amount).toLocaleString('en-NG')}`;
+  }
+}
+
+function getServiceMedia(service) {
+  const media = [];
+  const legacyImage = service.image ? [service.image] : [];
+  const legacyVideo = service.video ? [service.video] : [];
+  const images = Array.isArray(service.images) ? service.images : (service.images ? [service.images] : []);
+  const videos = Array.isArray(service.videos) ? service.videos : (service.videos ? [service.videos] : []);
+  legacyImage.concat(images).forEach(url => media.push({ type: 'image', url }));
+  legacyVideo.concat(videos).forEach(item => {
+    if (typeof item === 'string') media.push({ type: inferMediaType(item), url: item });
+    else if (item && (item.embedUrl || item.url)) media.push({ type: 'video', url: item.embedUrl || item.url, title: item.title || '' });
+  });
+  return media.filter(item => item.url);
+}
+
+function renderServiceMediaSlider(mediaItems, title, index) {
+  const isMulti = mediaItems.length > 1;
+  const slides = mediaItems.map(media => renderServiceMediaSlide(media, title)).join('');
+  const nav = isMulti
+    ? `<button class="service-slider-nav service-slider-prev" type="button" aria-label="Previous service media" onclick="moveServiceMedia(${index},-1)"><i class="fas fa-chevron-left"></i></button>
+       <button class="service-slider-nav service-slider-next" type="button" aria-label="Next service media" onclick="moveServiceMedia(${index},1)"><i class="fas fa-chevron-right"></i></button>`
+    : '';
+  const dots = isMulti
+    ? `<div class="service-slider-dots">${mediaItems.map((_, i) => `<button class="service-dot ${i === 0 ? 'active' : ''}" type="button" aria-label="Show media ${i + 1}" onclick="setServiceMedia(${index},${i})"></button>`).join('')}</div>`
+    : '';
+  const counter = isMulti ? `<div class="service-slide-counter" id="service-counter-${index}">1 / ${mediaItems.length}</div>` : '';
+
+  return `<div class="service-media" data-service-media="${index}" data-current="0" data-total="${mediaItems.length}" ontouchstart="serviceTouchStart(event,${index})" ontouchmove="serviceTouchMove(event,${index})" ontouchend="serviceTouchEnd(event,${index})">
+    ${nav}${counter}<div class="service-media-track" id="service-track-${index}">${slides}</div>${dots}
+  </div>`;
+}
+
+function renderServiceMediaSlide(media, title) {
+  const url = media.url;
+  if (isDirectVideoUrl(url)) {
+    return `<video controls muted preload="metadata" src="${escapeHtml(url)}" title="${escapeHtml(media.title || title)}"></video>`;
+  }
+  if (media.type === 'video' || isVideoUrl(url)) {
+    return `<iframe src="${escapeHtml(transformVideoUrl(url))}" title="${escapeHtml(media.title || title)}" allowfullscreen loading="lazy"></iframe>`;
+  }
+  return `<img src="${escapeHtml(url)}" alt="${escapeHtml(title)}" loading="lazy">`;
+}
+
+function inferMediaType(url) {
+  return isVideoUrl(url) ? 'video' : 'image';
+}
+
+function isVideoUrl(url) {
+  const value = String(url || '').toLowerCase();
+  return value.includes('youtube.com') || value.includes('youtu.be') || value.includes('embed') || value.includes('vimeo.com') || isDirectVideoUrl(value);
+}
+
+function isDirectVideoUrl(url) {
+  return /\.(mp4|webm|ogv)(\?|#|$)/i.test(String(url || ''));
+}
+
+function transformVideoUrl(url) {
+  const value = String(url || '');
+  if (value.includes('youtu.be/')) {
+    const id = value.split('youtu.be/')[1].split(/[?&]/)[0];
+    return `https://www.youtube.com/embed/${id}?rel=0`;
+  }
+  const watchMatch = value.match(/[?&]v=([^&]+)/);
+  if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}?rel=0`;
+  if (value.includes('youtube.com/embed/') && !value.includes('?')) return `${value}?rel=0`;
+  return value;
+}
+
+window.setServiceMedia = function(index, position) {
+  const media = document.querySelector(`[data-service-media="${index}"]`);
+  const track = document.getElementById(`service-track-${index}`);
+  if (!media || !track) return;
+  const total = parseInt(media.dataset.total || '1', 10);
+  const next = (position + total) % total;
+  media.dataset.current = next;
+  track.style.transform = `translateX(-${next * 100}%)`;
+  media.querySelectorAll('.service-dot').forEach((dot, i) => dot.classList.toggle('active', i === next));
+  const counter = document.getElementById(`service-counter-${index}`);
+  if (counter) counter.textContent = `${next + 1} / ${total}`;
+};
+
+window.moveServiceMedia = function(index, direction) {
+  const media = document.querySelector(`[data-service-media="${index}"]`);
+  if (!media) return;
+  const current = parseInt(media.dataset.current || '0', 10);
+  window.setServiceMedia(index, current + direction);
+};
+
+const serviceTouchX = {};
+const serviceTouchY = {};
+window.serviceTouchStart = function(event, index) {
+  serviceTouchX[index] = event.changedTouches[0].screenX;
+  serviceTouchY[index] = event.changedTouches[0].screenY;
+};
+window.serviceTouchMove = function(event, index) {
+  const dx = Math.abs(event.changedTouches[0].screenX - serviceTouchX[index]);
+  const dy = Math.abs(event.changedTouches[0].screenY - serviceTouchY[index]);
+  if (dx > dy) event.preventDefault();
+};
+window.serviceTouchEnd = function(event, index) {
+  const dx = event.changedTouches[0].screenX - serviceTouchX[index];
+  if (Math.abs(dx) > 48) window.moveServiceMedia(index, dx < 0 ? 1 : -1);
+};
+
+function hydrateStudioContact(studio) {
+  if (!studio) return;
+  const contact = studio.contact || {};
+  const social = studio.social || {};
+  const instagram = Array.isArray(social.instagram) ? social.instagram[0] : social.instagram;
+  const whatsapp = contact.whatsapp || studio.whatsapp || waNumber;
+  const email = contact.email || studio.email || '';
+  const website = contact.website || studio.website || '';
+  waNumber = whatsapp.replace(/\D/g, '') || waNumber;
+  const waHref = `https://wa.me/${waNumber}`;
+  document.querySelectorAll('a[href^="https://wa.me/"]').forEach(link => link.href = waHref);
+  if (studio.location) document.getElementById('footer-location').textContent = studio.location;
+  document.getElementById('contact-details').innerHTML = `
+    ${studio.location ? `<div class="contact-item"><div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div><div><div class="contact-item-label">Location</div><div class="contact-item-value">${escapeHtml(studio.location)}</div></div></div>` : ''}
+    <div class="contact-item"><div class="contact-icon"><i class="fab fa-whatsapp"></i></div><div><div class="contact-item-label">WhatsApp</div><div class="contact-item-value"><a href="${waHref}" target="_blank">${escapeHtml(whatsapp)}</a></div></div></div>
+    ${email ? `<div class="contact-item"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div><div class="contact-item-label">Email</div><div class="contact-item-value"><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></div></div></div>` : ''}
+    ${instagram ? `<div class="contact-item"><div class="contact-icon"><i class="fab fa-instagram"></i></div><div><div class="contact-item-label">Instagram</div><div class="contact-item-value"><a href="${escapeHtml(instagram)}" target="_blank">${escapeHtml(instagram.replace(/^https?:\/\//,''))}</a></div></div></div>` : ''}
+    ${website ? `<div class="contact-item"><div class="contact-icon"><i class="fas fa-globe"></i></div><div><div class="contact-item-label">Website</div><div class="contact-item-value"><a href="${escapeHtml(website)}" target="_blank">${escapeHtml(website.replace(/^https?:\/\//,''))}</a></div></div></div>` : ''}
+  `;
+  buildWaLink();
+}
+
 /* ── BOOKING FORM → WHATSAPP ── */
-document.getElementById('wa-submit').addEventListener('click', e => {
-  e.preventDefault();
-  const name    = (document.getElementById('name').value || 'a prospective client').trim();
-  const service = document.getElementById('service-select').value;
-  const extra   = document.getElementById('extra').value.trim();
-  let text = `Hello Royal Priesthood Studio! My name is ${name}. I'd like to book your *${service}* service.`;
-  if (extra) text += `\n\nAdditional notes: ${extra}`;
-  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`, '_blank');
-});
+function buildWaLink() {
+  const fname = document.getElementById('cf-fname').value.trim();
+  const lname = document.getElementById('cf-lname').value.trim();
+  const phone = document.getElementById('cf-phone').value.trim();
+  const service = document.getElementById('cf-service').value;
+  const message = document.getElementById('cf-message').value.trim();
+  const name = [fname, lname].filter(Boolean).join(' ') || 'A client';
+  let text = `Hello Royal Priesthood Studio!\n\nMy name is *${name}*.`;
+  if (phone) text += `\nPhone: ${phone}`;
+  if (service) text += `\nService: ${service}`;
+  if (message) text += `\n\n${message}`;
+  document.getElementById('btn-wa-contact').href = `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
+}
+
+['cf-fname','cf-lname','cf-phone','cf-service','cf-message'].forEach(id => document.getElementById(id).addEventListener('input', buildWaLink));
+
+function escapeHtml(value) {
+  return String(value || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 
 loadServices();
 </script>

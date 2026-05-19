@@ -109,6 +109,7 @@
   .about-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center;}
   .about-visual{position:relative;height:560px;}
   .about-frame-1{position:absolute;inset:0;border:1px solid rgba(201,168,76,.25);background:linear-gradient(135deg,var(--charcoal),var(--mid));display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .about-frame-1 img{width:100%;height:100%;object-fit:cover;display:block;opacity:.86;}
   .about-frame-inner{width:80%;height:80%;border:1px solid rgba(201,168,76,.15);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;}
   .about-icon{font-size:64px;opacity:.3;}
   .about-placeholder-text{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.4em;color:var(--muted);text-transform:uppercase;}
@@ -134,16 +135,18 @@
   .service-card{background:var(--charcoal);padding:48px 36px;position:relative;overflow:hidden;transition:background .4s;}
   .service-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s;}
   .service-card:hover{background:var(--mid);}.service-card:hover::before{transform:scaleX(1);}
-  .service-media-wrap{width:100%;margin-bottom:24px;display:none;}
+  .service-media-wrap{width:100%;aspect-ratio:16/9;margin-bottom:24px;display:none;background:#000;overflow:hidden;border:1px solid rgba(201,168,76,.1);}
   .service-media-wrap.visible{display:block;}
-  .service-media-wrap img{width:100%;aspect-ratio:16/9;object-fit:cover;border:1px solid rgba(201,168,76,.1);}
-  .service-media-wrap iframe{width:100%;aspect-ratio:16/9;border:none;}
+  .service-media-wrap img,.service-media-wrap iframe,.service-media-wrap video{width:100%;height:100%;object-fit:cover;border:none;display:block;}
   .service-num{font-family:'Cinzel Decorative',cursive;font-size:11px;color:rgba(201,168,76,.3);letter-spacing:.2em;margin-bottom:28px;}
   .service-icon-wrap{width:64px;height:64px;border:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;margin-bottom:24px;font-size:28px;transition:border-color .3s,background .3s;color:var(--gold);}
   .service-card:hover .service-icon-wrap{border-color:var(--gold);background:rgba(201,168,76,.08);}
   .service-name{font-family:'Cinzel',serif;font-size:14px;font-weight:700;letter-spacing:.08em;color:var(--white);margin-bottom:10px;text-transform:uppercase;}
   .service-desc{font-size:15px;line-height:1.7;color:var(--muted);font-weight:300;margin-bottom:14px;}
   .service-price{font-family:'Cinzel',serif;font-size:14px;color:var(--gold);margin-bottom:24px;}
+  .service-price del{display:block;color:var(--muted);font-size:11px;margin-top:4px;opacity:.75;}
+  .service-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+  .service-badge{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-light);border:1px solid rgba(201,168,76,.2);padding:6px 8px;background:rgba(201,168,76,.06);}
   .btn-wa-service{display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;background:rgba(37,211,102,.1);color:#25D366;border:1px solid rgba(37,211,102,.25);padding:14px 20px;text-decoration:none;transition:background .3s,border-color .3s;width:100%;}
   .btn-wa-service:hover{background:rgba(37,211,102,.2);border-color:#25D366;}
 
@@ -171,18 +174,18 @@
   .gallery-item:last-child:nth-child(odd) .gallery-media-wrap{aspect-ratio:16/9;}
 
   .slider-container{display:flex;height:100%;transition:transform .5s cubic-bezier(.23,1,.32,1);will-change:transform;}
-  .slider-container img,.slider-container iframe{min-width:100%;width:100%;height:100%;object-fit:cover;pointer-events:none;flex-shrink:0;}
-  .slider-container iframe{pointer-events:auto;}
+  .slider-container img,.slider-container iframe,.slider-container video{min-width:100%;width:100%;height:100%;object-fit:cover;pointer-events:none;flex-shrink:0;}
+  .slider-container iframe,.slider-container video{pointer-events:auto;}
 
   .slider-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.5);backdrop-filter:blur(4px);color:#fff;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;z-index:10;opacity:0;transition:opacity .3s;display:flex;align-items:center;justify-content:center;font-size:12px;}
   .gallery-item:hover .slider-nav{opacity:1;}
   .prev-btn{left:10px;}.next-btn{right:10px;}
 
   .slider-dots{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:11;}
-  .dot{width:6px;height:6px;background:rgba(255,255,255,.3);border-radius:50%;transition:.3s;cursor:pointer;}
+  .dot{width:6px;height:6px;background:rgba(255,255,255,.3);border:0;padding:0;border-radius:50%;transition:.3s;cursor:pointer;}
   .dot.active{background:var(--gold);transform:scale(1.3);}
 
-  .slide-counter{position:absolute;top:12px;right:12px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);color:var(--gold);padding:4px 10px;border-radius:20px;z-index:11;display:none;}
+  .slide-counter{position:absolute;top:12px;right:12px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);color:var(--gold);padding:4px 10px;border-radius:20px;z-index:11;display:block;}
   .gallery-item[data-total="1"] .slide-counter{display:none!important;}
 
   .gallery-item-body{padding:28px 32px;}
@@ -191,6 +194,19 @@
   .gallery-item-desc{font-size:15px;line-height:1.7;color:var(--muted);font-weight:300;}
 
   .gallery-cta{text-align:center;margin-top:60px;}
+
+  /* FAQ */
+  #faq{padding:120px 60px;background:var(--black);}
+  .faq-inner{max-width:1100px;margin:0 auto;}
+  .faq-header{text-align:center;margin-bottom:56px;}
+  .faq-header .section-label{justify-content:center;}
+  .faq-header .section-label::before{display:none;}
+  .faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;}
+  .faq-item{background:var(--charcoal);padding:28px 30px;border-top:1px solid rgba(201,168,76,.08);}
+  .faq-category{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+  .faq-question{font-family:'Cinzel',serif;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--white);line-height:1.45;margin-bottom:12px;}
+  .faq-answer{font-size:15px;line-height:1.7;color:var(--muted);font-weight:300;}
+  .faq-cta{text-align:center;margin-top:42px;}
 
   /* CONTACT */
   #contact{padding:140px 60px;background:var(--black);}
@@ -248,7 +264,7 @@
     .hero-eyebrow{font-size:9px;letter-spacing:.3em;}
 
     /* Sections — reduce horizontal padding */
-    #about,#services,#gallery,#contact{padding:80px 20px;}
+    #about,#services,#gallery,#faq,#contact{padding:80px 20px;}
 
     /* About */
     .about-inner{grid-template-columns:1fr;gap:60px;}
@@ -273,6 +289,9 @@
     .slide-counter{display:block;}
     .gallery-item-body{padding:20px 20px;}
 
+    /* FAQ */
+    .faq-grid{grid-template-columns:1fr;}
+
     /* Contact */
     .contact-inner{grid-template-columns:1fr;gap:48px;}
     .form-row{grid-template-columns:1fr;}
@@ -287,7 +306,7 @@
      SMALL PHONES — max-width: 420px
   ═══════════════════════════════════ */
   @media(max-width:420px){
-    #about,#services,#gallery,#contact{padding:60px 16px;}
+    #about,#services,#gallery,#faq,#contact{padding:60px 16px;}
     .hero-buttons{flex-direction:column;align-items:center;}
     .btn-primary,.btn-outline{width:100%;text-align:center;padding:16px 24px;}
     .about-stats{grid-template-columns:1fr;}
@@ -312,6 +331,8 @@
   <a href="#about"    onclick="closeMobile()">About</a>
   <a href="#services" onclick="closeMobile()">Services</a>
   <a href="#gallery"  onclick="closeMobile()">Gallery</a>
+  <a href="#faq"      onclick="closeMobile()">FAQ</a>
+  <a href="blog.html" onclick="closeMobile()">Blog</a>
   <a href="#contact"  onclick="closeMobile()">Contact</a>
   <a href="#" id="mobileThemeToggle" style="color:var(--gold);border-top:1px solid rgba(201,168,76,0.2);padding-top:20px;">Toggle Theme</a>
 </div>
@@ -323,6 +344,8 @@
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="blog.html">Blog</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><button class="theme-toggle" id="themeToggle" title="Switch Theme"><i class="fas fa-moon"></i></button></li>
   </ul>
@@ -433,6 +456,23 @@
 
 <div class="gold-divider"></div>
 
+<!-- ═══ FAQ ═══ -->
+<section id="faq">
+  <div class="faq-inner">
+    <div class="faq-header">
+      <div class="section-label reveal">Questions &amp; Answers</div>
+      <h2 class="section-title reveal reveal-delay-1">Studio <span class="gold">FAQ</span></h2>
+      <p class="section-body reveal reveal-delay-2" style="margin:12px auto 0;">Helpful answers before you book a session, event, or media project.</p>
+    </div>
+    <div class="faq-grid" id="faq-grid"></div>
+    <div class="faq-cta reveal reveal-delay-1">
+      <a href="#contact" class="btn-outline">Ask a Question</a>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
 <!-- ═══ CONTACT ═══ -->
 <section id="contact">
   <div class="contact-inner">
@@ -492,6 +532,8 @@
       <li><a href="#services">Services</a></li>
       <li><a href="services.html">All Services</a></li>
       <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="blog.html">Blog</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="footer-copy">© 2026 Royal Priesthood Studio. All rights reserved.</div>
@@ -597,20 +639,15 @@ function sessionPick(key, totalCount, pickCount) {
    GALLERY SLIDER
 ══════════════════════════════════════ */
 function buildSlider(item, idx){
-  const media  = item.media || (item.url ? [item.url] : []);
+  const media  = getMediaItems(item);
   const isMulti = media.length > 1;
 
-  const mediaHTML = media.map(url => {
-    if(url.includes('youtube.com') || url.includes('youtu.be') || url.includes('embed')) {
-      const src = url.includes('?') ? url : url + '?rel=0';
-      return `<iframe src="${src}" frameborder="0" allowfullscreen loading="lazy"></iframe>`;
-    }
-    return `<img src="${url}" alt="${item.title || ''}" loading="lazy"/>`;
-  }).join('');
+  const mediaHTML = media.length ? media.map(mediaItem => renderMediaSlide(mediaItem, item.title || '')).join('') :
+    `<div style="min-width:100%;display:flex;align-items:center;justify-content:center;color:var(--muted);padding:24px;">No media added</div>`;
 
   const dotsHTML = isMulti
     ? `<div class="slider-dots">${media.map((_,i) =>
-        `<span class="dot ${i===0?'active':''}" onclick="moveTo(${idx},${i})"></span>`
+        `<button class="dot ${i===0?'active':''}" type="button" aria-label="Show slide ${i + 1}" onclick="moveTo(${idx},${i})"></button>`
       ).join('')}</div>`
     : '';
 
@@ -624,7 +661,7 @@ function buildSlider(item, idx){
     : '';
 
   return `
-    <div class="gallery-item reveal" id="gal-${idx}" data-current="0" data-total="${media.length}">
+    <div class="gallery-item reveal" id="gal-${idx}" data-current="0" data-total="${Math.max(media.length, 1)}">
       <div class="gallery-media-wrap"
            ontouchstart="touchStart(event,${idx})"
            ontouchmove="touchMove(event,${idx})"
@@ -635,9 +672,9 @@ function buildSlider(item, idx){
         ${dotsHTML}
       </div>
       <div class="gallery-item-body">
-        ${item.date ? `<div class="gallery-item-date">${item.date}</div>` : ''}
-        <div class="gallery-item-title">${item.title || ''}</div>
-        <p class="gallery-item-desc">${item.desc || ''}</p>
+        ${item.date ? `<div class="gallery-item-date">${escapeHtml(item.date)}</div>` : ''}
+        <div class="gallery-item-title">${escapeHtml(item.title || '')}</div>
+        <p class="gallery-item-desc">${escapeHtml(item.shortDesc || item.desc || item.longDesc || '')}</p>
       </div>
     </div>`;
 }
@@ -673,25 +710,168 @@ window.touchEnd   = function(e, idx){
   if(Math.abs(dx) > 48) moveSlider(idx, dx < 0 ? 1 : -1);
 };
 
+function getMediaItems(item) {
+  const media = [];
+  const legacyMedia = Array.isArray(item.media) ? item.media : (item.media ? [item.media] : []);
+  const legacyImages = item.image ? [item.image] : [];
+  const legacyVideos = item.video ? [item.video] : [];
+  const images = Array.isArray(item.images) ? item.images : (item.images ? [item.images] : []);
+  const videos = Array.isArray(item.videos) ? item.videos : (item.videos ? [item.videos] : []);
+
+  legacyMedia.forEach(url => media.push({ type: inferMediaType(url), url }));
+  legacyImages.concat(images).forEach(url => media.push({ type: 'image', url }));
+  legacyVideos.concat(videos).forEach(video => {
+    if (typeof video === 'string') {
+      media.push({ type: inferMediaType(video), url: video });
+    } else if (video && (video.embedUrl || video.url)) {
+      media.push({ type: 'video', url: video.embedUrl || video.url, title: video.title || '' });
+    }
+  });
+  return media.filter(item => item.url);
+}
+
+function renderMediaSlide(mediaItem, title) {
+  const url = mediaItem.url;
+  if (isDirectVideoUrl(url)) {
+    return `<video controls muted preload="metadata" src="${escapeHtml(url)}" title="${escapeHtml(mediaItem.title || title)}"></video>`;
+  }
+  if (mediaItem.type === 'video' || isVideoUrl(url)) {
+    return `<iframe src="${escapeHtml(transformVideoUrl(url))}" title="${escapeHtml(mediaItem.title || title)}" frameborder="0" allowfullscreen loading="lazy"></iframe>`;
+  }
+  return `<img src="${escapeHtml(url)}" alt="${escapeHtml(title)}" loading="lazy"/>`;
+}
+
+function inferMediaType(url) {
+  return isVideoUrl(url) ? 'video' : 'image';
+}
+
+function isVideoUrl(url) {
+  const value = String(url || '').toLowerCase();
+  return value.includes('youtube.com') || value.includes('youtu.be') || value.includes('embed') || value.includes('vimeo.com') || isDirectVideoUrl(value);
+}
+
+function isDirectVideoUrl(url) {
+  return /\.(mp4|webm|ogv)(\?|#|$)/i.test(String(url || ''));
+}
+
+function transformVideoUrl(url) {
+  const value = String(url || '');
+  if (value.includes('youtu.be/')) {
+    const id = value.split('youtu.be/')[1].split(/[?&]/)[0];
+    return `https://www.youtube.com/embed/${id}?rel=0`;
+  }
+  const match = value.match(/[?&]v=([^&]+)/);
+  if (match) return `https://www.youtube.com/embed/${match[1]}?rel=0`;
+  if (value.includes('youtube.com/embed/') && !value.includes('?')) return `${value}?rel=0`;
+  return value;
+}
+
+function getDisplayPrice(service) {
+  const pricing = service.pricing || {};
+  return pricing.displayPrice || service.price || formatMoney(pricing.baseAmount, pricing.currency);
+}
+
+function getPromoPrice(service) {
+  const pricing = service.pricing || {};
+  const promo = pricing.promotionDetails || null;
+  return promo && promo.calculatedAmount ? formatMoney(promo.calculatedAmount, pricing.currency) : '';
+}
+
+function formatMoney(amount, currency = 'NGN') {
+  if (amount == null || amount === '') return '';
+  try {
+    return new Intl.NumberFormat('en-NG', { style: 'currency', currency: currency || 'NGN', maximumFractionDigits: 0 }).format(Number(amount));
+  } catch (error) {
+    return `${currency || 'NGN'} ${Number(amount).toLocaleString('en-NG')}`;
+  }
+}
+
+function buildServicePreview(service, index, num) {
+  const media = getMediaItems(service)[0];
+  const price = getDisplayPrice(service);
+  const promoPrice = getPromoPrice(service);
+  const promo = service.pricing?.promotionDetails;
+  const payment = service.pricing?.paymentStructure || {};
+  const message = encodeURIComponent(service.message || `Hello, I'd like to book: ${service.title || 'a service'}`);
+  const badges = [
+    promo ? `Promo: ${promo.promoCode || 'Active'}` : '',
+    payment.requiresDeposit ? `Deposit ${payment.depositType === 'percentage' ? `${payment.depositValue}%` : formatMoney(payment.depositValue, service.pricing?.currency)}` : '',
+    payment.installmentsAllowed ? 'Installments' : ''
+  ].filter(Boolean).map(text => `<span class="service-badge">${escapeHtml(text)}</span>`).join('');
+
+  return `<div class="service-card reveal reveal-delay-${(index%3)+1}">
+    ${media ? `<div class="service-media-wrap visible">${renderMediaSlide(media, service.title || '')}</div>` : ''}
+    <div class="service-num">${String(index + 1).padStart(2,'0')}</div>
+    <div class="service-icon-wrap">${escapeHtml(service.icon || '')}</div>
+    <div class="service-name">${escapeHtml(service.title || '')}</div>
+    <p class="service-desc">${escapeHtml(service.shortDescription || service.desc || '')}</p>
+    ${price ? `<div class="service-price">${escapeHtml(promoPrice || price)}${promoPrice ? `<del>${escapeHtml(price)}</del>` : ''}</div>` : ''}
+    ${badges ? `<div class="service-badges">${badges}</div>` : ''}
+    <a class="btn-wa-service" href="https://wa.me/${num}?text=${message}" target="_blank">
+      <i class="fab fa-whatsapp"></i>&nbsp; Book This Service
+    </a>
+  </div>`;
+}
+
+function buildFaqPreview(faqs) {
+  const grid = document.getElementById('faq-grid');
+  if (!grid || !Array.isArray(faqs) || !faqs.length) return;
+  grid.innerHTML = faqs.slice(0, 6).map((item, index) => `
+    <article class="faq-item reveal reveal-delay-${(index % 3) + 1}">
+      ${item.category ? `<div class="faq-category">${escapeHtml(item.category)}</div>` : ''}
+      <h3 class="faq-question">${escapeHtml(item.question || '')}</h3>
+      <p class="faq-answer">${escapeHtml(item.answer || '')}</p>
+    </article>
+  `).join('');
+}
+
+function escapeHtml(value) {
+  return String(value || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 /* ══════════════════════════════════════
    JSON LOADER
 ══════════════════════════════════════ */
 async function j(path){ try{ const r=await fetch(path); if(!r.ok) throw 0; return r.json(); }catch{ return null; } }
 
 async function loadData(){
-  const [studio, services, gallery] = await Promise.all([
-    j('studio-info.json'), j('services.json'), j('gallery.json')
+  const [studio, services, gallery, faqs] = await Promise.all([
+    j('studio-info.json'), j('services.json'), j('gallery.json'), j('faq.json')
   ]);
 
   /* ── STUDIO INFO ── */
   if(studio){
-    waNumber = studio.whatsapp || '';
+    const contact = studio.contact || {};
+    const social = studio.social || {};
+    const instagram = Array.isArray(social.instagram) ? social.instagram[0] : social.instagram;
+    waNumber = contact.whatsapp || studio.whatsapp || '';
+    const email = contact.email || studio.email || '';
+    const website = contact.website || studio.website || '';
     const num = waNumber.replace(/\D/g,'');
     const waBase = `https://wa.me/${num}`;
 
+    if(studio.metaTitle) document.title = studio.metaTitle;
+    if(studio.metaDescription) {
+      let meta = document.querySelector('meta[name="description"]');
+      if(!meta) {
+        meta = document.createElement('meta');
+        meta.name = 'description';
+        document.head.appendChild(meta);
+      }
+      meta.content = studio.metaDescription;
+    }
+    if(studio.name) {
+      document.querySelector('.nav-logo').innerHTML = `${escapeHtml(studio.name)}<span>${escapeHtml(studio.businessCategory || studio.location || '')}</span>`;
+      document.querySelector('.footer-logo').firstChild.textContent = studio.name;
+    }
+    if(studio.heroHeadline) document.querySelector('.hero-title').innerHTML = escapeHtml(studio.heroHeadline).replace(/\s+/, '<br/><span class="gold">') + '</span>';
+    if(studio.heroSubheading) document.querySelector('.hero-subtitle').textContent = studio.heroSubheading;
     if(studio.tagline)     document.getElementById('hero-tagline').textContent    = studio.tagline;
     if(studio.description) document.getElementById('about-body').textContent      = studio.description;
     if(studio.location)    document.getElementById('footer-location').textContent = studio.location;
+    if(studio.heroImage) {
+      document.querySelector('.about-frame-1').innerHTML = `<img src="${escapeHtml(studio.heroImage)}" alt="${escapeHtml(studio.name || 'Royal Priesthood Studio')}" loading="lazy">`;
+    }
 
     document.getElementById('hero-wa-btn').href = waBase;
     document.getElementById('floatingWa').href  = waBase;
@@ -714,18 +894,22 @@ async function loadData(){
       <div class="contact-item">
         <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
         <div><div class="contact-item-label">WhatsApp</div>
-          <div class="contact-item-value"><a href="${waBase}" target="_blank">${studio.whatsapp}</a></div>
+          <div class="contact-item-value"><a href="${waBase}" target="_blank">${waNumber}</a></div>
         </div>
       </div>
-      ${studio.email?`<div class="contact-item">
+      ${email?`<div class="contact-item">
         <div class="contact-icon"><i class="fas fa-envelope"></i></div>
         <div><div class="contact-item-label">Email</div>
-          <div class="contact-item-value"><a href="mailto:${studio.email}">${studio.email}</a></div>
+          <div class="contact-item-value"><a href="mailto:${email}">${email}</a></div>
         </div>
       </div>`:''}
-      ${studio.instagram?`<div class="contact-item">
+      ${instagram?`<div class="contact-item">
         <div class="contact-icon"><i class="fab fa-instagram"></i></div>
-        <div><div class="contact-item-label">Instagram</div><div class="contact-item-value">${studio.instagram}</div></div>
+        <div><div class="contact-item-label">Instagram</div><div class="contact-item-value"><a href="${instagram}" target="_blank">${instagram.replace(/^https?:\/\//,'')}</a></div></div>
+      </div>`:''}
+      ${website?`<div class="contact-item">
+        <div class="contact-icon"><i class="fas fa-globe"></i></div>
+        <div><div class="contact-item-label">Website</div><div class="contact-item-value"><a href="${website}" target="_blank">${website.replace(/^https?:\/\//,'')}</a></div></div>
       </div>`:''}`;
     buildWaLink();
   }
@@ -739,30 +923,13 @@ async function loadData(){
 
     services.forEach(s => {
       const o = document.createElement('option');
-      o.value = s.title; o.textContent = s.title; sel.appendChild(o);
+      o.value = s.title; o.textContent = `${s.title}${getDisplayPrice(s) ? ` - ${getDisplayPrice(s)}` : ''}`; sel.appendChild(o);
     });
 
     const pickedIndices = sessionPick('rps-services-indices', services.length, SERVICES_LIMIT);
     const preview = pickedIndices.map(i => services[i]);
 
-    grid.innerHTML = preview.map((s,i) => {
-      const n = String(i+1).padStart(2,'0');
-      let mediaHTML = '';
-      if(s.video)       mediaHTML = `<div class="service-media-wrap visible"><iframe src="${s.video}" allowfullscreen loading="lazy"></iframe></div>`;
-      else if(s.image)  mediaHTML = `<div class="service-media-wrap visible"><img src="${s.image}" alt="${s.title}" loading="lazy"/></div>`;
-      const msg = encodeURIComponent(s.message || `Hello, I'd like to book: ${s.title}`);
-      return `<div class="service-card reveal reveal-delay-${(i%3)+1}">
-        ${mediaHTML}
-        <div class="service-num">${n}</div>
-        <div class="service-icon-wrap">${s.icon||'📸'}</div>
-        <div class="service-name">${s.title}</div>
-        <p class="service-desc">${s.desc}</p>
-        ${s.price?`<div class="service-price">${s.price}</div>`:''}
-        <a class="btn-wa-service" href="https://wa.me/${num}?text=${msg}" target="_blank">
-          <i class="fab fa-whatsapp"></i>&nbsp; Book This Service
-        </a>
-      </div>`;
-    }).join('');
+    grid.innerHTML = preview.map((s,i) => buildServicePreview(s, i, num)).join('');
 
     if(services.length > SERVICES_LIMIT){
       const ctaEl = document.getElementById('services-cta');
@@ -777,6 +944,8 @@ async function loadData(){
     const preview = pickedIndices.map(i => gallery[i]);
     document.getElementById('gallery-grid').innerHTML = preview.map((item, idx) => buildSlider(item, idx)).join('');
   }
+
+  buildFaqPreview(faqs);
 
   watchAll();
 }

@@ -60,6 +60,13 @@
   .preview-card img, .preview-card iframe, .preview-card video{width:100%;display:block;height:220px;object-fit:cover;}
   .preview-card a{display:block;padding:12px;font-size:13px;color:var(--muted);text-decoration:none;word-break:break-all;}
   .preview-footer{padding:12px 14px;background:rgba(255,255,255,.03);font-size:13px;color:var(--muted);}
+  .link-row{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:start;margin-bottom:8px;}
+  .link-status{grid-column:1 / -1;font-size:12px;color:var(--muted);line-height:1.45;min-height:18px;}
+  .link-status.ok{color:#b7f0ad;}
+  .link-status.bad{color:#ffb9b9;}
+  .link-status.warn{color:#f3d87f;}
+  .mini-button{padding:8px 10px;font-size:10px;letter-spacing:.18em;border-radius:8px;white-space:nowrap;}
+  input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px;}
   .raw-panel{display:grid;gap:12px;}
   .raw-panel textarea{min-height:300px;font-family:monospace;white-space:pre-wrap;word-break:break-word;background:rgba(0,0,0,.4);}
   .message{padding:14px 16px;border-radius:14px;font-size:14px;line-height:1.65;}
@@ -75,6 +82,8 @@
     <nav>
       <a href="json-editor.html?dataset=gallery" class="nav-link" id="link-gallery">Gallery</a>
       <a href="json-editor.html?dataset=services" class="nav-link" id="link-services">Services</a>
+      <a href="json-editor.html?dataset=blog" class="nav-link" id="link-blog">Blog</a>
+      <a href="json-editor.html?dataset=faq" class="nav-link" id="link-faq">FAQ</a>
       <a href="json-editor.html?dataset=studio" class="nav-link" id="link-studio">Studio Info</a>
     </nav>
   </header>
@@ -108,6 +117,18 @@ const datasetConfigs = {
     itemLabel: 'Service',
     rootType: 'array',
   },
+  blog: {
+    title: 'Blog',
+    file: 'blog.json',
+    itemLabel: 'Blog Post',
+    rootType: 'array',
+  },
+  faq: {
+    title: 'FAQ',
+    file: 'faq.json',
+    itemLabel: 'FAQ Item',
+    rootType: 'faqs',
+  },
   studio: {
     title: 'Studio Info',
     file: 'studio-info.json',
@@ -132,6 +153,8 @@ const copyBtn = document.getElementById('copyBtn');
 const navLinks = {
   gallery: document.getElementById('link-gallery'),
   services: document.getElementById('link-services'),
+  blog: document.getElementById('link-blog'),
+  faq: document.getElementById('link-faq'),
   studio: document.getElementById('link-studio')
 };
 
@@ -263,6 +286,10 @@ function renderEditor() {
     left.appendChild(createGalleryForm());
   } else if (datasetKey === 'services') {
     left.appendChild(createServicesForm());
+  } else if (datasetKey === 'blog') {
+    left.appendChild(createBlogForm());
+  } else if (datasetKey === 'faq') {
+    left.appendChild(createFaqForm());
   } else if (datasetKey === 'studio') {
     left.appendChild(createStudioForm());
   }
@@ -289,7 +316,16 @@ function createGalleryForm() {
 
   panel.append(header, body);
   header.querySelector('#addItemBtn').addEventListener('click', () => {
-    data.push({ title: 'New title', date: 'New date', desc: 'New description', media: [] });
+    data.push({ 
+      slug: 'new-item', 
+      title: 'New title', 
+      date: 'New date', 
+      category: 'Category',
+      shortDesc: 'Short description', 
+      longDesc: 'Long description',
+      images: [], 
+      videos: [] 
+    });
     renderEditor();
   });
   return panel;
@@ -298,21 +334,92 @@ function createGalleryForm() {
 function createGalleryItemEditor(item, index) {
   const group = document.createElement('fieldset');
   group.className = 'field-group';
+  
+  let imagesHtml = '<div style="margin-top:12px; padding:12px; background:rgba(0,0,0,.2); border-radius:8px;"><p style="margin:0 0 10px; font-size:12px; color:var(--accent);">Images</p>';
+  const images = Array.isArray(item.images) ? item.images : (item.images ? [item.images] : []);
+  images.forEach((url, imgIdx) => {
+    imagesHtml += `<div style="display:grid; grid-template-columns:1fr auto; gap:8px; margin-bottom:8px; align-items:start;">
+      <input type="text" data-path="${index}.images.${imgIdx}" value="${escapeHtml(url || '')}" placeholder="Image URL" style="padding:6px; border:1px solid rgba(255,255,255,.05); border-radius:4px; background:rgba(0,0,0,.3); color:var(--text); font-size:12px;" />
+      <button class="btn-secondary" type="button" data-action="delete-image" data-index="${index}" data-img="${imgIdx}" style="padding:6px 10px; font-size:11px; white-space:nowrap;">Remove</button>
+    </div>`;
+  });
+  imagesHtml += `<button class="btn-secondary" type="button" data-action="add-image" data-index="${index}" style="margin-top:8px; width:100%; padding:8px; font-size:11px;">Add image</button></div>`;
+  
+  let videosHtml = '<div style="margin-top:12px; padding:12px; background:rgba(0,0,0,.2); border-radius:8px;"><p style="margin:0 0 10px; font-size:12px; color:var(--accent);">Videos</p>';
+  const videos = Array.isArray(item.videos) ? item.videos : (item.videos ? [item.videos] : []);
+  videos.forEach((video, vidIdx) => {
+    const provider = typeof video === 'object' ? (video.provider || '') : '';
+    const embedUrl = typeof video === 'object' ? (video.embedUrl || '') : '';
+    const title = typeof video === 'object' ? (video.title || '') : '';
+    videosHtml += `<div style="margin-bottom:12px; padding:10px; background:rgba(255,255,255,.02); border-radius:6px; border-left:3px solid var(--accent);">
+      <div style="display:grid; grid-template-columns:1fr auto; gap:8px; margin-bottom:6px; align-items:start;">
+        <input type="text" data-path="${index}.videos.${vidIdx}.provider" placeholder="Provider (youtube/vimeo)" value="${escapeHtml(provider)}" style="padding:6px; border:1px solid rgba(255,255,255,.05); border-radius:4px; background:rgba(0,0,0,.3); color:var(--text); font-size:11px;" />
+        <button class="btn-secondary" type="button" data-action="delete-video" data-index="${index}" data-vid="${vidIdx}" style="padding:6px 10px; font-size:11px; white-space:nowrap;">Remove</button>
+      </div>
+      <input type="text" data-path="${index}.videos.${vidIdx}.embedUrl" placeholder="Embed URL" value="${escapeHtml(embedUrl)}" style="padding:6px; border:1px solid rgba(255,255,255,.05); border-radius:4px; background:rgba(0,0,0,.3); color:var(--text); font-size:11px; width:100%; margin-bottom:6px;" />
+      <input type="text" data-path="${index}.videos.${vidIdx}.title" placeholder="Video title" value="${escapeHtml(title)}" style="padding:6px; border:1px solid rgba(255,255,255,.05); border-radius:4px; background:rgba(0,0,0,.3); color:var(--text); font-size:11px; width:100%;" />
+    </div>`;
+  });
+  videosHtml += `<button class="btn-secondary" type="button" data-action="add-video" data-index="${index}" style="margin-top:8px; width:100%; padding:8px; font-size:11px;">Add video</button><button class="btn-secondary" type="button" data-action="sync-media" data-index="${index}" style="margin-top:6px; width:100%; padding:8px; font-size:11px; background:rgba(201,168,76,.15);">Sync & preview</button></div>`;
+  
   group.innerHTML = `
     <div class="item-row-header"><h3>Item ${index + 1}</h3><button class="btn-secondary" type="button" data-action="delete" data-index="${index}">Delete</button></div>
+    <label>Slug<input type="text" data-path="${index}.slug" value="${escapeHtml(item.slug || '')}" /></label>
     <label>Title<input type="text" data-path="${index}.title" value="${escapeHtml(item.title || '')}" /></label>
     <label>Date<input type="text" data-path="${index}.date" value="${escapeHtml(item.date || '')}" /></label>
-    <label>Description<textarea data-path="${index}.desc">${escapeHtml(item.desc || '')}</textarea></label>
-    <label>Media URLs (one per line)<textarea data-path="${index}.media">${escapeHtml(mediaToText(item.media))}</textarea></label>
-    <div class="preview-grid">${renderMediaPreviews(item.media)}</div>
+    <label>Category<input type="text" data-path="${index}.category" value="${escapeHtml(item.category || '')}" /></label>
+    <label>Short Description<textarea data-path="${index}.shortDesc">${escapeHtml(item.shortDesc || '')}</textarea></label>
+    <label>Long Description<textarea data-path="${index}.longDesc">${escapeHtml(item.longDesc || '')}</textarea></label>
+    ${imagesHtml}
+    ${videosHtml}
+    <div class="preview-grid">${renderMediaPreviews(item.images)}${Array.isArray(item.videos) ? item.videos.map(v => {
+      const url = typeof v === 'object' ? v.embedUrl : v;
+      return renderMediaPreview(url);
+    }).join('') : ''}</div>
   `;
-  group.querySelectorAll('input, textarea').forEach(el => {
+  
+  group.querySelectorAll('input[data-path], textarea[data-path]').forEach(el => {
     el.addEventListener('input', handleFieldUpdate);
   });
+  
+  group.querySelectorAll('[data-action="delete-image"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const imgIdx = parseInt(btn.dataset.img);
+      data[index].images.splice(imgIdx, 1);
+      renderEditor();
+    });
+  });
+  
+  group.querySelectorAll('[data-action="delete-video"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const vidIdx = parseInt(btn.dataset.vid);
+      data[index].videos.splice(vidIdx, 1);
+      renderEditor();
+    });
+  });
+  
+  group.querySelector('[data-action="add-image"]').addEventListener('click', () => {
+    if (!Array.isArray(data[index].images)) data[index].images = [];
+    data[index].images.push('');
+    renderEditor();
+  });
+  
+  group.querySelector('[data-action="add-video"]').addEventListener('click', () => {
+    if (!Array.isArray(data[index].videos)) data[index].videos = [];
+    data[index].videos.push({ provider: 'youtube', embedUrl: '', title: '' });
+    renderEditor();
+  });
+  
+  group.querySelector('[data-action="sync-media"]').addEventListener('click', () => {
+    renderEditor();
+    showMessage('Media links synced and previewing.', 'success');
+  });
+  
   group.querySelector('[data-action="delete"]').addEventListener('click', () => {
     data.splice(index, 1);
     renderEditor();
   });
+  
   return group;
 }
 
@@ -331,7 +438,30 @@ function createServicesForm() {
 
   panel.append(header, body);
   header.querySelector('#addServiceBtn').addEventListener('click', () => {
-    data.push({ icon: '✨', title: 'New title', desc: 'New description', price: 'New price', image: '', video: '', message: 'New WhatsApp message' });
+    data.push({ 
+      id: 'new-service', 
+      icon: '✨', 
+      title: 'New Service', 
+      shortDescription: '', 
+      longDescription: '', 
+      pricing: { 
+        baseAmount: 0, 
+        currency: 'NGN', 
+        displayPrice: '', 
+        hasPromotion: false, 
+        promotionDetails: null, 
+        paymentStructure: { 
+          requiresDeposit: false, 
+          depositType: 'percentage', 
+          depositValue: 0, 
+          installmentsAllowed: false, 
+          milestones: [] 
+        } 
+      }, 
+      images: [], 
+      videos: [], 
+      message: '' 
+    });
     renderEditor();
   });
   return panel;
@@ -340,16 +470,229 @@ function createServicesForm() {
 function createServiceItemEditor(item, index) {
   const group = document.createElement('fieldset');
   group.className = 'field-group';
+  
+  let imagesHtml = '<div style="margin-top:12px; padding:12px; background:rgba(0,0,0,.2); border-radius:8px;"><p style="margin:0 0 10px; font-size:12px; color:var(--accent);">Images</p>';
+  const images = Array.isArray(item.images) ? item.images : (item.images ? [item.images] : []);
+  images.forEach((url, imgIdx) => {
+    imagesHtml += `<div style="display:grid; grid-template-columns:1fr auto; gap:8px; margin-bottom:8px; align-items:start;">
+      <input type="text" data-path="${index}.images.${imgIdx}" value="${escapeHtml(url || '')}" placeholder="Image URL" style="padding:6px; border:1px solid rgba(255,255,255,.05); border-radius:4px; background:rgba(0,0,0,.3); color:var(--text); font-size:12px;" />
+      <button class="btn-secondary" type="button" data-action="delete-image" data-index="${index}" data-img="${imgIdx}" style="padding:6px 10px; font-size:11px; white-space:nowrap;">Remove</button>
+    </div>`;
+  });
+  imagesHtml += `<button class="btn-secondary" type="button" data-action="add-image" data-index="${index}" style="margin-top:8px; width:100%; padding:8px; font-size:11px;">Add image</button></div>`;
+  
+  let videosHtml = '<div style="margin-top:12px; padding:12px; background:rgba(0,0,0,.2); border-radius:8px;"><p style="margin:0 0 10px; font-size:12px; color:var(--accent);">Videos</p>';
+  const videos = Array.isArray(item.videos) ? item.videos : (item.videos ? [item.videos] : []);
+  videos.forEach((url, vidIdx) => {
+    videosHtml += `<div style="display:grid; grid-template-columns:1fr auto; gap:8px; margin-bottom:8px; align-items:start;">
+      <input type="text" data-path="${index}.videos.${vidIdx}" value="${escapeHtml(url || '')}" placeholder="Video URL" style="padding:6px; border:1px solid rgba(255,255,255,.05); border-radius:4px; background:rgba(0,0,0,.3); color:var(--text); font-size:12px;" />
+      <button class="btn-secondary" type="button" data-action="delete-video" data-index="${index}" data-vid="${vidIdx}" style="padding:6px 10px; font-size:11px; white-space:nowrap;">Remove</button>
+    </div>`;
+  });
+  videosHtml += `<button class="btn-secondary" type="button" data-action="add-video" data-index="${index}" style="margin-top:8px; width:100%; padding:8px; font-size:11px;">Add video</button><button class="btn-secondary" type="button" data-action="sync-media" data-index="${index}" style="margin-top:6px; width:100%; padding:8px; font-size:11px; background:rgba(201,168,76,.15);">Sync & preview</button></div>`;
+  
   group.innerHTML = `
     <div class="item-row-header"><h3>Service ${index + 1}</h3><button class="btn-secondary" type="button" data-action="delete" data-index="${index}">Delete</button></div>
+    <label>ID<input type="text" data-path="${index}.id" value="${escapeHtml(item.id || '')}" /></label>
     <label>Icon<input type="text" class="small-input" data-path="${index}.icon" value="${escapeHtml(item.icon || '')}" /></label>
     <label>Title<input type="text" data-path="${index}.title" value="${escapeHtml(item.title || '')}" /></label>
-    <label>Description<textarea data-path="${index}.desc">${escapeHtml(item.desc || '')}</textarea></label>
-    <label>Price<input type="text" class="small-input" data-path="${index}.price" value="${escapeHtml(item.price || '')}" /></label>
-    <label>Image URL(s) (one per line)<textarea data-path="${index}.image">${escapeHtml(mediaToText(item.image))}</textarea></label>
-    <label>Video URL<input type="text" data-path="${index}.video" value="${escapeHtml(item.video || '')}" /></label>
+    <label>Short Description<textarea data-path="${index}.shortDescription">${escapeHtml(item.shortDescription || '')}</textarea></label>
+    <label>Long Description<textarea data-path="${index}.longDescription">${escapeHtml(item.longDescription || '')}</textarea></label>
+    <fieldset style="border:1px solid rgba(255,255,255,.1); padding:12px; border-radius:10px; margin-top:12px;">
+      <legend style="font-size:12px; color:var(--accent);">Pricing</legend>
+      <label>Base Amount<input type="text" class="small-input" data-path="${index}.pricing.baseAmount" value="${escapeHtml(item.pricing?.baseAmount || '')}" /></label>
+      <label>Currency<input type="text" class="small-input" data-path="${index}.pricing.currency" value="${escapeHtml(item.pricing?.currency || 'NGN')}" /></label>
+      <label>Display Price<input type="text" data-path="${index}.pricing.displayPrice" value="${escapeHtml(item.pricing?.displayPrice || '')}" /></label>
+      <label>Has Promotion<input type="text" class="small-input" data-path="${index}.pricing.hasPromotion" value="${String(item.pricing?.hasPromotion || 'false')}" placeholder="true/false" /></label>
+      <div style="margin-top:12px; padding:10px; background:rgba(0,0,0,.2); border-radius:8px;">
+        <p style="margin:0 0 10px; font-size:12px; color:var(--accent);">Promotion Details</p>
+        <label>Code<input type="text" data-path="${index}.pricing.promotionDetails.promoCode" value="${escapeHtml(item.pricing?.promotionDetails?.promoCode || '')}" /></label>
+        <label>Discount Type<input type="text" class="small-input" data-path="${index}.pricing.promotionDetails.discountType" value="${escapeHtml(item.pricing?.promotionDetails?.discountType || 'percentage')}" placeholder="percentage/fixed" /></label>
+        <label>Discount Value<input type="text" class="small-input" data-path="${index}.pricing.promotionDetails.discountValue" value="${escapeHtml(item.pricing?.promotionDetails?.discountValue || '')}" /></label>
+      </div>
+      <div style="margin-top:12px; padding:10px; background:rgba(0,0,0,.2); border-radius:8px;">
+        <p style="margin:0 0 10px; font-size:12px; color:var(--accent);">Payment Structure</p>
+        <label>Requires Deposit<input type="text" class="small-input" data-path="${index}.pricing.paymentStructure.requiresDeposit" value="${String(item.pricing?.paymentStructure?.requiresDeposit || 'false')}" placeholder="true/false" /></label>
+        <label>Deposit Type<input type="text" class="small-input" data-path="${index}.pricing.paymentStructure.depositType" value="${escapeHtml(item.pricing?.paymentStructure?.depositType || '')}" placeholder="percentage/fixed" /></label>
+        <label>Deposit Value<input type="text" class="small-input" data-path="${index}.pricing.paymentStructure.depositValue" value="${escapeHtml(item.pricing?.paymentStructure?.depositValue || '')}" /></label>
+        <label>Installments Allowed<input type="text" class="small-input" data-path="${index}.pricing.paymentStructure.installmentsAllowed" value="${String(item.pricing?.paymentStructure?.installmentsAllowed || 'false')}" placeholder="true/false" /></label>
+      </div>
+    </fieldset>
+    ${imagesHtml}
+    ${videosHtml}
     <label>WhatsApp Message<textarea data-path="${index}.message">${escapeHtml(item.message || '')}</textarea></label>
-    <div class="preview-grid">${renderMediaPreviews(item.image)}${item.video ? renderMediaPreview(item.video):''}</div>
+    <div class="preview-grid">${renderMediaPreviews(item.images)}${Array.isArray(item.videos) ? item.videos.map(v => renderMediaPreview(v)).join('') : ''}</div>
+  `;
+  
+  group.querySelectorAll('input[data-path], textarea[data-path]').forEach(el => {
+    el.addEventListener('input', handleFieldUpdate);
+  });
+  
+  group.querySelectorAll('[data-action="delete-image"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const imgIdx = parseInt(btn.dataset.img);
+      data[index].images.splice(imgIdx, 1);
+      renderEditor();
+    });
+  });
+  
+  group.querySelectorAll('[data-action="delete-video"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const vidIdx = parseInt(btn.dataset.vid);
+      data[index].videos.splice(vidIdx, 1);
+      renderEditor();
+    });
+  });
+  
+  group.querySelector('[data-action="add-image"]').addEventListener('click', () => {
+    if (!Array.isArray(data[index].images)) data[index].images = [];
+    data[index].images.push('');
+    renderEditor();
+  });
+  
+  group.querySelector('[data-action="add-video"]').addEventListener('click', () => {
+    if (!Array.isArray(data[index].videos)) data[index].videos = [];
+    data[index].videos.push('');
+    renderEditor();
+  });
+  
+  group.querySelector('[data-action="sync-media"]').addEventListener('click', () => {
+    renderEditor();
+    showMessage('Media links synced and previewing.', 'success');
+  });
+  
+  group.querySelector('[data-action="delete"]').addEventListener('click', () => {
+    data.splice(index, 1);
+    renderEditor();
+  });
+  
+  return group;
+}
+
+function createBlogForm() {
+  const panel = document.createElement('div');
+  panel.className = 'panel';
+  const header = document.createElement('div');
+  header.className = 'panel-heading';
+  header.innerHTML = `<h2>Blog Posts</h2><div class="panel-actions"><button class="btn-secondary" type="button" id="addBlogBtn">Add post</button></div>`;
+  const body = document.createElement('div');
+  body.className = 'editor-column';
+
+  data.forEach((item, index) => {
+    body.appendChild(createBlogItemEditor(item, index));
+  });
+
+  panel.append(header, body);
+  header.querySelector('#addBlogBtn').addEventListener('click', () => {
+    data.push({ 
+      postSlug: 'new-post', 
+      title: 'New Post', 
+      publishedDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }), 
+      author: '', 
+      featuredImage: '', 
+      summary: '', 
+      contentBlocks: [] 
+    });
+    renderEditor();
+  });
+  return panel;
+}
+
+function createBlogItemEditor(item, index) {
+  const group = document.createElement('fieldset');
+  group.className = 'field-group';
+  
+  let contentHtml = '<div style="margin-top:12px; padding:12px; background:rgba(0,0,0,.2); border-radius:8px;"><p style="margin:0 0 10px; font-size:12px; color:var(--accent);">Content Blocks</p>';
+  if (Array.isArray(item.contentBlocks)) {
+    item.contentBlocks.forEach((block, bIdx) => {
+      contentHtml += `<div style="margin-bottom:10px; padding:8px; background:rgba(255,255,255,.02); border-radius:6px; border-left:3px solid var(--accent);"><p style="margin:0 0 5px; font-size:11px; color:var(--muted);">Block ${bIdx + 1}: ${block.type || 'unknown'}</p>`;
+      if (block.type === 'paragraph' || block.type === 'heading' || block.type === 'blockquote') {
+        contentHtml += `<textarea data-path="${index}.contentBlocks.${bIdx}.value" style="width:100%; font-size:11px; min-height:60px; padding:6px; border:1px solid rgba(255,255,255,.05); border-radius:4px; background:rgba(0,0,0,.3); color:var(--text);">${escapeHtml(block.value || '')}</textarea>`;
+      } else if (block.type === 'inlineImage') {
+        contentHtml += `<input type="text" data-path="${index}.contentBlocks.${bIdx}.url" placeholder="Image URL" value="${escapeHtml(block.url || '')}" style="width:100%; margin-bottom:4px; padding:6px; border:1px solid rgba(255,255,255,.05); border-radius:4px; background:rgba(0,0,0,.3); color:var(--text);" />
+        <input type="text" data-path="${index}.contentBlocks.${bIdx}.caption" placeholder="Caption" value="${escapeHtml(block.caption || '')}" style="width:100%; padding:6px; border:1px solid rgba(255,255,255,.05); border-radius:4px; background:rgba(0,0,0,.3); color:var(--text);" />`;
+      } else if (block.type === 'embeddedVideo') {
+        contentHtml += `<input type="text" data-path="${index}.contentBlocks.${bIdx}.provider" placeholder="Provider (youtube/vimeo)" value="${escapeHtml(block.provider || '')}" style="width:100%; margin-bottom:4px; padding:6px; border:1px solid rgba(255,255,255,.05); border-radius:4px; background:rgba(0,0,0,.3); color:var(--text);" />
+        <input type="text" data-path="${index}.contentBlocks.${bIdx}.embedUrl" placeholder="Embed URL" value="${escapeHtml(block.embedUrl || '')}" style="width:100%; margin-bottom:4px; padding:6px; border:1px solid rgba(255,255,255,.05); border-radius:4px; background:rgba(0,0,0,.3); color:var(--text);" />
+        <input type="text" data-path="${index}.contentBlocks.${bIdx}.caption" placeholder="Caption" value="${escapeHtml(block.caption || '')}" style="width:100%; padding:6px; border:1px solid rgba(255,255,255,.05); border-radius:4px; background:rgba(0,0,0,.3); color:var(--text);" />`;
+      }
+      contentHtml += `<button class="btn-secondary" type="button" style="margin-top:6px; padding:4px 8px; font-size:11px; width:100%;" data-action="delete-block" data-index="${index}" data-block="${bIdx}">Remove block</button></div>`;
+    });
+  }
+  contentHtml += `<button class="btn-secondary" type="button" style="margin-top:8px; width:100%; padding:8px;" data-action="add-block" data-index="${index}">Add content block</button></div>`;
+  
+  group.innerHTML = `
+    <div class="item-row-header"><h3>Post ${index + 1}</h3><button class="btn-secondary" type="button" data-action="delete" data-index="${index}">Delete</button></div>
+    <label>Post Slug<input type="text" data-path="${index}.postSlug" value="${escapeHtml(item.postSlug || '')}" /></label>
+    <label>Title<input type="text" data-path="${index}.title" value="${escapeHtml(item.title || '')}" /></label>
+    <label>Published Date<input type="text" data-path="${index}.publishedDate" value="${escapeHtml(item.publishedDate || '')}" /></label>
+    <label>Author<input type="text" data-path="${index}.author" value="${escapeHtml(item.author || '')}" /></label>
+    <label>Featured Image URL<input type="text" data-path="${index}.featuredImage" value="${escapeHtml(item.featuredImage || '')}" /></label>
+    <label>Summary<textarea data-path="${index}.summary">${escapeHtml(item.summary || '')}</textarea></label>
+    ${contentHtml}
+    <div class="preview-grid">${renderMediaPreview(item.featuredImage)}</div>
+  `;
+  
+  group.querySelectorAll('input, textarea').forEach(el => {
+    el.addEventListener('input', handleFieldUpdate);
+  });
+  
+  group.querySelectorAll('[data-action="delete-block"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const bIdx = parseInt(btn.dataset.block);
+      data[index].contentBlocks.splice(bIdx, 1);
+      renderEditor();
+    });
+  });
+  
+  group.querySelectorAll('[data-action="add-block"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (!Array.isArray(data[index].contentBlocks)) data[index].contentBlocks = [];
+      data[index].contentBlocks.push({ type: 'paragraph', value: 'New content' });
+      renderEditor();
+    });
+  });
+  
+  group.querySelector('[data-action="delete"]').addEventListener('click', () => {
+    data.splice(index, 1);
+    renderEditor();
+  });
+  
+  return group;
+}
+
+function createFaqForm() {
+  const panel = document.createElement('div');
+  panel.className = 'panel';
+  const header = document.createElement('div');
+  header.className = 'panel-heading';
+  
+  let faqs = Array.isArray(data) ? data : [];
+  
+  header.innerHTML = `<h2>FAQ Items</h2><div class="panel-actions"><button class="btn-secondary" type="button" id="addFaqBtn">Add FAQ</button></div>`;
+  const body = document.createElement('div');
+  body.className = 'editor-column';
+
+  faqs.forEach((item, index) => {
+    body.appendChild(createFaqItemEditor(item, index));
+  });
+
+  panel.append(header, body);
+  header.querySelector('#addFaqBtn').addEventListener('click', () => {
+    data.push({ category: 'New Category', question: 'New question?', answer: 'New answer' });
+    renderEditor();
+  });
+  return panel;
+}
+
+function createFaqItemEditor(item, index) {
+  const group = document.createElement('fieldset');
+  group.className = 'field-group';
+  group.innerHTML = `
+    <div class="item-row-header"><h3>FAQ ${index + 1}</h3><button class="btn-secondary" type="button" data-action="delete" data-index="${index}">Delete</button></div>
+    <label>Category<input type="text" data-path="${index}.category" value="${escapeHtml(item.category || '')}" /></label>
+    <label>Question<input type="text" data-path="${index}.question" value="${escapeHtml(item.question || '')}" /></label>
+    <label>Answer<textarea data-path="${index}.answer">${escapeHtml(item.answer || '')}</textarea></label>
   `;
   group.querySelectorAll('input, textarea').forEach(el => {
     el.addEventListener('input', handleFieldUpdate);
@@ -380,21 +723,23 @@ function createStudioForm() {
     { key: 'description', label: 'Description', type: 'textarea' },
     { key: 'location', label: 'Location', type: 'text' },
     { key: 'address', label: 'Address', type: 'text' },
-    { key: 'website', label: 'Website', type: 'text' },
-    { key: 'whatsapp', label: 'WhatsApp', type: 'text' },
-    { key: 'email', label: 'Email', type: 'text' },
+    { key: 'contact.website', label: 'Website', type: 'url' },
+    { key: 'contact.whatsapp', label: 'WhatsApp', type: 'text' },
+    { key: 'contact.email', label: 'Email', type: 'email' },
     { key: 'businessCategory', label: 'Business Category', type: 'text' },
     { key: 'servicesSummary', label: 'Services Summary', type: 'textarea' }
   ];
 
   fields.forEach(field => {
-    body.appendChild(createStudioField(field, data[field.key] || ''));
+    body.appendChild(createStudioField(field, getDataPath(data, field.key) || ''));
   });
 
   body.appendChild(createStudioMediaField('logo', 'Logo URL'));
   body.appendChild(createStudioMediaField('heroImage', 'Hero Image URL'));
   body.appendChild(createStudioMediaField('ogImage', 'Open Graph Image URL'));
   body.appendChild(createStudioSocialSection());
+  body.appendChild(createStudioOperatingHoursSection());
+  body.appendChild(createStudioHolidaysSection());
 
   const statsSection = document.createElement('fieldset');
   statsSection.className = 'field-group';
@@ -415,23 +760,53 @@ function createStudioField(field, value) {
   const wrapper = document.createElement('label');
   if (field.type === 'textarea') {
     wrapper.innerHTML = `${field.label}<textarea data-path="${field.key}">${escapeHtml(value)}</textarea>`;
+  } else if (field.type === 'url' || field.type === 'email') {
+    wrapper.innerHTML = `${field.label}<div class="link-row"><input type="text" data-path="${field.key}" value="${escapeHtml(value)}" /><button class="btn-secondary mini-button" type="button" data-action="validate-link">Validate</button><a class="btn-secondary mini-button" href="${escapeHtml(value || '#')}" target="_blank" rel="noopener">Open</a></div><div class="link-status"></div>`;
   } else {
     wrapper.innerHTML = `${field.label}<input type="text" data-path="${field.key}" value="${escapeHtml(value)}" />`;
   }
   wrapper.querySelectorAll('input, textarea').forEach(el => el.addEventListener('input', handleFieldUpdate));
+  const validateBtn = wrapper.querySelector('[data-action="validate-link"]');
+  if (validateBtn) {
+    const input = wrapper.querySelector('input');
+    const openLink = wrapper.querySelector('a');
+    const status = wrapper.querySelector('.link-status');
+    input.addEventListener('input', () => {
+      openLink.href = normalizeOpenUrl(input.value);
+      status.textContent = '';
+      status.className = 'link-status';
+    });
+    validateBtn.addEventListener('click', () => validateLinkInput(input, status));
+  }
   return wrapper;
 }
 
 function createStudioMediaField(key, label) {
-  const wrapper = document.createElement('label');
+  const wrapper = document.createElement('div');
   const value = data[key] || '';
-  wrapper.innerHTML = `${label}<input type="text" data-path="${key}" value="${escapeHtml(value)}" />`;
+  wrapper.innerHTML = `<label>${label}<input type="text" data-path="${key}" value="${escapeHtml(value)}" /></label>
+  <div style="margin-top:6px; display:flex; gap:6px;">
+    <button class="btn-secondary" type="button" data-action="sync-studio-media" data-key="${key}" style="padding:6px 10px; font-size:11px; flex:1;">Sync preview</button>
+    <button class="btn-secondary" type="button" data-action="validate-media" data-key="${key}" style="padding:6px 10px; font-size:11px; flex:1;">Validate</button>
+    <a class="btn-secondary" href="${escapeHtml(value || '#')}" target="_blank" rel="noopener" style="padding:6px 10px; font-size:11px; flex:1; text-align:center;">Open</a>
+  </div><div class="link-status"></div>`;
   wrapper.appendChild(document.createElement('div'));
   const previewHtml = renderMediaPreview(value);
-  wrapper.querySelector('div').innerHTML = previewHtml;
+  wrapper.querySelector('div:last-child').innerHTML = previewHtml;
   wrapper.querySelector('input').addEventListener('input', event => {
     handleFieldUpdate(event);
-    wrapper.querySelector('div').innerHTML = renderMediaPreview(event.target.value);
+    wrapper.querySelector('a').href = normalizeOpenUrl(event.target.value);
+    const status = wrapper.querySelector('.link-status');
+    status.textContent = '';
+    status.className = 'link-status';
+  });
+  wrapper.querySelector('[data-action="sync-studio-media"]').addEventListener('click', () => {
+    const url = wrapper.querySelector('input').value;
+    wrapper.querySelector('div:last-child').innerHTML = renderMediaPreview(url);
+    showMessage('Preview synced.', 'success');
+  });
+  wrapper.querySelector('[data-action="validate-media"]').addEventListener('click', () => {
+    validateLinkInput(wrapper.querySelector('input'), wrapper.querySelector('.link-status'), { media: true });
   });
   return wrapper;
 }
@@ -442,15 +817,140 @@ function createStudioSocialSection() {
   socialSection.className = 'field-group';
   socialSection.innerHTML = `<legend>Social Profiles</legend>`;
   const socialFields = [
-    { key: 'social.instagram', label: 'Instagram' },
-    { key: 'social.facebook', label: 'Facebook' },
-    { key: 'social.youtube', label: 'YouTube' },
-    { key: 'social.tiktok', label: 'TikTok' }
+    { key: 'instagram', label: 'Instagram' },
+    { key: 'facebook', label: 'Facebook' },
+    { key: 'youtube', label: 'YouTube' },
+    { key: 'tiktok', label: 'TikTok' }
   ];
   socialFields.forEach(field => {
-    socialSection.appendChild(createStudioField(field, data.social[field.key.split('.')[1]] || ''));
+    if (!Array.isArray(data.social[field.key])) {
+      data.social[field.key] = data.social[field.key] ? [data.social[field.key]] : [];
+    }
+    socialSection.appendChild(createStudioLinkList(`social.${field.key}`, field.label, data.social[field.key]));
   });
   return socialSection;
+}
+
+function createStudioLinkList(path, label, links) {
+  const wrapper = document.createElement('div');
+  wrapper.style.cssText = 'display:grid; gap:8px;';
+  wrapper.innerHTML = `<div style="display:flex; justify-content:space-between; gap:12px; align-items:center;"><strong style="font-size:14px;">${label}</strong><button class="btn-secondary mini-button" type="button" data-action="add-link">Add</button></div>`;
+  links.forEach((url, idx) => {
+    const row = document.createElement('div');
+    row.className = 'link-row';
+    row.innerHTML = `
+      <input type="text" data-path="${path}.${idx}" value="${escapeHtml(url || '')}" placeholder="${label} URL" />
+      <button class="btn-secondary mini-button" type="button" data-action="validate-link">Validate</button>
+      <a class="btn-secondary mini-button" href="${escapeHtml(url || '#')}" target="_blank" rel="noopener">Open</a>
+      <button class="btn-secondary mini-button" type="button" data-action="delete-link">Delete</button>
+      <div class="link-status"></div>
+    `;
+    const input = row.querySelector('input');
+    const openLink = row.querySelector('a');
+    const status = row.querySelector('.link-status');
+    input.addEventListener('input', event => {
+      handleFieldUpdate(event);
+      openLink.href = normalizeOpenUrl(input.value);
+      status.textContent = '';
+      status.className = 'link-status';
+    });
+    row.querySelector('[data-action="validate-link"]').addEventListener('click', () => validateLinkInput(input, status));
+    row.querySelector('[data-action="delete-link"]').addEventListener('click', () => {
+      links.splice(idx, 1);
+      renderEditor();
+    });
+    wrapper.appendChild(row);
+  });
+  wrapper.querySelector('[data-action="add-link"]').addEventListener('click', () => {
+    links.push('');
+    setDataPath(data, path, links);
+    renderEditor();
+  });
+  return wrapper;
+}
+
+function createStudioOperatingHoursSection() {
+  data.operatingHours = typeof data.operatingHours === 'object' && data.operatingHours ? data.operatingHours : { timezone: 'Africa/Lagos', schedule: [] };
+  const section = document.createElement('fieldset');
+  section.className = 'field-group';
+  section.innerHTML = `<legend>Operating Hours</legend>`;
+  
+  const tzWrapper = document.createElement('label');
+  tzWrapper.innerHTML = `Timezone<input type="text" data-path="operatingHours.timezone" value="${escapeHtml(data.operatingHours.timezone || 'Africa/Lagos')}" />`;
+  tzWrapper.querySelector('input').addEventListener('input', handleFieldUpdate);
+  section.appendChild(tzWrapper);
+  
+  const scheduleWrapper = document.createElement('div');
+  scheduleWrapper.style.cssText = 'margin-top:12px; padding:10px; background:rgba(0,0,0,.2); border-radius:8px;';
+  scheduleWrapper.innerHTML = '<p style="margin:0 0 10px; font-size:12px; color:var(--accent);">Weekly Schedule</p>';
+  
+  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const schedule = data.operatingHours.schedule || [];
+  
+  days.forEach((day, idx) => {
+    const dayData = schedule[idx] || { day, open: '09:00 AM', close: '06:00 PM', isOpen: true };
+    if (!schedule[idx]) {
+      schedule[idx] = dayData;
+      data.operatingHours.schedule = schedule;
+    }
+    const dayRow = document.createElement('div');
+    dayRow.style.cssText = 'display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:6px; margin-bottom:8px; padding:8px; background:rgba(0,0,0,.3); border-radius:6px; align-items:center;';
+    dayRow.innerHTML = `
+      <input type="text" data-path="operatingHours.schedule.${idx}.day" placeholder="Day" value="${escapeHtml(dayData.day || day)}" style="padding:6px; border:1px solid rgba(255,255,255,.05); border-radius:4px; background:rgba(0,0,0,.3); color:var(--text); font-size:11px;" />
+      <input type="text" data-path="operatingHours.schedule.${idx}.open" placeholder="Open time" value="${escapeHtml(dayData.open || '')}" style="padding:6px; border:1px solid rgba(255,255,255,.05); border-radius:4px; background:rgba(0,0,0,.3); color:var(--text); font-size:11px;" />
+      <input type="text" data-path="operatingHours.schedule.${idx}.close" placeholder="Close time" value="${escapeHtml(dayData.close || '')}" style="padding:6px; border:1px solid rgba(255,255,255,.05); border-radius:4px; background:rgba(0,0,0,.3); color:var(--text); font-size:11px;" />
+      <label style="display:flex; align-items:center; gap:6px; font-size:11px; color:var(--muted);"><input type="checkbox" data-path="operatingHours.schedule.${idx}.isOpen" ${dayData.isOpen !== false ? 'checked' : ''} /> Open</label>
+      <input type="text" data-path="operatingHours.schedule.${idx}.note" placeholder="Note (optional)" value="${escapeHtml(dayData.note || '')}" style="grid-column:1 / -1; padding:6px; border:1px solid rgba(255,255,255,.05); border-radius:4px; background:rgba(0,0,0,.3); color:var(--text); font-size:11px;" />
+    `;
+    dayRow.querySelectorAll('input[type="text"]').forEach(el => el.addEventListener('input', handleFieldUpdate));
+    dayRow.querySelector('input[type="checkbox"]').addEventListener('change', handleFieldUpdate);
+    scheduleWrapper.appendChild(dayRow);
+  });
+  
+  section.appendChild(scheduleWrapper);
+  return section;
+}
+
+function createStudioHolidaysSection() {
+  data.holidays = typeof data.holidays === 'object' && data.holidays ? data.holidays : { observed: [], policyNote: '' };
+  const section = document.createElement('fieldset');
+  section.className = 'field-group';
+  const header = document.createElement('div');
+  header.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;';
+  header.innerHTML = `<legend style="margin:0;">Holidays</legend><button class="btn-secondary" type="button" id="addHolidayBtn" style="padding:6px 12px; font-size:11px;">Add holiday</button>`;
+  section.appendChild(header);
+  
+  const holidays = Array.isArray(data.holidays.observed) ? data.holidays.observed : [];
+  holidays.forEach((holiday, idx) => {
+    const holidayRow = document.createElement('div');
+    holidayRow.style.cssText = 'display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:6px; margin-bottom:8px; padding:8px; background:rgba(0,0,0,.3); border-radius:6px; align-items:start;';
+    holidayRow.innerHTML = `
+      <input type="text" data-path="holidays.observed.${idx}.name" placeholder="Holiday name" value="${escapeHtml(holiday.name || '')}" style="padding:6px; border:1px solid rgba(255,255,255,.05); border-radius:4px; background:rgba(0,0,0,.3); color:var(--text); font-size:11px;" />
+      <input type="text" data-path="holidays.observed.${idx}.date" placeholder="Date (e.g., January 1)" value="${escapeHtml(holiday.date || '')}" style="padding:6px; border:1px solid rgba(255,255,255,.05); border-radius:4px; background:rgba(0,0,0,.3); color:var(--text); font-size:11px;" />
+      <input type="text" data-path="holidays.observed.${idx}.status" placeholder="Status" value="${escapeHtml(holiday.status || 'Closed')}" style="padding:6px; border:1px solid rgba(255,255,255,.05); border-radius:4px; background:rgba(0,0,0,.3); color:var(--text); font-size:11px;" />
+      <button class="btn-secondary" type="button" data-action="delete-holiday" data-index="${idx}" style="padding:6px 8px; font-size:11px;">Delete</button>
+    `;
+    holidayRow.querySelectorAll('input').forEach(el => el.addEventListener('input', handleFieldUpdate));
+    holidayRow.querySelector('[data-action="delete-holiday"]').addEventListener('click', () => {
+      data.holidays.observed.splice(idx, 1);
+      renderEditor();
+    });
+    section.appendChild(holidayRow);
+  });
+  
+  const policyWrapper = document.createElement('label');
+  policyWrapper.style.cssText = 'margin-top:12px;';
+  policyWrapper.innerHTML = `Policy Note<textarea data-path="holidays.policyNote">${escapeHtml(data.holidays.policyNote || '')}</textarea>`;
+  policyWrapper.querySelector('textarea').addEventListener('input', handleFieldUpdate);
+  section.appendChild(policyWrapper);
+  
+  header.querySelector('#addHolidayBtn').addEventListener('click', () => {
+    if (!Array.isArray(data.holidays.observed)) data.holidays.observed = [];
+    data.holidays.observed.push({ name: 'New Holiday', date: 'January 1', status: 'Closed' });
+    renderEditor();
+  });
+  
+  return section;
 }
 
 function createStudioStatEditor(stat, index) {
@@ -494,14 +994,10 @@ function createRawPanel() {
 function handleFieldUpdate(event) {
   const path = event.target.dataset.path;
   if (!path) return;
-  const value = event.target.value;
+  const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
   const parsedValue = parseFieldValue(path, value);
   setDataPath(data, path, parsedValue);
-  if (path.includes('image') || path.includes('media')) {
-    renderEditor();
-  } else {
-    updateRawText();
-  }
+  updateRawText();
 }
 
 function parseFieldValue(path, value) {
@@ -527,12 +1023,22 @@ function setDataPath(target, path, value) {
   let current = target;
   for (let i = 0; i < parts.length - 1; i += 1) {
     const key = isNaN(parts[i]) ? parts[i] : Number(parts[i]);
+    if (current[key] == null) {
+      current[key] = isNaN(parts[i + 1]) ? {} : [];
+    }
     current = current[key];
-    if (current == null) return;
   }
   const last = parts[parts.length - 1];
   current[isNaN(last) ? last : Number(last)] = value;
   updateRawText();
+}
+
+function getDataPath(target, path) {
+  return path.split('.').reduce((current, part) => {
+    if (current == null) return undefined;
+    const key = isNaN(part) ? part : Number(part);
+    return current[key];
+  }, target);
 }
 
 function renderMediaPreviews(media) {
@@ -567,6 +1073,77 @@ function transformYouTubeUrl(url) {
   return url.replace('watch?v=', 'embed/');
 }
 
+function normalizeOpenUrl(value) {
+  const text = String(value || '').trim();
+  if (!text) return '#';
+  if (text.includes('@') && !text.startsWith('mailto:') && !/^https?:\/\//i.test(text)) return `mailto:${text}`;
+  if (/^\+?\d[\d\s-]+$/.test(text)) return `https://wa.me/${text.replace(/\D/g, '')}`;
+  if (/^(https?:|mailto:|tel:)/i.test(text)) return text;
+  return `https://${text}`;
+}
+
+async function validateLinkInput(input, statusEl, options = {}) {
+  const raw = input.value.trim();
+  if (!raw) {
+    setValidationStatus(statusEl, 'Enter a link before validating.', 'warn');
+    return;
+  }
+
+  if (raw.includes('@') && !/^https?:\/\//i.test(raw)) {
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(raw.replace(/^mailto:/i, ''));
+    setValidationStatus(statusEl, ok ? 'Email format looks valid.' : 'Email format needs attention.', ok ? 'ok' : 'bad');
+    return;
+  }
+
+  const url = normalizeOpenUrl(raw);
+  if (!/^https?:\/\//i.test(url)) {
+    setValidationStatus(statusEl, 'This value is not a web URL, so only format validation is available.', 'warn');
+    return;
+  }
+
+  setValidationStatus(statusEl, 'Checking link...', 'warn');
+  if (options.media && isLikelyImageUrl(url)) {
+    const imageOk = await validateImageUrl(url);
+    setValidationStatus(statusEl, imageOk ? 'Image loaded successfully.' : 'Image could not be loaded. Check for a broken URL or blocked host.', imageOk ? 'ok' : 'bad');
+    return;
+  }
+
+  try {
+    const response = await fetch(url, { method: 'HEAD', cache: 'no-store' });
+    if (response.ok) {
+      setValidationStatus(statusEl, `Link responded with ${response.status}.`, 'ok');
+    } else {
+      setValidationStatus(statusEl, `Link responded with ${response.status}.`, 'bad');
+    }
+  } catch (error) {
+    try {
+      await fetch(url, { method: 'GET', mode: 'no-cors', cache: 'no-store' });
+      setValidationStatus(statusEl, 'Browser reached this link, but the host hides status details. Open to confirm it is not a 404.', 'warn');
+    } catch (fallbackError) {
+      setValidationStatus(statusEl, 'Could not reach this link from the browser.', 'bad');
+    }
+  }
+}
+
+function setValidationStatus(statusEl, message, state) {
+  statusEl.textContent = message;
+  statusEl.className = `link-status ${state}`;
+}
+
+function isLikelyImageUrl(url) {
+  return /\.(jpg|jpeg|png|webp|gif|avif|svg)(\?|#|$)/i.test(url) || url.includes('images.unsplash.com');
+}
+
+function validateImageUrl(url) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.referrerPolicy = 'no-referrer';
+    img.src = url;
+  });
+}
+
 function updateRawText() {
   const rawArea = document.getElementById('jsonRaw');
   if (rawArea) rawArea.value = JSON.stringify(data, null, 2);
@@ -587,7 +1164,7 @@ function capitalize(text) {
 }
 
 function escapeHtml(text) {
-  return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 </script>
 </body>
