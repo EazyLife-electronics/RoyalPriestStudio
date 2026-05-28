@@ -15,22 +15,6 @@
     "videos": []
   },
   {
-    "slug": "crusade-highlights",
-    "title": "Crusade Highlights",
-    "date": "January 2025",
-    "category": "Ministry Media",
-    "shortDesc": "Full media coverage of the Ibadan Evangelistic Crusade, capturing the atmosphere of worship.",
-    "longDesc": "Multi-camera broadcast production tracking massive multi-day outdoor crusades. Rigged with deep soundboard optimization matrices to feed crisp ambient audio captures alongside stadium-grade wide crane framing.",
-    "images": [],
-    "videos": [
-      {
-        "provider": "youtube",
-        "embedUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        "title": "Main Event Stream Recap"
-      }
-    ]
-  },
-  {
     "slug": "the-bolarinwas-wedding",
     "title": "The Bolarinwa’s Wedding ✨🤍",
     "date": "October 2025",
@@ -48,17 +32,25 @@
     "videos": []
   },
   {
-    "slug": "nature-spirit-exhibit",
-    "title": "Nature & Spirit Exhibit",
-    "date": "April 2025",
-    "category": "Creative Editorial",
-    "shortDesc": "An artistic exploration of creation through the lens of a spiritual journey.",
-    "longDesc": "A conceptual landscape art display documenting raw geographical peaks across the southwestern borders of Nigeria, framing deep metaphorical correlations between natural elements and inner peace.",
-    "images": [
-      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80"
-    ],
-    "videos": []
+    "slug": "crusade-highlights",
+    "title": "MEET & GREET WITH MIKE ABDUL",
+    "date": "Junw 2025",
+    "category": "Ministry Media",
+    "shortDesc": "Full media coverage of the Ibadan Meet And Greet With Mike Abdul @ Royal Priest Studios",
+    "longDesc": "...",
+    "images": [],
+    "videos": [
+      {
+        "provider": "youtube",
+        "embedUrl": "https://youtu.be/FbqrOS4xn6g?si=5s5AD2g8mHtGBUNG",
+        "title": "Main Event Stream Recap"
+      },
+      {
+        "provider": "youtube",
+        "embedUrl": "https://youtu.be/GBB_noNACaI?si=J3n-yWiO_bU66jA9",
+        "title": "Experience Mike Abdul Praise medley at the Biggest Studio in Ibadan ROYAL PRIEST STUDIOS"
+      }
+    ]
   },
   {
     "slug": "zion-choir-live",
