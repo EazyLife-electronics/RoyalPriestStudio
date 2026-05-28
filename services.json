@@ -17,13 +17,22 @@
         "depositValue": 50,
         "installmentsAllowed": false,
         "milestones": [
-          { "label": "Booking Deposit (To secure date)", "percentage": 50, "amount": 12500 },
-          { "label": "Session Completion (Before delivery)", "percentage": 50, "amount": 12500 }
+          {
+            "label": "Booking Deposit (To secure date)",
+            "percentage": 50,
+            "amount": 12500
+          },
+          {
+            "label": "Session Completion (Before delivery)",
+            "percentage": 50,
+            "amount": 12500
+          }
         ]
       }
     },
     "images": [
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=800"
+      "https://rpstudio.ng/rp%20pics/service_shots/portrait_shot1.jpg",
+      "https://rpstudio.ng/rp%20pics/service_shots/portrait_shot2.jpg"
     ],
     "videos": [],
     "message": "Hello Royal Priest Studios, I'd like to book a Portrait Photography session."
@@ -51,8 +60,16 @@
         "depositValue": 20000,
         "installmentsAllowed": false,
         "milestones": [
-          { "label": "Booking Lock Deposit", "percentage": 40, "amount": 20000 },
-          { "label": "Event Day Wrap", "percentage": 60, "amount": 30000 }
+          {
+            "label": "Booking Lock Deposit",
+            "percentage": 40,
+            "amount": 20000
+          },
+          {
+            "label": "Event Day Wrap",
+            "percentage": 60,
+            "amount": 30000
+          }
         ]
       }
     },
@@ -80,16 +97,29 @@
         "depositValue": 40,
         "installmentsAllowed": true,
         "milestones": [
-          { "label": "Retainer Deposit to Lock Date", "percentage": 40, "amount": 60000 },
-          { "label": "Mid-way Installment (1 week before event)", "percentage": 40, "amount": 60000 },
-          { "label": "Final Review (Prior to digital gallery delivery)", "percentage": 20, "amount": 30000 }
+          {
+            "label": "Retainer Deposit to Lock Date",
+            "percentage": 40,
+            "amount": 60000
+          },
+          {
+            "label": "Mid-way Installment (1 week before event)",
+            "percentage": 40,
+            "amount": 60000
+          },
+          {
+            "label": "Final Review (Prior to digital gallery delivery)",
+            "percentage": 20,
+            "amount": 30000
+          }
         ]
       }
     },
     "images": [
-      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800",
-      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800",
-      "https://images.unsplash.com/photo-1519225495810-75123328577b?auto=format&fit=crop&q=80&w=800"
+      "https://rpstudio.ng/rp%20pics/service_shots/red_wedding_pic.jpg",
+      "https://rpstudio.ng/rp%20pics/service_shots/red_wedding_pic2.jpg",
+      "https://rpstudio.ng/rp%20pics/service_shots/brown_wedding_pic.jpg",
+      "https://rpstudio.ng/rp%20pics/service_shots/brown_wedding_pic2.jpg"
     ],
     "videos": [],
     "message": "Hello Royal Priest Studios, I'd like to enquire about Wedding Coverage."
@@ -117,8 +147,16 @@
         "depositValue": 50,
         "installmentsAllowed": false,
         "milestones": [
-          { "label": "Commitment Deposit", "percentage": 50, "amount": 20000 },
-          { "label": "Post-Production Kickoff", "percentage": 50, "amount": 20000 }
+          {
+            "label": "Commitment Deposit",
+            "percentage": 50,
+            "amount": 20000
+          },
+          {
+            "label": "Post-Production Kickoff",
+            "percentage": 50,
+            "amount": 20000
+          }
         ]
       }
     },
@@ -149,13 +187,22 @@
         "depositValue": 50,
         "installmentsAllowed": false,
         "milestones": [
-          { "label": "Retainer Invoice", "percentage": 50, "amount": 30000 },
-          { "label": "Final Delivery Invoice", "percentage": 50, "amount": 30000 }
+          {
+            "label": "Retainer Invoice",
+            "percentage": 50,
+            "amount": 30000
+          },
+          {
+            "label": "Final Delivery Invoice",
+            "percentage": 50,
+            "amount": 30000
+          }
         ]
       }
     },
     "images": [
-      "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800"
+      "https://rpstudio.ng/rp%20pics/service_shots/edu_shot1.jpg",
+      "https://rpstudio.ng/rp%20pics/service_shots/edu_shot2.jpg"
     ],
     "videos": [],
     "message": "Hello Royal Priest Studios, I'd like to book a Corporate Shoot."
@@ -178,8 +225,12 @@
         "depositValue": 0,
         "installmentsAllowed": false,
         "milestones": [
-          { "label": "Upfront Pay in Full", "percentage": 100, "amount": 15000 }
-         ]
+          {
+            "label": "Upfront Pay in Full",
+            "percentage": 100,
+            "amount": 15000
+          }
+        ]
       }
     },
     "images": [
@@ -206,8 +257,16 @@
         "depositValue": 50,
         "installmentsAllowed": false,
         "milestones": [
-          { "label": "Concept Approval Retainer", "percentage": 50, "amount": 22500 },
-          { "label": "Shoot Day Execution Balance", "percentage": 50, "amount": 22500 }
+          {
+            "label": "Concept Approval Retainer",
+            "percentage": 50,
+            "amount": 22500
+          },
+          {
+            "label": "Shoot Day Execution Balance",
+            "percentage": 50,
+            "amount": 22500
+          }
         ]
       }
     },
@@ -236,13 +295,24 @@
         "depositValue": 50,
         "installmentsAllowed": false,
         "milestones": [
-          { "label": "Booking Reservation", "percentage": 50, "amount": 15000 },
-          { "label": "Session Wrap Balance", "percentage": 50, "amount": 15000 }
+          {
+            "label": "Booking Reservation",
+            "percentage": 50,
+            "amount": 15000
+          },
+          {
+            "label": "Session Wrap Balance",
+            "percentage": 50,
+            "amount": 15000
+          }
         ]
       }
     },
     "images": [
-      "https://images.unsplash.com/photo-1555243896-c709bfa0b564?auto=format&fit=crop&q=80&w=800"
+      "https://rpstudio.ng/rp%20pics/service_shots/black_merternity_shot.jpg",
+      "https://rpstudio.ng/rp%20pics/service_shots/black_merternity_shot2.jpg",
+      "https://rpstudio.ng/rp%20pics/service_shots/purple_merternity_shot.jpg",
+      "https://rpstudio.ng/rp%20pics/service_shots/purple_merternity_shot2.jpg"
     ],
     "videos": [],
     "message": "Hello Royal Priest Studios, I'd like to book a Maternity/Newborn session."
@@ -265,9 +335,21 @@
         "depositValue": 30,
         "installmentsAllowed": true,
         "milestones": [
-          { "label": "Pre-production & Scripting Lock", "percentage": 30, "amount": 30000 },
-          { "label": "Principal Photography Execution", "percentage": 40, "amount": 40000 },
-          { "label": "Final Draft Delivery Closeout", "percentage": 30, "amount": 30000 }
+          {
+            "label": "Pre-production & Scripting Lock",
+            "percentage": 30,
+            "amount": 30000
+          },
+          {
+            "label": "Principal Photography Execution",
+            "percentage": 40,
+            "amount": 40000
+          },
+          {
+            "label": "Final Draft Delivery Closeout",
+            "percentage": 30,
+            "amount": 30000
+          }
         ]
       }
     },
@@ -303,8 +385,16 @@
         "depositValue": 50,
         "installmentsAllowed": false,
         "milestones": [
-          { "label": "Session Slot Deposit", "percentage": 50, "amount": 10000 },
-          { "label": "Photo Proofing Clearance", "percentage": 50, "amount": 10000 }
+          {
+            "label": "Session Slot Deposit",
+            "percentage": 50,
+            "amount": 10000
+          },
+          {
+            "label": "Photo Proofing Clearance",
+            "percentage": 50,
+            "amount": 10000
+          }
         ]
       }
     },
