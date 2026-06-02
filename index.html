@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Royal Priesthood Studio | Ibadan</title>
+<title>Royal Priest Studios | Music, Photography & Videography in Ibadan</title>
+<link rel="icon" type="image/jpeg" href="https://rpstudio.ng/rp%20pics/logo.jpg.jpeg"/>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
 <style>
@@ -46,7 +47,9 @@
   /* NAV */
   nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:24px 60px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,var(--nav-bg),transparent);transition:background .4s;}
   nav.scrolled{background:var(--nav-bg);border-bottom:1px solid rgba(201,168,76,.15);}
-  .nav-logo{font-family:'Cinzel Decorative',cursive;font-size:13px;font-weight:700;color:var(--gold);letter-spacing:.15em;text-decoration:none;text-transform:uppercase;line-height:1.3;}
+  .nav-logo{display:flex;align-items:center;gap:12px;font-family:'Cinzel Decorative',cursive;font-size:13px;font-weight:700;color:var(--gold);letter-spacing:.15em;text-decoration:none;text-transform:uppercase;line-height:1.3;}
+  .nav-logo-img{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1px solid var(--gold);display:none;}
+  .nav-logo-img.visible{display:block;}
   .nav-logo span{display:block;font-size:9px;font-weight:400;color:var(--muted);letter-spacing:.4em;}
   .nav-links{display:flex;gap:40px;list-style:none;align-items:center;}
   .nav-links a{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;position:relative;}
@@ -320,12 +323,10 @@
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- Floating WhatsApp -->
 <a class="floating-wa" id="floatingWa" href="#" target="_blank" title="Chat on WhatsApp">
   <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#hero"     onclick="closeMobile()">Home</a>
   <a href="#about"    onclick="closeMobile()">About</a>
@@ -337,9 +338,13 @@
   <a href="#" id="mobileThemeToggle" style="color:var(--gold);border-top:1px solid rgba(201,168,76,0.2);padding-top:20px;">Toggle Theme</a>
 </div>
 
-<!-- NAV -->
 <nav id="navbar">
-  <a class="nav-logo" href="#hero">Royal Priesthood<span>Studio · Ibadan</span></a>
+  <a class="nav-logo" id="navLogoAnchor" href="#hero">
+    <img id="navLogoImg" class="nav-logo-img" src="https://rpstudio.ng/rp%20pics/logo.jpg.jpeg" alt="Royal Priest Studios Logo"/>
+    <div>
+      Royal Priest<span>Studios · Ibadan</span>
+    </div>
+  </a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
@@ -355,15 +360,14 @@
   </div>
 </nav>
 
-<!-- ═══ HERO ═══ -->
 <section id="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-float hero-float-1"></div>
   <div class="hero-float hero-float-2"></div>
   <div class="hero-content">
-    <div class="hero-eyebrow">Photography &amp; Videography · Ibadan</div>
-    <h1 class="hero-title">Royal<br/><span class="gold">Priesthood</span></h1>
+    <div class="hero-eyebrow">Music, Photography &amp; Videography · Ibadan</div>
+    <h1 class="hero-title">Royal Priest<br/><span class="gold">Studios</span></h1>
     <div class="hero-subtitle">Studio</div>
     <div class="hero-divider"></div>
     <p class="hero-tagline" id="hero-tagline">Capturing moments. Telling sacred stories. Framing eternity.</p>
@@ -381,7 +385,6 @@
 
 <div class="gold-divider"></div>
 
-<!-- ═══ ABOUT ═══ -->
 <section id="about">
   <div class="about-inner">
     <div class="about-visual reveal">
@@ -402,7 +405,7 @@
       <div class="section-label reveal">About Us</div>
       <h2 class="section-title reveal reveal-delay-1">We Capture What<br/><span class="gold">Heaven Sees</span></h2>
       <p class="section-body reveal reveal-delay-2" id="about-body">
-        Royal Priesthood Studio is more than a photography and videography company — we are storytellers, historians, and artists who believe every moment deserves to be preserved with excellence and intention. From intimate portraits to grand productions, we bring a regal touch to every frame.
+        At Royal Priest Studios, we believe every project deserves attention to detail, creativity, and professionalism. From intimate studio sessions to large-scale productions, our goal is to deliver clean sound, stunning visuals, and memorable experiences that exceed expectations.
       </p>
       <div class="about-stats" id="about-stats"></div>
     </div>
@@ -411,7 +414,6 @@
 
 <div class="gold-divider"></div>
 
-<!-- ═══ SERVICES ═══ -->
 <section id="services">
   <div class="services-inner">
     <div class="services-header">
@@ -425,7 +427,6 @@
     </div>
     <div class="services-grid" id="services-grid"></div>
 
-    <!-- ── More Services CTA ── -->
     <div class="services-cta reveal reveal-delay-2" id="services-cta" style="display:none;">
       <span class="services-cta-label">Explore everything we offer</span>
       <a href="services.html" class="btn-catalog">
@@ -439,13 +440,12 @@
 
 <div class="gold-divider"></div>
 
-<!-- ═══ GALLERY (HOME PREVIEW) ═══ -->
 <section id="gallery">
   <div class="gallery-inner">
     <div class="gallery-header">
       <div class="section-label reveal">Recent Works &amp; Moments</div>
       <h2 class="section-title reveal reveal-delay-1">The <span class="gold">Portfolio</span></h2>
-      <p class="section-body reveal reveal-delay-2" style="margin-top:12px;">Proof of excellence from Royal Priesthood Studio</p>
+      <p class="section-body reveal reveal-delay-2" style="margin-top:12px;">Proof of excellence from Royal Priest Studios</p>
     </div>
     <div class="gallery-grid reveal" id="gallery-grid"></div>
     <div class="gallery-cta reveal reveal-delay-1">
@@ -456,7 +456,6 @@
 
 <div class="gold-divider"></div>
 
-<!-- ═══ FAQ ═══ -->
 <section id="faq">
   <div class="faq-inner">
     <div class="faq-header">
@@ -473,7 +472,6 @@
 
 <div class="gold-divider"></div>
 
-<!-- ═══ CONTACT ═══ -->
 <section id="contact">
   <div class="contact-inner">
     <div class="contact-info">
@@ -520,11 +518,10 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-logo">
-      Royal Priesthood Studio
+      Royal priest Studio
       <span>Photography &amp; Videography · <span id="footer-location">Ibadan, Oyo State</span></span>
     </div>
     <ul class="footer-links">
@@ -536,7 +533,7 @@
       <li><a href="blog.html">Blog</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <div class="footer-copy">© 2026 Royal Priesthood Studio. All rights reserved.</div>
+    <div class="footer-copy">© 2026 Royal priest Studio. All rights reserved.</div>
   </div>
 </footer>
 
@@ -551,7 +548,7 @@ const themeIcon         = themeToggle.querySelector('i');
 
 function setTheme(t) {
   htmlEl.setAttribute('data-theme', t);
-  localStorage.setItem('royal-priesthood-theme', t);
+  localStorage.setItem('royal-priest-theme', t);
   themeIcon.className = (t === 'light') ? 'fas fa-sun' : 'fas fa-moon';
 }
 function toggleTheme() {
@@ -559,7 +556,7 @@ function toggleTheme() {
     (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
   setTheme(cur === 'light' ? 'dark' : 'light');
 }
-const saved = localStorage.getItem('royal-priesthood-theme');
+const saved = localStorage.getItem('royal-priest-theme');
 if (saved) { setTheme(saved); }
 else { themeIcon.className = window.matchMedia('(prefers-color-scheme:light)').matches ? 'fas fa-sun' : 'fas fa-moon'; }
 
@@ -582,7 +579,11 @@ document.addEventListener('mouseover', e => {
    NAV / MOBILE
 ══════════════════════════════════════ */
 const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', scrollY > 60));
+const navLogoImg = document.getElementById('navLogoImg');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', scrollY > 60);
+  if(navLogoImg) navLogoImg.classList.toggle('visible', scrollY > 60);
+});
 function toggleMobile(){ document.getElementById('mobileMenu').classList.toggle('open'); }
 function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); }
 
@@ -606,7 +607,7 @@ function buildWaLink(){
   const service = document.getElementById('cf-service').value;
   const msg     = document.getElementById('cf-message').value.trim();
   const name    = [fname,lname].filter(Boolean).join(' ') || 'A client';
-  let text = `Hello Royal Priesthood Studio! 👋\n\nMy name is *${name}*.`;
+  let text = `Hello Royal Priest Studios! 👋\n\nMy name is *${name}*.`;
   if(phone)   text += `\n📞 Phone: ${phone}`;
   if(service) text += `\n📷 Service: ${service}`;
   if(msg)     text += `\n\n💬 ${msg}`;
@@ -843,7 +844,12 @@ async function loadData(){
   if(studio){
     const contact = studio.contact || {};
     const social = studio.social || {};
-    const instagram = Array.isArray(social.instagram) ? social.instagram[0] : social.instagram;
+    
+    const instagram = Array.isArray(social.instagram) ? social.instagram : (social.instagram ? [social.instagram] : []);
+    const facebook = Array.isArray(social.facebook) ? social.facebook : (social.facebook ? [social.facebook] : []);
+    const youtube = Array.isArray(social.youtube) ? social.youtube : (social.youtube ? [social.youtube] : []);
+    const tiktok = Array.isArray(social.tiktok) ? social.tiktok : (social.tiktok ? [social.tiktok] : []);
+
     waNumber = contact.whatsapp || studio.whatsapp || '';
     const email = contact.email || studio.email || '';
     const website = contact.website || studio.website || '';
@@ -860,8 +866,18 @@ async function loadData(){
       }
       meta.content = studio.metaDescription;
     }
+    
+    // Dynamically display Logo Image in Nav if provided in studio-info.json
+    if(studio.logo) {
+      const logoImg = document.getElementById('navLogoImg');
+      if(logoImg) {
+        logoImg.src = studio.logo;
+        logoImg.classList.add('visible');
+      }
+    }
+
     if(studio.name) {
-      document.querySelector('.nav-logo').innerHTML = `${escapeHtml(studio.name)}<span>${escapeHtml(studio.businessCategory || studio.location || '')}</span>`;
+      document.querySelector('.nav-logo div').innerHTML = `${escapeHtml(studio.name)}<span>${escapeHtml(studio.businessCategory || studio.location || '')}</span>`;
       document.querySelector('.footer-logo').firstChild.textContent = studio.name;
     }
     if(studio.heroHeadline) document.querySelector('.hero-title').innerHTML = escapeHtml(studio.heroHeadline).replace(/\s+/, '<br/><span class="gold">') + '</span>';
@@ -870,7 +886,7 @@ async function loadData(){
     if(studio.description) document.getElementById('about-body').textContent      = studio.description;
     if(studio.location)    document.getElementById('footer-location').textContent = studio.location;
     if(studio.heroImage) {
-      document.querySelector('.about-frame-1').innerHTML = `<img src="${escapeHtml(studio.heroImage)}" alt="${escapeHtml(studio.name || 'Royal Priesthood Studio')}" loading="lazy">`;
+      document.querySelector('.about-frame-1').innerHTML = `<img src="${escapeHtml(studio.heroImage)}" alt="${escapeHtml(studio.name || 'Royal Priest Studios')}" loading="lazy">`;
     }
 
     document.getElementById('hero-wa-btn').href = waBase;
@@ -886,31 +902,62 @@ async function loadData(){
         <div class="stat-label">${s.label}</div>
       </div>`).join('');
 
-    document.getElementById('contact-details').innerHTML = `
-      ${studio.location?`<div class="contact-item">
+    // Rebuilt contact details rendering logic to parse Facebook, YouTube, and TikTok data arrays smoothly
+    let contactHTML = '';
+    
+    if(studio.location){
+      contactHTML += `<div class="contact-item">
         <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
         <div><div class="contact-item-label">Location</div><div class="contact-item-value">${studio.location}</div></div>
-      </div>`:''}
-      <div class="contact-item">
-        <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
-        <div><div class="contact-item-label">WhatsApp</div>
-          <div class="contact-item-value"><a href="${waBase}" target="_blank">${waNumber}</a></div>
-        </div>
+      </div>`;
+    }
+    
+    contactHTML += `<div class="contact-item">
+      <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+      <div><div class="contact-item-label">WhatsApp</div>
+        <div class="contact-item-value"><a href="${waBase}" target="_blank">${waNumber}</a></div>
       </div>
-      ${email?`<div class="contact-item">
+    </div>`;
+    
+    if(email){
+      contactHTML += `<div class="contact-item">
         <div class="contact-icon"><i class="fas fa-envelope"></i></div>
         <div><div class="contact-item-label">Email</div>
           <div class="contact-item-value"><a href="mailto:${email}">${email}</a></div>
         </div>
-      </div>`:''}
-      ${instagram?`<div class="contact-item">
-        <div class="contact-icon"><i class="fab fa-instagram"></i></div>
-        <div><div class="contact-item-label">Instagram</div><div class="contact-item-value"><a href="${instagram}" target="_blank">${instagram.replace(/^https?:\/\//,'')}</a></div></div>
-      </div>`:''}
-      ${website?`<div class="contact-item">
+      </div>`;
+    }
+    
+    const renderSocialLinks = (links, label, iconClass) => {
+      if (!Array.isArray(links) || !links.length) return;
+      const filtered = links.filter(Boolean);
+      if (!filtered.length) return;
+      const labelText = filtered.length > 1 ? `${label}s` : label;
+      const itemsHtml = filtered.map(url => `
+          <a href="${url}" target="_blank">${url.replace(/^https?:\/\/(www\.)?/,'')}</a>`).join('<br>');
+
+      contactHTML += `<div class="contact-item">
+        <div class="contact-icon"><i class="${iconClass}"></i></div>
+        <div>
+          <div class="contact-item-label">${labelText}</div>
+          <div class="contact-item-value">${itemsHtml}</div>
+        </div>
+      </div>`;
+    };
+
+    renderSocialLinks(instagram, 'Instagram', 'fab fa-instagram');
+    renderSocialLinks(facebook, 'Facebook', 'fab fa-facebook-f');
+    renderSocialLinks(youtube, 'YouTube', 'fab fa-youtube');
+    renderSocialLinks(tiktok, 'TikTok', 'fab fa-tiktok');
+    
+    if(website){
+      contactHTML += `<div class="contact-item">
         <div class="contact-icon"><i class="fas fa-globe"></i></div>
         <div><div class="contact-item-label">Website</div><div class="contact-item-value"><a href="${website}" target="_blank">${website.replace(/^https?:\/\//,'')}</a></div></div>
-      </div>`:''}`;
+      </div>`;
+    }
+
+    document.getElementById('contact-details').innerHTML = contactHTML;
     buildWaLink();
   }
 
