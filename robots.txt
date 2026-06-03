@@ -1,0 +1,14 @@
+# robots.txt — Royal Priest Studios
+# https://rpstudio.ng
+
+# Allow all search engine crawlers
+User-agent: *
+Allow: /
+
+# Block access to any private or system files if added in future
+Disallow: /admin/
+Disallow: /private/
+
+# Sitemap location
+Sitemap: https://rpstudio.ng/sitemap.xml
+
